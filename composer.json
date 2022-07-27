@@ -1,5 +1,5 @@
 {
-    "name": "undostres-com-mx/magento-udt_payment_processor",
+    "name": "undostres-com-mx/magento-gateway-undostres",
     "description": "UnDosTres payment gateway for magento.",
     "version": "1.0.0",
     "type": "magento2-module",
