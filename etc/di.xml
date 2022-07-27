@@ -1,0 +1,100 @@
+<?xml version="1.0"?>
+<!--/* DI CONFIG FILE (INITS) */-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <!-- Payment Method Facade configuration -->
+    <virtualType name="PaymentGatewayFacade" type="Magento\Payment\Model\Method\Adapter">
+        <arguments>
+            <argument name="code" xsi:type="const">unDosTres\paymentGateway\Gateway\Config\Config::CODE</argument>
+            <argument name="formBlockType" xsi:type="string">Magento\Payment\Block\Form</argument>
+            <argument name="infoBlockType" xsi:type="string">unDosTres\paymentGateway\Block\Info</argument>
+            <argument name="valueHandlerPool" xsi:type="object">PaymentGatewayValueHandlerPool</argument>
+            <argument name="commandPool" xsi:type="object">PaymentGatewayCommandPool</argument>
+        </arguments>
+    </virtualType>
+
+    <!-- CONFIGURATION READER -->
+    <type name="unDosTres\paymentGateway\Gateway\Config\Config">
+        <arguments>
+            <argument name="methodCode" xsi:type="const">unDosTres\paymentGateway\Gateway\Config\Config::CODE</argument>
+        </arguments>
+    </type>
+
+    <!-- COMMANDS INFRAESTRCUTURE -->
+    <virtualType name="PaymentGatewayCommandPool" type="Magento\Payment\Gateway\Command\CommandPool">
+        <arguments>
+            <argument name="commands" xsi:type="array">
+                <item name="initialize" xsi:type="string">PaymentGatewayInitializeCommand</item>
+                <item name="refund" xsi:type="string">PaymentGatewayRefundCommand</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <!-- INIT COMMAND -->
+    <virtualType name="PaymentGatewayInitializeCommand" type="Magento\Payment\Gateway\Command\GatewayCommand">
+        <arguments>
+            <argument name="requestBuilder" xsi:type="object">PaymentGatewayInitializationRequest</argument>
+            <argument name="transferFactory" xsi:type="object">unDosTres\paymentGateway\Gateway\Http\TransferFactory</argument>
+            <argument name="client" xsi:type="object">unDosTres\paymentGateway\Gateway\Http\Client\Client</argument>
+        </arguments>
+    </virtualType>
+
+    <!-- REFUND COMMAND -->
+    <virtualType name="PaymentGatewayRefundCommand" type="Magento\Payment\Gateway\Command\GatewayCommand">
+        <arguments>
+            <argument name="requestBuilder" xsi:type="object">PaymentGatewayRefundRequest</argument>
+            <argument name="transferFactory" xsi:type="object">unDosTres\paymentGateway\Gateway\Http\TransferFactory</argument>
+            <argument name="handler" xsi:type="object">unDosTres\paymentGateway\Model\UnDosTresPayment</argument>
+            <argument name="client" xsi:type="object">unDosTres\paymentGateway\Gateway\Http\Client\RefundClient</argument>
+        </arguments>
+    </virtualType>
+
+    <!-- INIT REQUEST -->
+    <virtualType name="PaymentGatewayInitializationRequest" type="Magento\Payment\Gateway\Request\BuilderComposite">
+        <arguments>
+            <argument name="builders" xsi:type="array">
+                <item name="transaction" xsi:type="string">unDosTres\paymentGateway\Gateway\Request\InitializationRequest</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <!-- REFUN REQUEST -->
+    <virtualType name="PaymentGatewayRefundRequest" type="Magento\Payment\Gateway\Request\BuilderComposite">
+        <arguments>
+            <argument name="builders" xsi:type="array">
+                <item name="transaction" xsi:type="string">unDosTres\paymentGateway\Gateway\Request\RefundRequest</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <type name="unDosTres\paymentGateway\Gateway\Request\InitializationRequest">
+        <arguments>
+            <argument name="config" xsi:type="object">unDosTres\paymentGateway\Gateway\Config\Config</argument>
+        </arguments>
+    </type>
+
+    <!-- VALUE HANDLERS -->
+    <virtualType name="PaymentGatewayValueHandlerPool" type="Magento\Payment\Gateway\Config\ValueHandlerPool">
+        <arguments>
+            <argument name="handlers" xsi:type="array">
+                <item name="default" xsi:type="string">PaymentGatewayConfigValueHandler</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="PaymentGatewayConfigValueHandler" type="Magento\Payment\Gateway\Config\ConfigValueHandler">
+        <arguments>
+            <argument name="configInterface" xsi:type="object">unDosTres\paymentGateway\Gateway\Config\Config</argument>
+        </arguments>
+    </virtualType>
+    <type name="unDosTres\paymentGateway\Block\Info">
+        <arguments>
+            <argument name="config" xsi:type="object">unDosTres\paymentGateway\Gateway\Config\Config</argument>
+        </arguments>
+    </type>
+
+    <!-- CANCEL REQUEST -->
+    <type name="Magento\Sales\Model\Order">
+            <plugin name="orderCancelUDT" type="unDosTres\paymentGateway\Plugin\Model\Order" sortOrder="10"/>
+    </type>
+
+    <!-- API INTERFACE -->
+    <preference for="unDosTres\paymentGateway\Model\Api\CustomInterface" type="unDosTres\paymentGateway\Model\Api\Custom"/>
+</config>
