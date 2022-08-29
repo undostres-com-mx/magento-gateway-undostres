@@ -5,7 +5,7 @@
     "type": "magento2-module",
     "license": "proprietary",
     "require": {
-        "undostres-com-mx/superapp_sdk": "0.1",
+        "undostres-com-mx/superapp_sdk": "1.0.1",
         "php": "~7.4",
         "magento/module-sales": "*",
         "magento/module-quote": "*",
