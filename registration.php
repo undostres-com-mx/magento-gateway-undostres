@@ -1,12 +1,11 @@
 <?php
 
+use Magento\Framework\Component\ComponentRegistrar as R;
+
 /*
-PLUGIN REGISTER
-undostres_gateway -> Gateway name
-unDosTres_paymentGateway -> Plugin name
+ * PLUGIN REGISTER
+ * undostres-gateway -> Gateway name
+ * magento-gateway-undostres -> Plugin name
 */
-\Magento\Framework\Component\ComponentRegistrar::register(
-    \Magento\Framework\Component\ComponentRegistrar::MODULE,
-    'unDosTres_paymentGateway',
-    __DIR__
-);
+
+R::register(R::MODULE, 'magento-gateway-undostres', __DIR__);

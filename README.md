@@ -2,58 +2,72 @@
 
 ## Plugin information
 
-This plugin has been tested on magento 2.3 up to 2.4.2.
+This plugin has been tested on magento 2.4.X.
 
-On the composer.json are the dependencies linked.
+The composer.json have the dependencies of the plugin.
+
+---
 
 ## Installation
 
-### Uploading files installation
-
-It's needed to make the following dir structure:
-`app/code/unDosTres/paymentGateway`
-
-Upload the plugin files there and then do the steps of **Updating magento core** section.
-
-To update the plugin it's necesary to delete all the files inside the plugin folder and upload there the latest version of plugin, then do  **Updating magento core** section.
-
-### Composer installation
-
-To install throught composer it's only necesary to add the requeriment inside the root of magento installation.
+To install through composer it's only necessary to execute the following on the magento's root folder.
 
 ```
-composer require undostres-com-mx/paymentGateway
+composer require undostres-com-mx/magento-gateway-undostres
+php bin/magento maintenance:enable 
+php bin/magento module:enable magento-gateway-undostres
+php bin/magento setup:upgrade
+php bin/magento setup:static-content:deploy -f
+php bin/magento setup:di:compile
+php bin/magento cache:flush
+php bin/magento maintenance:disable
 ``` 
 
-Then do the steps of **Updating magento core** section.
+---
 
-To update the plugin execute inside the root of magento installation:
+## Update
+
+To update through composer it's only necessary to execute the following on the magento's root folder.
 
 ```
-composer update
+composer update undostres-com-mx/magento-gateway-undostres
+php bin/magento maintenance:enable
+php bin/magento setup:upgrade
+php bin/magento setup:static-content:deploy -f
+php bin/magento setup:di:compile
+php bin/magento cache:flush
+php bin/magento maintenance:disable
 ``` 
 
-Then do the steps of **Updating magento core** section.
+---
+
+## Uninstall
+
+To delete the plugin:
+
+```
+php bin/magento maintenance:enable
+php bin/magento module:disable magento-gateway-undostres
+composer remove undostres-com-mx/magento-gateway-undostres
+php bin/magento setup:upgrade
+php bin/magento setup:static-content:deploy -f
+php bin/magento setup:di:compile
+php bin/magento cache:flush
+php bin/magento maintenance:disable
+``` 
+
+---
 
 ## Configuration
 
-All the configuration needed its inside:
-`app/code/unDosTres/paymentGateway/registration.php`
+All the configuration needed it's on the payment methods page located on admin site.
 
-The logging system logs into:
-`var/log/system.log`
+---
 
-## Updating magento core
+## Logs
 
-It's needed to run the following code (*Inside the magento root installation directory*) after installing or update to properly update the core of magento, enabling the gateway.
+The logging system logs into a folder inside magento root directory.
 
 ```
-php bin/magento maintenance:enable 
-php bin/magento module:enable unDosTres_paymentGateway
-php bin/magento setup:upgrade
-php bin/magento setup:static-content:deploy
-php bin/magento setup:di:compile
-php bin/magento cache:clean
-php bin/magento cache:flush
-php bin/magento maintenance:disable
+nano var/log/system.log
 ``` 
