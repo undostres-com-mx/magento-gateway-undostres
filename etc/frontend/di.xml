@@ -4,7 +4,7 @@
     <type name="Magento\Checkout\Model\CompositeConfigProvider">
         <arguments>
             <argument name="configProviders" xsi:type="array">
-                <item name="unDosTres_gateway_config_provider" xsi:type="object">Undostres\PaymentGateway\Model\Ui\ConfigProvider</item>
+                <item name="undostres_gateway_config_provider" xsi:type="object">Undostres\PaymentGateway\Model\Ui\ConfigProvider</item>
             </argument>
         </arguments>
     </type>
