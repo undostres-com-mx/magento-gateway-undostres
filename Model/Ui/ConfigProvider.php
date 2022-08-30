@@ -1,13 +1,13 @@
 <?php
 
-namespace Undostres\paymentGateway\Model\Ui;
+namespace Undostres\PaymentGateway\Model\Ui;
 
 use Magento\Checkout\Model\ConfigProviderInterface;
 use Magento\Customer\Model\Session;
 use Magento\Backend\Model\Session\Quote;
 use Magento\Framework\App\Helper\Context;
 use Magento\Framework\View\Asset\Repository;
-use Undostres\paymentGateway\Gateway\Config\Config;
+use Undostres\PaymentGateway\Gateway\Config\Config;
 
 final class ConfigProvider implements ConfigProviderInterface
 {

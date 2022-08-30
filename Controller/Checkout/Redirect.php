@@ -1,9 +1,9 @@
 <?php
 
-namespace Undostres\paymentGateway\Controller\Checkout;
+namespace Undostres\PaymentGateway\Controller\Checkout;
 
-use Undostres\paymentGateway\Helper\AbstractAction;
-use Undostres\paymentGateway\Helper\Helper;
+use Undostres\PaymentGateway\Helper\AbstractAction;
+use Undostres\PaymentGateway\Helper\Helper;
 
 /* CONTROLLER WHERE PAYMENT IS VALIDATED AND ORDER ACCEPTED */
 

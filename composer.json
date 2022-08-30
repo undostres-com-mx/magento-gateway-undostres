@@ -19,7 +19,7 @@
             "registration.php"
         ],
         "psr-4": {
-            "undostres\\paymentGateway\\": ""
+            "undostres\\PaymentGateway\\": ""
         }
     }
 }

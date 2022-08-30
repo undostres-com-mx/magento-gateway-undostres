@@ -1,9 +1,9 @@
 <?php
 
-namespace Undostres\paymentGateway\Model;
+namespace Undostres\PaymentGateway\Model;
 
 use Magento\Payment\Gateway\Response\HandlerInterface;
-use Undostres\paymentGateway\PrivateConfig;
+use Undostres\PaymentGateway\PrivateConfig;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Model\Context;
 use Magento\Framework\Registry;
@@ -12,7 +12,7 @@ use Magento\Framework\Api\AttributeValueFactory;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Payment\Model\Method\Logger;
 use UDT\SDK\SDK;
-use Undostres\paymentGateway\Helper\Helper;
+use Undostres\PaymentGateway\Helper\Helper;
 use Magento\Payment\Helper\Data;
 
 class UnDosTresPayment extends \Magento\Payment\Model\Method\AbstractMethod implements HandlerInterface
@@ -45,7 +45,7 @@ class UnDosTresPayment extends \Magento\Payment\Model\Method\AbstractMethod impl
 		);
 		$this->_scopeConfig = $scopeConfig;
         $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
-        $this->_helper =  $objectManager->get('Undostres\paymentGateway\Helper\Helper');
+        $this->_helper =  $objectManager->get('Undostres\PaymentGateway\Helper\Helper');
 	}
 
     private function makeRefund($payload){

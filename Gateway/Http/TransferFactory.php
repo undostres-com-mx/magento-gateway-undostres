@@ -1,6 +1,6 @@
 <?php
 
-namespace Undostres\paymentGateway\Gateway\Http;
+namespace Undostres\PaymentGateway\Gateway\Http;
 
 use Magento\Payment\Gateway\Http\TransferFactoryInterface;
 use Magento\Payment\Gateway\Http\TransferBuilder;
