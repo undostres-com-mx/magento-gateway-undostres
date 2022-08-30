@@ -9,7 +9,7 @@ use \Magento\Payment\Gateway\Config\Config as MagentoConfig;
 class Config extends MagentoConfig
 {
     /* KEYS INSIDE MAGENTO CONFIG */
-    const CODE = 'undostres-gateway';
+    const CODE = 'undostres_gateway';
     const KEY_TITLE = 'title';
     const KEY_DESCRIPTION = 'description';
     const KEY_GATEWAY_LOGO = 'gateway_logo';

@@ -1,5 +1,5 @@
 {
-    "name": "undostres-com-mx/magento-gateway-undostres",
+    "name": "undostres-com-mx/undostres_gateway",
     "version": "1.0.1",
     "description": "UnDosTres payment gateway for magento.",
     "type": "magento2-module",

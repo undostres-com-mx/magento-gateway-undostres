@@ -45,7 +45,7 @@ final class ConfigProvider implements ConfigProviderInterface
             $request = $om->get('Magento\Framework\App\RequestInterface');
             $params = array();
             $params = array_merge(['_secure' => $request->isSecure()], $params);
-            $logo = $this->_assetRepo->getUrlWithParams('magento-gateway-undostres::images/undostres_logo.png', $params);
+            $logo = $this->_assetRepo->getUrlWithParams('undostres_gateway::images/undostres_logo.png', $params);
         }
 
         $config = [

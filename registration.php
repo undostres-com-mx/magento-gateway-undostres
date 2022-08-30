@@ -4,8 +4,8 @@ use Magento\Framework\Component\ComponentRegistrar as R;
 
 /*
  * PLUGIN REGISTER
- * undostres-gateway -> Gateway name
- * magento-gateway-undostres -> Plugin name
+ * undostres_gateway -> Gateway name
+ * undostres_gateway -> Plugin name
 */
 
 R::register(R::MODULE, 'undostres_gateway', __DIR__);

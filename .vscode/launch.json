@@ -7,7 +7,7 @@
             "request": "launch",
             "port": 9009,
             "pathMappings": {
-                "/var/www/html/magento/vendor/undostres-com-mx/magento-gateway-undostres/": "${workspaceFolder}"
+                "/var/www/html/magento/vendor/undostres-com-mx/undostres_gateway/": "${workspaceFolder}"
             }
         }
     ]
