@@ -1,9 +1,9 @@
 <?php
 
-namespace Undostres\PaymentGateway\Model;
+namespace unDosTres\paymentGateway\Model;
 
 use Magento\Payment\Gateway\Response\HandlerInterface;
-use Undostres\PaymentGateway\PrivateConfig;
+use unDosTres\paymentGateway\PrivateConfig;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Model\Context;
 use Magento\Framework\Registry;
@@ -12,7 +12,7 @@ use Magento\Framework\Api\AttributeValueFactory;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Payment\Model\Method\Logger;
 use UDT\SDK\SDK;
-use Undostres\PaymentGateway\Helper\Helper;
+use unDosTres\paymentGateway\Gateway\Config\Config;
 use Magento\Payment\Helper\Data;
 
 class UnDosTresPayment extends \Magento\Payment\Model\Method\AbstractMethod implements HandlerInterface
@@ -23,7 +23,6 @@ class UnDosTresPayment extends \Magento\Payment\Model\Method\AbstractMethod impl
 	public $_canCapture = true;
 	public $_canCapturePartial = true;
 	public $_scopeConfig;
-    private $_helper;
 
 	public function __construct(
 		Context $context,
@@ -44,22 +43,19 @@ class UnDosTresPayment extends \Magento\Payment\Model\Method\AbstractMethod impl
 			$logger
 		);
 		$this->_scopeConfig = $scopeConfig;
-        $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
-        $this->_helper =  $objectManager->get('Undostres\PaymentGateway\Helper\Helper');
 	}
 
     private function makeRefund($payload){
-        return $this->_helper->callUdtSdk('refund',$payload);
-        //$request['refund'] = $payload;
-		//$sdk = new SDK(PrivateConfig::KEY,'testing');
-        //$response = $sdk->handlePayload(json_encode($request));
-        //$response["code"] = isset($response["code"]) ? $response["code"] : 500;
+        $request['refund'] = $payload;
+		$sdk = new SDK(PrivateConfig::SDK);
+        $response = $sdk->handlePayload(json_encode($request));
+        $response["code"] = isset($response["code"]) ? $response["code"] : 500;
 
-		//$this->_logger->info(__('Request refund: '.json_encode($request)));
-		//$this->_logger->info(__('Response refund: '.json_encode($response)));
+		$this->_logger->info(__('Request refund: '.json_encode($request)));
+		$this->_logger->info(__('Response refund: '.json_encode($response)));
 
 
-        //return $response;
+        return $response;
     }
 	public function handle(array $handlingSubject, array $response)
 	{

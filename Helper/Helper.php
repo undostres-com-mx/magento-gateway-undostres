@@ -1,9 +1,9 @@
 <?php
 
-namespace Undostres\PaymentGateway\Helper;
+namespace unDosTres\paymentGateway\Helper;
 
-use Undostres\PaymentGateway\Gateway\Config\Config;
-use Undostres\PaymentGateway\PrivateConfig;
+use unDosTres\paymentGateway\Gateway\Config\Config;
+use unDosTres\paymentGateway\PrivateConfig;
 use \Magento\Framework\App\Action\Context;
 use \Magento\Sales\Model\OrderFactory;
 use Magento\Store\Model\StoreManagerInterface;
@@ -31,8 +31,6 @@ class Helper
     private $_session;
     private $_messager;
     private $_storeManager;
-    private $_config;
-    private $_api;
 
     public function __construct(Context $context, LoggerInterface $logger, Session $session, OrderFactory $orderFactory, StoreManagerInterface $storeManager)
     {
@@ -41,14 +39,6 @@ class Helper
         $this->_session = $session;
         $this->_orderFactory = $orderFactory;
         $this->_storeManager = $storeManager;
-        $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
-        $configScope =  $objectManager->get('Magento\Framework\App\Config\ScopeConfigInterface');
-        $this->_config = new Config($configScope);
-        $apiKey = $configScope->getValue('payment/Undostres_Gateway/key');
-        $mode = $configScope->getValue('payment/Undostres_Gateway/mode');
-        $this->log(sprintf('Key obtenida de las settings = %s',$apiKey));
-        $this->log(sprintf('Modo obtenido de las settings = %s',$mode));
-        $this->_api = new SDK($apiKey,$mode);
     }
 
     /* LOG INTO MAGENTO LOGS */
@@ -96,7 +86,7 @@ class Helper
     /* GET LANDING URL WHEN UDT REDIRECTS */
     public function getReturnUrl()
     {
-        return $this->_storeManager->getStore()->getBaseUrl() . 'Undostres/checkout/redirect';
+        return $this->_storeManager->getStore()->getBaseUrl() . 'unDosTres/checkout/redirect';
     }
 
     /* GET CALLBACK URL */
@@ -165,7 +155,9 @@ class Helper
     {
         $response = $this->callUdtSdk(Helper::PAYMENT, $json);
         if ($response === null) return null;
-        return $response["response"];
+        $redirect = urlencode($response["body"]["queryParams"]["url"]);
+        $base = 'undostres://home?stage=superAppPaymentIntent&url=';
+        return ($base . $redirect);
     }
 
     /* CANCEL ORDER */
@@ -192,18 +184,23 @@ class Helper
         return $order !== null && $order->getState() === Order::STATE_PROCESSING;
     }
 
-    /*
-    SDK INTERFACE
+    /* 
+    SDK INTERFACE 
     type: 'payment','refund','cancel'
     request: body
     */
     public function callUdtSdk($type, $request)
     {
-        $request_json = json_encode([$type => $request]);
+        $request_json = json_encode(array($type => $request));
         $this->log(sprintf('Request sent to UnDosTres with the SDK for %s: %s', $type, $request_json));
-        $response = $this->_api->handlePayload($request_json);
+        $sdk = new SDK(PrivateConfig::SDK);
+        $response = $sdk->handlePayload($request_json);
         $this->log(sprintf('Request receive of UnDosTres with the SDK for %s: %s', $type, json_encode($response)));
         if ($response['code'] !== 200) return null;
+        if ($type === 'payment' && Config::UDT_APP_ENVIRONMENT == 'localhost') {
+            $response["body"]["queryParams"]["url"] = str_replace("https://test.undostres.com.mx", "http://localhost:8081", $response["body"]["queryParams"]["url"]);
+            $this->log('Payment url update to localhost: %s', $response["body"]["queryParams"]["url"]);
+        }
         return $response;
     }
 }

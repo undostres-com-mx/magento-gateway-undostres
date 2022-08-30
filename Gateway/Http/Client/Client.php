@@ -1,6 +1,6 @@
 <?php
 
-namespace Undostres\PaymentGateway\Gateway\Http\Client;
+namespace unDosTres\paymentGateway\Gateway\Http\Client;
 
 use Magento\Payment\Gateway\Http\ClientInterface;
 use Magento\Payment\Gateway\Http\TransferInterface;

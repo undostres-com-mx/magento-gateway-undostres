@@ -1,6 +1,6 @@
 <?php
 
-namespace Undostres\PaymentGateway\Observer;
+namespace unDosTres\paymentGateway\Observer;
 
 use Magento\Framework\Event\ObserverInterface;
 use Magento\Framework\App\Request\DataPersistorInterface;
@@ -30,10 +30,10 @@ class DisableGateways implements ObserverInterface
 
 
         /* Disable */
-      /*  if ($cookieValue == "isUDT" && $method_instance->getCode() != 'UDT_Gateway') {
+        if ($cookieValue == "isUDT" && $method_instance->getCode() != 'undostres_gateway') {
             $result->setData('is_available', false);
-        } else if ($cookieValue != "isUDT" && $method_instance->getCode() == 'UDT_Gateway') {
+        } else if ($cookieValue != "isUDT" && $method_instance->getCode() == 'undostres_gateway') {
             $result->setData('is_available', false);
-        }*/
+        }
     }
 }

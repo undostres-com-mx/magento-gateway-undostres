@@ -1,13 +1,13 @@
 <?php
 
-namespace Undostres\PaymentGateway\Model\Ui;
+namespace unDosTres\paymentGateway\Model\Ui;
 
 use Magento\Checkout\Model\ConfigProviderInterface;
 use Magento\Customer\Model\Session;
 use Magento\Backend\Model\Session\Quote;
 use Magento\Framework\App\Helper\Context;
 use Magento\Framework\View\Asset\Repository;
-use Undostres\PaymentGateway\Gateway\Config\Config;
+use unDosTres\paymentGateway\Gateway\Config\Config;
 
 final class ConfigProvider implements ConfigProviderInterface
 {
@@ -45,7 +45,7 @@ final class ConfigProvider implements ConfigProviderInterface
             $request = $om->get('Magento\Framework\App\RequestInterface');
             $params = array();
             $params = array_merge(['_secure' => $request->isSecure()], $params);
-            $logo = $this->_assetRepo->getUrlWithParams('Undostres_Gateway::images/undostres_logo.png', $params);
+            $logo = $this->_assetRepo->getUrlWithParams('unDosTres_paymentGateway::images/undostres_logo.png', $params);
         }
 
         $config = [

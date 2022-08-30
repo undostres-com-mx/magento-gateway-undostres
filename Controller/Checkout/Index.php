@@ -1,9 +1,9 @@
 <?php
 
-namespace Undostres\PaymentGateway\Controller\Checkout;
+namespace unDosTres\paymentGateway\Controller\Checkout;
 
-use Undostres\PaymentGateway\Helper\AbstractAction;
-use Undostres\PaymentGateway\Helper\Helper;
+use unDosTres\paymentGateway\Helper\AbstractAction;
+use unDosTres\paymentGateway\Helper\Helper;
 
 /* CONTROLLER WHERE PAYMENT URL IS CREATED AND REDIRECTION IS DONE */
 
@@ -33,7 +33,7 @@ class Index extends AbstractAction
                 } else $this->throwError($order, false);
             }
         } catch (\Exception $ex) {
-            $this->log('Ocurrió una excepción con la orden Undostres/checkout/index: ' . $ex->getMessage());
+            $this->log('Ocurrió una excepción con la orden unDosTres/checkout/index: ' . $ex->getMessage());
             $this->log($ex->getTraceAsString());
             $this->throwError($order, true);
         }

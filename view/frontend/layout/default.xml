@@ -2,6 +2,6 @@
 
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
     <head>
-      <link src="Undostres_Gateway::js/Undostres.js"/>
+      <link src="unDosTres_paymentGateway::js/unDosTres.js"/>
     </head>
 </page>

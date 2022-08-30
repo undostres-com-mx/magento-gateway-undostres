@@ -9,7 +9,7 @@ define(
 
         return Component.extend({
             defaults: {
-                template: 'Undostres_Gateway/payment/form'
+                template: 'unDosTres_paymentGateway/payment/form'
             },
 
             redirectAfterPlaceOrder: false,
@@ -20,7 +20,7 @@ define(
             },
 
             getCode: function () {
-                return 'Undostres_Gateway';
+                return 'undostres_gateway';
             },
 
             getData: function () {
@@ -30,20 +30,20 @@ define(
             },
 
             getTitle: function () {
-                return window.checkoutConfig.payment.Undostres_Gateway.title;
+                return window.checkoutConfig.payment.undostres_gateway.title;
             },
 
             getDescription: function () {
-                return window.checkoutConfig.payment.Undostres_Gateway.description;
+                return window.checkoutConfig.payment.undostres_gateway.description;
             },
 
             getunDosTresLogo: function () {
-                return window.checkoutConfig.payment.Undostres_Gateway.logo;
+                return window.checkoutConfig.payment.undostres_gateway.logo;
             },
 
             /* CALLS THE FUNCTION THAT MAKE THE PAYMENT URL  */
             afterPlaceOrder: function () {
-                window.location.replace(url.build('Undostres/checkout/index'));
+                window.location.replace(url.build('unDosTres/checkout/index'));
             }
         });
     }

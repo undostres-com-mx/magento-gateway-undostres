@@ -1,10 +1,10 @@
 <?php
 
-namespace Undostres\PaymentGateway\Gateway\Request;
+namespace unDosTres\paymentGateway\Gateway\Request;
 
 use Magento\Sales\Model\Order;
 use Magento\Payment\Gateway\Request\BuilderInterface;
-use Undostres\PaymentGateway\Helper\Helper;
+use unDosTres\paymentGateway\Helper\Helper;
 use Magento\Payment\Gateway\Helper\SubjectReader;
 
 class InitializationRequest extends Helper implements BuilderInterface

@@ -8,4 +8,4 @@ use Magento\Framework\Component\ComponentRegistrar as R;
  * Undostres_Gateway -> Plugin name
 */
 
-R::register(R::MODULE, 'Undostres_Gateway', __DIR__);
+R::register(R::MODULE, 'unDosTres_paymentGateway', __DIR__);

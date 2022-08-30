@@ -1,6 +1,6 @@
 <?php
 
-namespace Undostres\PaymentGateway\Gateway\Config;
+namespace unDosTres\paymentGateway\Gateway\Config;
 
 use \Magento\Payment\Gateway\Config\Config as MagentoConfig;
 
@@ -9,14 +9,11 @@ use \Magento\Payment\Gateway\Config\Config as MagentoConfig;
 class Config extends MagentoConfig
 {
     /* KEYS INSIDE MAGENTO CONFIG */
-    const CODE = 'UDT_Gateway';
+    const CODE = 'undostres_gateway';
     const KEY_TITLE = 'title';
     const KEY_DESCRIPTION = 'description';
     const KEY_GATEWAY_LOGO = 'gateway_logo';
     const KEY_SPECIFIC_COUNTRY = 'specificcountry';
-    const KEY_DATA = 'key';
-    const KEY_MODE = 'mode';
-    const KEY_LOGGING = 'log';
 
     /* PRIVATE KEYS */
     const X_VTEX_API_APPKEY = 'vtexappkey-undostres-BILMYN';
@@ -52,20 +49,5 @@ class Config extends MagentoConfig
     public function getSpecificCountry()
     {
         return $this->getValue(self::KEY_SPECIFIC_COUNTRY);
-    }
-
-    /* GET MARCHANT KEY */
-    public function getKey(){
-        return $this->getValue(self::KEY_DATA);
-    }
-
-    /* GET MODE */
-    public function getMode(){
-        return $this->getValue(self::KEY_MODE);
-    }
-
-    /* GET LOG */
-    public function getLog(){
-        return $this->getValue(self::KEY_LOGGING);
     }
 }
