@@ -16,10 +16,10 @@
                                                     <item name="children" xsi:type="array">
                                                         <item name="renders" xsi:type="array">
                                                             <item name="children" xsi:type="array">
-                                                                <item name="undostres_gateway" xsi:type="array">
-                                                                    <item name="component" xsi:type="string">undostres_gateway/js/view/payment/undostres_gateway</item>
+                                                                <item name="Undostres_Gateway" xsi:type="array">
+                                                                    <item name="component" xsi:type="string">Undostres_Gateway/js/view/payment/Undostres_Gateway</item>
                                                                     <item name="methods" xsi:type="array">
-                                                                        <item name="undostres_gateway" xsi:type="array">
+                                                                        <item name="Undostres_Gateway" xsi:type="array">
                                                                             <item name="isBillingAddressRequired" xsi:type="boolean">true</item>
                                                                         </item>
                                                                     </item>

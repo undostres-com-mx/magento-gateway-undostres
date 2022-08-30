@@ -11,8 +11,8 @@ define(
         'use strict';
         rendererList.push(
             {
-                type: 'undostres_gateway',
-                component: 'undostres_gateway/js/view/payment/method-renderer/undostres_gateway'
+                type: 'Undostres_Gateway',
+                component: 'Undostres_Gateway/js/view/payment/method-renderer/Undostres_Gateway'
             }
         );
         return Component.extend({});

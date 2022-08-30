@@ -9,7 +9,7 @@ define(
 
         return Component.extend({
             defaults: {
-                template: 'undostres_gateway/payment/form'
+                template: 'Undostres_Gateway/payment/form'
             },
 
             redirectAfterPlaceOrder: false,
@@ -20,7 +20,7 @@ define(
             },
 
             getCode: function () {
-                return 'undostres_gateway';
+                return 'Undostres_Gateway';
             },
 
             getData: function () {
@@ -30,15 +30,15 @@ define(
             },
 
             getTitle: function () {
-                return window.checkoutConfig.payment.undostres_gateway.title;
+                return window.checkoutConfig.payment.Undostres_Gateway.title;
             },
 
             getDescription: function () {
-                return window.checkoutConfig.payment.undostres_gateway.description;
+                return window.checkoutConfig.payment.Undostres_Gateway.description;
             },
 
             getunDosTresLogo: function () {
-                return window.checkoutConfig.payment.undostres_gateway.logo;
+                return window.checkoutConfig.payment.Undostres_Gateway.logo;
             },
 
             /* CALLS THE FUNCTION THAT MAKE THE PAYMENT URL  */

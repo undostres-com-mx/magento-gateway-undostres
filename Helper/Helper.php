@@ -44,8 +44,8 @@ class Helper
         $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
         $configScope =  $objectManager->get('Magento\Framework\App\Config\ScopeConfigInterface');
         $this->_config = new Config($configScope);
-        $apiKey = $configScope->getValue('payment/undostres_gateway/key');
-        $mode = $configScope->getValue('payment/undostres_gateway/mode');
+        $apiKey = $configScope->getValue('payment/Undostres_Gateway/key');
+        $mode = $configScope->getValue('payment/Undostres_Gateway/mode');
         $this->log(sprintf('Key obtenida de las settings = %s',$apiKey));
         $this->log(sprintf('Modo obtenido de las settings = %s',$mode));
         $this->_api = new SDK($apiKey,$mode);
