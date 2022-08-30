@@ -2,6 +2,6 @@
 <!--/* OBSERVER TO HIDE THE GATEWAYS */-->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
     <event name="payment_method_is_active">
-        <observer name="unDosTres_paymentGateway_DisableGateways" instance="unDosTres\paymentGateway\Observer\DisableGateways" />
+        <observer name="unDosTres_paymentGateway_DisableGateways" instance="Undostres\paymentGateway\Observer\DisableGateways" />
     </event>
 </config>

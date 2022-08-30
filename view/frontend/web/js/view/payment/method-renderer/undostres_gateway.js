@@ -43,7 +43,7 @@ define(
 
             /* CALLS THE FUNCTION THAT MAKE THE PAYMENT URL  */
             afterPlaceOrder: function () {
-                window.location.replace(url.build('unDosTres/checkout/index'));
+                window.location.replace(url.build('Undostres/checkout/index'));
             }
         });
     }

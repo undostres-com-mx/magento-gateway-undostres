@@ -45,7 +45,7 @@ class UnDosTresPayment extends \Magento\Payment\Model\Method\AbstractMethod impl
 		);
 		$this->_scopeConfig = $scopeConfig;
         $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
-        $this->_helper =  $objectManager->get('unDosTres\paymentGateway\Helper\Helper');
+        $this->_helper =  $objectManager->get('Undostres\paymentGateway\Helper\Helper');
 	}
 
     private function makeRefund($payload){

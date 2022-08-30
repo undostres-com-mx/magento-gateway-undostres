@@ -96,7 +96,7 @@ class Helper
     /* GET LANDING URL WHEN UDT REDIRECTS */
     public function getReturnUrl()
     {
-        return $this->_storeManager->getStore()->getBaseUrl() . 'unDosTres/checkout/redirect';
+        return $this->_storeManager->getStore()->getBaseUrl() . 'Undostres/checkout/redirect';
     }
 
     /* GET CALLBACK URL */
