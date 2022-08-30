@@ -9,7 +9,7 @@ define(
 
         return Component.extend({
             defaults: {
-                template: 'unDosTres_paymentGateway/payment/form'
+                template: 'magento-gateway-undostres/payment/form'
             },
 
             redirectAfterPlaceOrder: false,
@@ -20,7 +20,7 @@ define(
             },
 
             getCode: function () {
-                return 'undostres_gateway';
+                return 'undostres-gateway';
             },
 
             getData: function () {
@@ -30,15 +30,15 @@ define(
             },
 
             getTitle: function () {
-                return window.checkoutConfig.payment.undostres_gateway.title;
+                return window.checkoutConfig.payment.undostres-gateway.title;
             },
 
             getDescription: function () {
-                return window.checkoutConfig.payment.undostres_gateway.description;
+                return window.checkoutConfig.payment.undostres-gateway.description;
             },
 
             getunDosTresLogo: function () {
-                return window.checkoutConfig.payment.undostres_gateway.logo;
+                return window.checkoutConfig.payment.undostres-gateway.logo;
             },
 
             /* CALLS THE FUNCTION THAT MAKE THE PAYMENT URL  */

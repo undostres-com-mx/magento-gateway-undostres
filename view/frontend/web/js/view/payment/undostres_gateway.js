@@ -11,8 +11,8 @@ define(
         'use strict';
         rendererList.push(
             {
-                type: 'undostres_gateway',
-                component: 'unDosTres_paymentGateway/js/view/payment/method-renderer/undostres_gateway'
+                type: 'undostres-gateway',
+                component: 'magento-gateway-undostres/js/view/payment/method-renderer/undostres-gateway'
             }
         );
         return Component.extend({});
