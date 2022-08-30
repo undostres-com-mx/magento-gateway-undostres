@@ -30,10 +30,10 @@ class DisableGateways implements ObserverInterface
 
 
         /* Disable */
-        if ($cookieValue == "isUDT" && $method_instance->getCode() != 'UDT_Gateway') {
+      /*  if ($cookieValue == "isUDT" && $method_instance->getCode() != 'UDT_Gateway') {
             $result->setData('is_available', false);
         } else if ($cookieValue != "isUDT" && $method_instance->getCode() == 'UDT_Gateway') {
             $result->setData('is_available', false);
-        }
+        }*/
     }
 }
