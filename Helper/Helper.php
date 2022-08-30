@@ -1,9 +1,9 @@
 <?php
 
-namespace undostres\paymentGateway\Helper;
+namespace Undostres\paymentGateway\Helper;
 
-use undostres\paymentGateway\Gateway\Config\Config;
-use undostres\paymentGateway\PrivateConfig;
+use Undostres\paymentGateway\Gateway\Config\Config;
+use Undostres\paymentGateway\PrivateConfig;
 use \Magento\Framework\App\Action\Context;
 use \Magento\Sales\Model\OrderFactory;
 use Magento\Store\Model\StoreManagerInterface;

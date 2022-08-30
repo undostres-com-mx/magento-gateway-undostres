@@ -1,9 +1,9 @@
 <?php
 
-namespace undostres\paymentGateway\Plugin\Model;
+namespace Undostres\paymentGateway\Plugin\Model;
 
-use undostres\paymentGateway\Helper\Helper;
-use undostres\paymentGateway\Gateway\Config\Config;
+use Undostres\paymentGateway\Helper\Helper;
+use Undostres\paymentGateway\Gateway\Config\Config;
 
 /* ORDER CANCEL ON ADMIN PANEL */
 

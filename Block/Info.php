@@ -1,6 +1,6 @@
 <?php
 
-namespace undostres\paymentGateway\Block;
+namespace Undostres\paymentGateway\Block;
 
 use Magento\Framework\Phrase;
 use Magento\Payment\Block\ConfigurableInfo;

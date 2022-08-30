@@ -1,6 +1,6 @@
 <?php
 
-namespace undostres\paymentGateway\Observer;
+namespace Undostres\paymentGateway\Observer;
 
 use Magento\Framework\Event\ObserverInterface;
 use Magento\Framework\App\Request\DataPersistorInterface;

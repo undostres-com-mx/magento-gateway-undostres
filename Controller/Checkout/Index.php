@@ -1,9 +1,9 @@
 <?php
 
-namespace undostres\paymentGateway\Controller\Checkout;
+namespace Undostres\paymentGateway\Controller\Checkout;
 
-use undostres\paymentGateway\Helper\AbstractAction;
-use undostres\paymentGateway\Helper\Helper;
+use Undostres\paymentGateway\Helper\AbstractAction;
+use Undostres\paymentGateway\Helper\Helper;
 
 /* CONTROLLER WHERE PAYMENT URL IS CREATED AND REDIRECTION IS DONE */
 

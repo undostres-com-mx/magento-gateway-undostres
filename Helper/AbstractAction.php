@@ -1,6 +1,6 @@
 <?php
 
-namespace undostres\paymentGateway\Helper;
+namespace Undostres\paymentGateway\Helper;
 
 use \Magento\Framework\App\Action\Action;
 use \Magento\Framework\App\Action\Context;
