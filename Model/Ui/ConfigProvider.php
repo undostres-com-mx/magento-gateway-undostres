@@ -1,6 +1,6 @@
 <?php
 
-namespace unDosTres\paymentGateway\Model\Ui;
+namespace undostres\paymentGateway\Model\Ui;
 
 use Magento\Checkout\Model\ConfigProviderInterface;
 use Magento\Customer\Model\Session;

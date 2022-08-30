@@ -14,13 +14,10 @@ To install through composer it's only necessary to execute the following on the 
 
 ```
 composer require undostres-com-mx/magento-gateway-undostres
-php bin/magento maintenance:enable 
-php bin/magento module:enable magento-gateway-undostres
-php bin/magento setup:upgrade
-php bin/magento setup:static-content:deploy -f
-php bin/magento setup:di:compile
-php bin/magento cache:flush
-php bin/magento maintenance:disable
+```
+
+```
+php bin/magento maintenance:enable && php bin/magento module:enable magento-gateway-undostres && php bin/magento setup:upgrade && php bin/magento setup:static-content:deploy -f && php bin/magento setup:di:compile && php bin/magento cache:flush && php bin/magento maintenance:disable
 ``` 
 
 ---

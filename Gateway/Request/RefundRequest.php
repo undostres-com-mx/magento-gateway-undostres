@@ -1,6 +1,6 @@
 <?php
 
-namespace unDosTres\paymentGateway\Gateway\Request;
+namespace undostres\paymentGateway\Gateway\Request;
 
 use Magento\Payment\Gateway\Request\BuilderInterface;
 

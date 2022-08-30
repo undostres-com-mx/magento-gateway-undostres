@@ -1,6 +1,6 @@
 <?php
 
-namespace unDosTres\paymentGateway\Model;
+namespace undostres\paymentGateway\Model;
 
 use Magento\Payment\Gateway\Response\HandlerInterface;
 use unDosTres\paymentGateway\PrivateConfig;

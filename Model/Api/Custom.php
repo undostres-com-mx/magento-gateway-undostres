@@ -1,5 +1,5 @@
 <?php
-namespace unDosTres\paymentGateway\Model\Api;
+namespace undostres\paymentGateway\Model\Api;
 use \Magento\Sales\Model\Order;
 use unDosTres\paymentGateway\Gateway\Config\Config;
 use Magento\Framework\App\ObjectManager;

@@ -1,6 +1,6 @@
 <?php
 
-namespace unDosTres\paymentGateway\Plugin\Model;
+namespace undostres\paymentGateway\Plugin\Model;
 
 use unDosTres\paymentGateway\Helper\Helper;
 use unDosTres\paymentGateway\Gateway\Config\Config;

@@ -1,6 +1,6 @@
 <?php
 
-namespace unDosTres\paymentGateway\Model\Config\Source;
+namespace undostres\paymentGateway\Model\Config\Source;
 
 use Magento\Directory\Model\ResourceModel\Country\Collection;
 use Magento\Directory\Model\Config\Source\Country;

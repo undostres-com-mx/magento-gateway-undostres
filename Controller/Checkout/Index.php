@@ -1,6 +1,6 @@
 <?php
 
-namespace unDosTres\paymentGateway\Controller\Checkout;
+namespace undostres\paymentGateway\Controller\Checkout;
 
 use unDosTres\paymentGateway\Helper\AbstractAction;
 use unDosTres\paymentGateway\Helper\Helper;
