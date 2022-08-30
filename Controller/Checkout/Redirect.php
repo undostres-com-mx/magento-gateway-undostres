@@ -2,8 +2,8 @@
 
 namespace undostres\paymentGateway\Controller\Checkout;
 
-use unDosTres\paymentGateway\Helper\AbstractAction;
-use unDosTres\paymentGateway\Helper\Helper;
+use undostres\paymentGateway\Helper\AbstractAction;
+use undostres\paymentGateway\Helper\Helper;
 
 /* CONTROLLER WHERE PAYMENT IS VALIDATED AND ORDER ACCEPTED */
 

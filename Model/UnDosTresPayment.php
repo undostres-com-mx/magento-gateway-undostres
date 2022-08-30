@@ -3,7 +3,7 @@
 namespace undostres\paymentGateway\Model;
 
 use Magento\Payment\Gateway\Response\HandlerInterface;
-use unDosTres\paymentGateway\PrivateConfig;
+use undostres\paymentGateway\PrivateConfig;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Model\Context;
 use Magento\Framework\Registry;
@@ -12,7 +12,7 @@ use Magento\Framework\Api\AttributeValueFactory;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Payment\Model\Method\Logger;
 use UDT\SDK\SDK;
-use unDosTres\paymentGateway\Helper\Helper;
+use undostres\paymentGateway\Helper\Helper;
 use Magento\Payment\Helper\Data;
 
 class UnDosTresPayment extends \Magento\Payment\Model\Method\AbstractMethod implements HandlerInterface

@@ -2,8 +2,8 @@
 
 namespace undostres\paymentGateway\Plugin\Model;
 
-use unDosTres\paymentGateway\Helper\Helper;
-use unDosTres\paymentGateway\Gateway\Config\Config;
+use undostres\paymentGateway\Helper\Helper;
+use undostres\paymentGateway\Gateway\Config\Config;
 
 /* ORDER CANCEL ON ADMIN PANEL */
 

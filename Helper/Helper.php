@@ -2,8 +2,8 @@
 
 namespace undostres\paymentGateway\Helper;
 
-use unDosTres\paymentGateway\Gateway\Config\Config;
-use unDosTres\paymentGateway\PrivateConfig;
+use undostres\paymentGateway\Gateway\Config\Config;
+use undostres\paymentGateway\PrivateConfig;
 use \Magento\Framework\App\Action\Context;
 use \Magento\Sales\Model\OrderFactory;
 use Magento\Store\Model\StoreManagerInterface;
