@@ -4,7 +4,7 @@
     <event name="payment_method_is_active">
         <observer name="unDosTres_paymentGateway_DisableGateways" instance="unDosTres\paymentGateway\Observer\DisableGateways" />
     </event>
-    <event name="layout_render_before">
+    <event name="controller_action_predispatch">
         <observer name="unDosTres_paymentGateway_Cookie" instance="unDosTres\paymentGateway\Observer\Cookie" />
     </event>
 
