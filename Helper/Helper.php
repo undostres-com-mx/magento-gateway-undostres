@@ -2,6 +2,7 @@
 
 namespace unDosTres\paymentGateway\Helper;
 
+use UDT\SDK\SASDK;
 use unDosTres\paymentGateway\Gateway\Config\Config;
 use unDosTres\paymentGateway\PrivateConfig;
 use \Magento\Framework\App\Action\Context;
@@ -10,7 +11,6 @@ use Magento\Store\Model\StoreManagerInterface;
 use \Magento\Checkout\Model\Session;
 use \Magento\Sales\Model\Order;
 use Psr\Log\LoggerInterface;
-use UDT\SDK\SDK;
 
 /* PHP CLASS WHIT COMMON FUNCTIONS */
 
@@ -191,16 +191,11 @@ class Helper
     */
     public function callUdtSdk($type, $request)
     {
-        $request_json = json_encode(array($type => $request));
-        $this->log(sprintf('Request sent to UnDosTres with the SDK for %s: %s', $type, $request_json));
-        $sdk = new SDK(PrivateConfig::SDK);
-        $response = $sdk->handlePayload($request_json);
+        SASDK::init('36wqV4OcrAa1/Sq9LJ7ARcclXqRhBJsVTZEFR4eo8Htxn6o4nKPrfpW/9rmP3SxPMNCSIfel+507CLU1HIknbSq242/YXNeun/Kwyhqp47LqdiSEUrlwNhBezHSiQwjx6c58W0NUne+IvfKl255TE4qn5Upf1AYoo4CzWClNkfN4vftn/FNOTahWZR6nL46IkzhQqTbNkWDjApP3NXhiBpVaUsci1f9JXaC9WlMR4mWV1FsghFgvPSpCUac+1T/O+pdkHORk0borVbQqBtzox+iZlqkgwjy2TyBpIVwgDhVer5IwhzSaA6Bz4uWULpPMIf3nAqtxShmNwNCnAX5Z1lPrhSdH3j+5hClk47kWCkqHU7sGC+LllD2yOeZtD5YFp2BHdAmlNJHh0p5EClLbcryWaYRRSiOOgZWC7zObOVU=', null);
+        $this->log(sprintf('Request sent to UnDosTres with the SDK for %s: %s', $type, json_encode(PrivateConfig)));
+        $response = SASDK::createPayment($request);
         $this->log(sprintf('Request receive of UnDosTres with the SDK for %s: %s', $type, json_encode($response)));
         if ($response['code'] !== 200) return null;
-        if ($type === 'payment' && Config::UDT_APP_ENVIRONMENT == 'localhost') {
-            $response["body"]["queryParams"]["url"] = str_replace("https://test.undostres.com.mx", "http://localhost:8081", $response["body"]["queryParams"]["url"]);
-            $this->log('Payment url update to localhost: %s', $response["body"]["queryParams"]["url"]);
-        }
         return $response;
     }
 }

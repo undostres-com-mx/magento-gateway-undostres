@@ -11,8 +11,7 @@ use Magento\Framework\Api\ExtensionAttributesFactory;
 use Magento\Framework\Api\AttributeValueFactory;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Payment\Model\Method\Logger;
-use UDT\SDK\SDK;
-use unDosTres\paymentGateway\Gateway\Config\Config;
+use UDT\SDK\SASDK;
 use Magento\Payment\Helper\Data;
 
 class UnDosTresPayment extends \Magento\Payment\Model\Method\AbstractMethod implements HandlerInterface
@@ -47,7 +46,8 @@ class UnDosTresPayment extends \Magento\Payment\Model\Method\AbstractMethod impl
 
     private function makeRefund($payload){
         $request['refund'] = $payload;
-		$sdk = new SDK(PrivateConfig::SDK);
+		$sdk = null;
+        SASDK::init('36wqV4OcrAa1/Sq9LJ7ARcclXqRhBJsVTZEFR4eo8Htxn6o4nKPrfpW/9rmP3SxPMNCSIfel+507CLU1HIknbSq242/YXNeun/Kwyhqp47LqdiSEUrlwNhBezHSiQwjx6c58W0NUne+IvfKl255TE4qn5Upf1AYoo4CzWClNkfN4vftn/FNOTahWZR6nL46IkzhQqTbNkWDjApP3NXhiBpVaUsci1f9JXaC9WlMR4mWV1FsghFgvPSpCUac+1T/O+pdkHORk0borVbQqBtzox+iZlqkgwjy2TyBpIVwgDhVer5IwhzSaA6Bz4uWULpPMIf3nAqtxShmNwNCnAX5Z1lPrhSdH3j+5hClk47kWCkqHU7sGC+LllD2yOeZtD5YFp2BHdAmlNJHh0p5EClLbcryWaYRRSiOOgZWC7zObOVU=', null);
         $response = $sdk->handlePayload(json_encode($request));
         $response["code"] = isset($response["code"]) ? $response["code"] : 500;
 
