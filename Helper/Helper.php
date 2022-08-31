@@ -152,11 +152,11 @@ class Helper
     /* GENERETE DE URL TO PAY ON UDT */
     public function getPaymentUrl($json)
     {
-        $response = $this->callUdtSdk(Helper::PAYMENT, $json);
-        if ($response === null) return null;
-        $redirect = urlencode($response["body"]["queryParams"]["url"]);
-        $base = 'undostres://home?stage=superAppPaymentIntent&url=';
-        return ($base . $redirect);
+        SASDK::init('36wqV4OcrAa1/Sq9LJ7ARcclXqRhBJsVTZEFR4eo8Htxn6o4nKPrfpW/9rmP3SxPMNCSIfel+507CLU1HIknbSq242/YXNeun/Kwyhqp47LqdiSEUrlwNhBezHSiQwjx6c58W0NUne+IvfKl255TE4qn5Upf1AYoo4CzWClNkfN4vftn/FNOTahWZR6nL46IkzhQqTbNkWDjApP3NXhiBpVaUsci1f9JXaC9WlMR4mWV1FsghFgvPSpCUac+1T/O+pdkHORk0borVbQqBtzox+iZlqkgwjy2TyBpIVwgDhVer5IwhzSaA6Bz4uWULpPMIf3nAqtxShmNwNCnAX5Z1lPrhSdH3j+5hClk47kWCkqHU7sGC+LllD2yOeZtD5YFp2BHdAmlNJHh0p5EClLbcryWaYRRSiOOgZWC7zObOVU=', 'https://prueba.undostres.com.mx');
+        $response = SASDK::createPayment($json);
+        $this->log(sprintf('Request receive of UnDosTres with the SDK for %s: %s', json_encode($json), json_encode($response)));
+        if ($response['code'] !== 200) return null;
+        return $response['response'];
     }
 
     /* CANCEL ORDER */
