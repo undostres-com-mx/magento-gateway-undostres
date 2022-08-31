@@ -26,12 +26,28 @@ class Cookie implements ObserverInterface
      */
     public function execute(\Magento\Framework\Event\Observer $observer)
     {
-        $UDTParam = $this->_request->getParam('udtref');
-        $cookieValue = $this->_cookieManager->getCookie('UDT');
+        $cookieName = 'UDT';
+        $cookiePositiveValue = 'isUDT';
+        $cookieNegativeValue = 'notUDT';
+        $queryParam = $this->_request->getParam('udtref');
+        $cookieValue = $this->_cookieManager->getCookie($cookieName);
+        $expiresAfter = (30 * 86400);
 
-        $isUDT = isset($UDTParam);
-        $time = (30 * 86400);
-        if (!isset($cookieValue) || (isset($cookieValue) && $cookieValue == 'notUDT')) setcookie("UDT", $isUDT ? 'isUDT' : 'notUDT', time() + ($time), "/");
-        else setcookie("UDT", 'isUDT', time() + ($time), "/");
+        $isQueryParamSet = ($queryParam !== null);
+        $cookieNotSetOrNegative = (
+            $cookieValue === null || $cookieValue == $cookieNegativeValue
+        );
+
+        if ($cookieNotSetOrNegative) $newCookieValue = $isQueryParamSet ?
+            $cookiePositiveValue : $cookieNegativeValue;
+        else $newCookieValue = $cookiePositiveValue;
+
+        $newCookieMetadata = $this->_cookieMetadataFactory
+            ->createPublicCookieMetadata()
+            ->setDuration($expiresAfter)
+            ->setPath('/');
+        $this->_cookieManager->setPublicCookie(
+            $cookieName, $newCookieValue, $newCookieMetadata
+        );
     }
 }
