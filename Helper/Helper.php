@@ -190,7 +190,7 @@ class Helper
     */
     public function callUdtSdk($type, $request)
     {
-        SASDK::init('36wqV4OcrAa1/Sq9LJ7ARcclXqRhBJsVTZEFR4eo8Htxn6o4nKPrfpW/9rmP3SxPMNCSIfel+507CLU1HIknbSq242/YXNeun/Kwyhqp47LqdiSEUrlwNhBezHSiQwjx6c58W0NUne+IvfKl255TE4qn5Upf1AYoo4CzWClNkfN4vftn/FNOTahWZR6nL46IkzhQqTbNkWDjApP3NXhiBpVaUsci1f9JXaC9WlMR4mWV1FsghFgvPSpCUac+1T/O+pdkHORk0borVbQqBtzox+iZlqkgwjy2TyBpIVwgDhVer5IwhzSaA6Bz4uWULpPMIf3nAqtxShmNwNCnAX5Z1lPrhSdH3j+5hClk47kWCkqHU7sGC+LllD2yOeZtD5YFp2BHdAmlNJHh0p5EClLbcryWaYRRSiOOgZWC7zObOVU=', null);
+        SASDK::init('36wqV4OcrAa1/Sq9LJ7ARcclXqRhBJsVTZEFR4eo8Htxn6o4nKPrfpW/9rmP3SxPMNCSIfel+507CLU1HIknbSq242/YXNeun/Kwyhqp47LqdiSEUrlwNhBezHSiQwjx6c58W0NUne+IvfKl255TE4qn5Upf1AYoo4CzWClNkfN4vftn/FNOTahWZR6nL46IkzhQqTbNkWDjApP3NXhiBpVaUsci1f9JXaC9WlMR4mWV1FsghFgvPSpCUac+1T/O+pdkHORk0borVbQqBtzox+iZlqkgwjy2TyBpIVwgDhVer5IwhzSaA6Bz4uWULpPMIf3nAqtxShmNwNCnAX5Z1lPrhSdH3j+5hClk47kWCkqHU7sGC+LllD2yOeZtD5YFp2BHdAmlNJHh0p5EClLbcryWaYRRSiOOgZWC7zObOVU=', 'https://prueba.undostres.com.mx');
         $this->log(sprintf('Request sent to UnDosTres with the SDK for %s: ', $type));
         $response = SASDK::createPayment($request);
         $this->log(sprintf('Request receive of UnDosTres with the SDK for %s: %s', $type, json_encode($response)));
