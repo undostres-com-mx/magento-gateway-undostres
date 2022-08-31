@@ -6,7 +6,6 @@
         <arguments>
             <argument name="code" xsi:type="const">unDosTres\paymentGateway\Gateway\Config\Config::CODE</argument>
             <argument name="formBlockType" xsi:type="string">Magento\Payment\Block\Form</argument>
-            <argument name="infoBlockType" xsi:type="string">unDosTres\paymentGateway\Block\Info</argument>
             <argument name="valueHandlerPool" xsi:type="object">PaymentGatewayValueHandlerPool</argument>
             <argument name="commandPool" xsi:type="object">PaymentGatewayCommandPool</argument>
         </arguments>
@@ -84,11 +83,6 @@
             <argument name="configInterface" xsi:type="object">unDosTres\paymentGateway\Gateway\Config\Config</argument>
         </arguments>
     </virtualType>
-    <type name="unDosTres\paymentGateway\Block\Info">
-        <arguments>
-            <argument name="config" xsi:type="object">unDosTres\paymentGateway\Gateway\Config\Config</argument>
-        </arguments>
-    </type>
 
     <!-- CANCEL REQUEST -->
     <type name="Magento\Sales\Model\Order">
