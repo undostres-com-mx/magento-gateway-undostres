@@ -73,7 +73,9 @@ class Helper
     /* REDIRECT USING JS */
     public function redirectPage($redirectUrl)
     {
-        echo "<script>window.location.replace('$redirectUrl');</script>";
+        header('Location: ' . $redirectUrl);
+        die();
+        //die("<script>window.location.replace('$redirectUrl');</script>");
     }
 
     /* MONEY FORMAT */
