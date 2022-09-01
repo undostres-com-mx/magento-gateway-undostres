@@ -7,7 +7,7 @@ use unDosTres\paymentGateway\Helper\Helper;
 use unDosTres\paymentGateway\Gateway\Config\Config;
 
 /* ORDER CANCEL ON ADMIN PANEL */
-class Order extends Helper
+class Cancel extends Helper2
 {
     public function beforeCancel($subject)
     {

@@ -104,6 +104,6 @@
 
     <!-- CANCEL REQUEST -->
     <type name="Magento\Sales\Model\Order">
-        <plugin name="orderCancelUDT" type="unDosTres\paymentGateway\Gateway\Order" />
+        <plugin name="undostresOrderCancel" type="unDosTres\paymentGateway\Gateway\Cancel" />
     </type>
 </config>
