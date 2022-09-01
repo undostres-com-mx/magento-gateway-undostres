@@ -13,7 +13,7 @@ The composer.json have the dependencies of the plugin.
 To install through composer it's only necessary to execute the following on the magento's root folder.
 
 ```
-php bin/magento maintenance:enable && composer require undostres-com-mx/magento-gateway-undostres:dev-DEV --ignore-platform-reqs && php bin/magento module:enable Undostres_Gateway && php bin/magento setup:upgrade && php bin/magento setup:static-content:deploy -f && php bin/magento setup:di:compile && php bin/magento cache:flush && php bin/magento maintenance:disable
+php bin/magento maintenance:enable && composer require undostres-com-mx/magento-gateway-undostres && php bin/magento module:enable Undostres_PaymentGateway && php bin/magento setup:upgrade && php bin/magento setup:static-content:deploy -f && php bin/magento setup:di:compile && php bin/magento cache:flush && php bin/magento maintenance:disable
 ``` 
 
 ---
@@ -33,7 +33,7 @@ php bin/magento maintenance:enable && composer update undostres-com-mx/magento-g
 To delete the plugin:
 
 ```
-php bin/magento maintenance:enable && php bin/magento module:disable Undostres_Gateway && composer remove undostres-com-mx/magento-gateway-undostres && php bin/magento setup:upgrade && php bin/magento setup:static-content:deploy -f && php bin/magento setup:di:compile && php bin/magento cache:flush && php bin/magento maintenance:disable
+php bin/magento maintenance:enable && php bin/magento module:disable Undostres_PaymentGateway && composer remove undostres-com-mx/magento-gateway-undostres && php bin/magento setup:upgrade && php bin/magento setup:static-content:deploy -f && php bin/magento setup:di:compile && php bin/magento cache:flush && php bin/magento maintenance:disable
 ``` 
 
 ---
