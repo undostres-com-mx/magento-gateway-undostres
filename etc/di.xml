@@ -5,7 +5,7 @@
     <!-- Payment Method Facade configuration -->
     <virtualType name="PaymentGatewayFacade" type="Magento\Payment\Model\Method\Adapter">
         <arguments>
-            <argument name="code" xsi:type="const">Undostres\PaymentGateway\Gateway\Config\Config::CODE</argument>
+            <argument name="code" xsi:type="const">Undostres\PaymentGateway\Gateway\Config::CODE</argument>
             <argument name="formBlockType" xsi:type="string">Magento\Payment\Block\Form</argument>
             <argument name="valueHandlerPool" xsi:type="object">PaymentGatewayValueHandlerPool</argument>
             <argument name="commandPool" xsi:type="object">PaymentGatewayCommandPool</argument>
@@ -13,9 +13,9 @@
     </virtualType>
 
     <!-- CONFIGURATION READER -->
-    <type name="Undostres\PaymentGateway\Gateway\Config\Config">
+    <type name="Undostres\PaymentGateway\Gateway\Config">
         <arguments>
-            <argument name="methodCode" xsi:type="const">Undostres\PaymentGateway\Gateway\Config\Config::CODE</argument>
+            <argument name="methodCode" xsi:type="const">Undostres\PaymentGateway\Gateway\Config::CODE</argument>
         </arguments>
     </type>
 
@@ -38,6 +38,16 @@
             <argument name="client" xsi:type="object">Undostres\PaymentGateway\Gateway\Http\Client\Client</argument>
         </arguments>
     </virtualType>
+    <!-- INIT REQUEST -->
+    <virtualType name="PaymentGatewayInitializationRequest" type="Magento\Payment\Gateway\Request\BuilderComposite">
+        <arguments>
+            <argument name="builders" xsi:type="array">
+                <item name="transaction" xsi:type="string">
+                    Undostres\PaymentGateway\Gateway\Request\InitializationRequest
+                </item>
+            </argument>
+        </arguments>
+    </virtualType>
 
     <!-- REFUND COMMAND -->
     <virtualType name="PaymentGatewayRefundCommand" type="Magento\Payment\Gateway\Command\GatewayCommand">
@@ -51,16 +61,7 @@
         </arguments>
     </virtualType>
 
-    <!-- INIT REQUEST -->
-    <virtualType name="PaymentGatewayInitializationRequest" type="Magento\Payment\Gateway\Request\BuilderComposite">
-        <arguments>
-            <argument name="builders" xsi:type="array">
-                <item name="transaction" xsi:type="string">
-                    Undostres\PaymentGateway\Gateway\Request\InitializationRequest
-                </item>
-            </argument>
-        </arguments>
-    </virtualType>
+
 
     <!-- REFUN REQUEST -->
     <virtualType name="PaymentGatewayRefundRequest" type="Magento\Payment\Gateway\Request\BuilderComposite">
@@ -72,7 +73,7 @@
     </virtualType>
     <type name="Undostres\PaymentGateway\Gateway\Request\InitializationRequest">
         <arguments>
-            <argument name="config" xsi:type="object">Undostres\PaymentGateway\Gateway\Config\Config</argument>
+            <argument name="config" xsi:type="object">Undostres\PaymentGateway\Gateway\Config</argument>
         </arguments>
     </type>
 
@@ -86,7 +87,7 @@
     </virtualType>
     <virtualType name="PaymentGatewayConfigValueHandler" type="Magento\Payment\Gateway\Config\ConfigValueHandler">
         <arguments>
-            <argument name="configInterface" xsi:type="object">Undostres\PaymentGateway\Gateway\Config\Config</argument>
+            <argument name="configInterface" xsi:type="object">Undostres\PaymentGateway\Gateway\Config</argument>
         </arguments>
     </virtualType>
 
@@ -102,7 +103,7 @@
 
 
 
-    <!-- CANCEL REQUEST -->
+    <!-- ADMIN CANCEL ORDER -->
     <type name="Magento\Sales\Model\Order">
         <plugin name="undostresOrderCancel" type="Undostres\PaymentGateway\Gateway\Cancel" />
     </type>

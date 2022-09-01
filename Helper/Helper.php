@@ -3,7 +3,7 @@
 namespace Undostres\PaymentGateway\Helper;
 
 use UDT\SDK\SASDK;
-use Undostres\PaymentGateway\Gateway\Config\Config;
+use Undostres\PaymentGateway\Gateway\Config;
 use \Magento\Framework\App\Action\Context;
 use \Magento\Sales\Model\OrderFactory;
 use Magento\Store\Model\StoreManagerInterface;

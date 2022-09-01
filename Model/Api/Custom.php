@@ -1,7 +1,7 @@
 <?php
 namespace Undostres\PaymentGateway\Model\Api;
 use \Magento\Sales\Model\Order;
-use Undostres\PaymentGateway\Gateway\Config\Config;
+use Undostres\PaymentGateway\Gateway\Config;
 use Magento\Framework\App\ObjectManager;
 use Psr\Log\LoggerInterface;
 class Custom {

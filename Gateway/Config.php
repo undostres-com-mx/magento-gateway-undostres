@@ -6,10 +6,10 @@ use \Magento\Payment\Gateway\Config\Config as MagentoConfig;
 
 /* EXTRACTS INFO FROM MAGENTO CONFIG THROUGHT CONFIG EXTENDED CLASS - DICTIONARY */
 
-class  Config extends MagentoConfig
+class Config extends MagentoConfig
 {
     /* KEYS INSIDE MAGENTO CONFIG */
-    const CODE = 'undostres_gateway';
+    const CODE = 'Undostres_Gateway';
     const KEY_TITLE = 'title';
     const KEY_DESCRIPTION = 'description';
     const KEY_GATEWAY_LOGO = 'gateway_logo';
