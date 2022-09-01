@@ -2,38 +2,29 @@
 
 namespace Undostres\PaymentGateway\Observer;
 
-use Magento\Framework\Event\ObserverInterface;
 use Magento\Framework\App\Request\DataPersistorInterface;
+use Magento\Framework\Stdlib\CookieManagerInterfacee;
+use Magento\Framework\Event\ObserverInterface;
 use Magento\Framework\App\ObjectManager;
+use Magento\Framework\Event\Observer;
+
+/* GATEWAYS DISABLER ON COOKIE */
 
 class DisableGateways implements ObserverInterface
 {
+    protected $cookieManager;
 
-    protected $_cookieManager;
-
-    public function __construct(\Magento\Framework\Stdlib\CookieManagerInterface $cookieManager)
+    public function __construct(CookieManagerInterface $cookieManager)
     {
-        $this->_cookieManager = $cookieManager;
+        $this->cookieManager = $cookieManager;
     }
-    /**
-     *
-     * @param \Magento\Framework\Event\Observer $observer
-     * @return void
-     */
-    public function execute(\Magento\Framework\Event\Observer $observer)
+
+    public function execute(Observer $observer)
     {
-        $result          = $observer->getEvent()->getResult();
+        $result = $observer->getEvent()->getResult();
         $method_instance = $observer->getEvent()->getMethodInstance();
-        //$quote           = $observer->getEvent()->getQuote();
-
-        $cookieValue = $this->_cookieManager->getCookie('UDT');
-
-
-        /* Disable */
-        if ($cookieValue == "isUDT" && $method_instance->getCode() != 'undostres_gateway') {
+        $cookieValue = $this->cookieManager->getCookie('UDT');
+        if (($cookieValue == "isUDT" && $method_instance->getCode() != 'undostres_gateway') || ($cookieValue != "isUDT" && $method_instance->getCode() == 'undostres_gateway'))
             $result->setData('is_available', false);
-        } else if ($cookieValue != "isUDT" && $method_instance->getCode() == 'undostres_gateway') {
-            $result->setData('is_available', false);
-        }
     }
 }

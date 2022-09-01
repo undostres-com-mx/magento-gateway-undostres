@@ -2,52 +2,33 @@
 
 namespace Undostres\PaymentGateway\Observer;
 
+use Magento\Framework\Stdlib\Cookie\CookieMetadataFactory;
+use Magento\Framework\Stdlib\CookieManagerInterface;
 use Magento\Framework\Event\ObserverInterface;
+use Magento\Framework\App\Request\Http;
+
+/* COOKIE SETTER AND UPDATER */
 
 class Cookie implements ObserverInterface
 {
+    protected $cookieManager;
+    protected $cookieMetadataFactory;
+    protected $request;
 
-    protected $_cookieManager;
-
-    public function __construct(
-        \Magento\Framework\Stdlib\CookieManagerInterface $cookieManager,
-        \Magento\Framework\Stdlib\Cookie\CookieMetadataFactory $cookieMetadataFactory,
-        \Magento\Framework\App\Request\Http $request
-    ) {
-        $this->_cookieManager = $cookieManager;
-        $this->_cookieMetadataFactory = $cookieMetadataFactory;
-        $this->_request = $request;
+    public function __construct(CookieManagerInterface $cookieManager, CookieMetadataFactory $cookieMetadataFactory, Http $request)
+    {
+        $this->cookieManager = $cookieManager;
+        $this->cookieMetadataFactory = $cookieMetadataFactory;
+        $this->request = $request;
     }
 
-    /**
-     *
-     * @param \Magento\Framework\Event\Observer $observer
-     * @return void
-     */
-    public function execute(\Magento\Framework\Event\Observer $observer)
+    public function execute()
     {
-        $cookieName = 'UDT';
-        $cookiePositiveValue = 'isUDT';
-        $cookieNegativeValue = 'notUDT';
-        $queryParam = $this->_request->getParam('udtref');
-        $cookieValue = $this->_cookieManager->getCookie($cookieName);
-        $expiresAfter = (30 * 86400);
-
-        $isQueryParamSet = ($queryParam !== null);
-        $cookieNotSetOrNegative = (
-            $cookieValue === null || $cookieValue == $cookieNegativeValue
-        );
-
-        if ($cookieNotSetOrNegative) $newCookieValue = $isQueryParamSet ?
-            $cookiePositiveValue : $cookieNegativeValue;
-        else $newCookieValue = $cookiePositiveValue;
-
-        $newCookieMetadata = $this->_cookieMetadataFactory
-            ->createPublicCookieMetadata()
-            ->setDuration($expiresAfter)
-            ->setPath('/');
-        $this->_cookieManager->setPublicCookie(
-            $cookieName, $newCookieValue, $newCookieMetadata
-        );
+        $isUDT = $this->_request->getParam('udtref') !== null;
+        $cookie = $this->_cookieManager->getCookie("UDT");
+        if (!$isUDT && ($cookie == null || $cookie == 'notUDT')) $value = "notUDT";
+        else $value = "isUDT";
+        $newCookieMetadata = $this->_cookieMetadataFactory->createPublicCookieMetadata()->setDuration(30 * 86400)->setPath('/');
+        $this->_cookieManager->setPublicCookie('UDT', $value, $newCookieMetadata);
     }
 }
