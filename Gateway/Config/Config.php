@@ -6,7 +6,7 @@ use \Magento\Payment\Gateway\Config\Config as MagentoConfig;
 
 /* EXTRACTS INFO FROM MAGENTO CONFIG THROUGHT CONFIG EXTENDED CLASS - DICTIONARY */
 
-class Config extends MagentoConfig
+class  Config extends MagentoConfig
 {
     /* KEYS INSIDE MAGENTO CONFIG */
     const CODE = 'undostres_gateway';

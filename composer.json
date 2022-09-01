@@ -1,25 +1,25 @@
 {
-    "name": "undostres-com-mx/magento-gateway-undostres",
-    "version": "1.0.1",
-    "description": "UnDosTres payment gateway for magento.",
-    "type": "magento2-module",
-    "license": "proprietary",
-    "authors": [
-        {
-            "name": "Carlos Miranda",
-            "email": "carlos.miranda@undostres.com.mx"
-        }
-    ],
-    "require": {
-        "undostres-com-mx/superapp_sdk": "dev-master",
-        "php": ">=7.1"
-    },
-    "autoload": {
-        "files": [
-            "registration.php"
-        ],
-        "psr-4": {
-            "unDosTres\\paymentGateway\\": ""
-        }
+  "name": "undostres-com-mx/magento-gateway-undostres",
+  "version": "1.0.1",
+  "description": "UnDosTres payment gateway for magento.",
+  "type": "magento2-module",
+  "license": "proprietary",
+  "authors": [
+    {
+      "name": "Carlos Miranda",
+      "email": "carlos.miranda@undostres.com.mx"
     }
+  ],
+  "require": {
+    "undostres-com-mx/superapp_sdk": "dev-master",
+    "php": ">=7.1"
+  },
+  "autoload": {
+    "files": [
+      "registration.php"
+    ],
+    "psr-4": {
+      "unDosTres\\paymentGateway\\": ""
+    }
+  }
 }
