@@ -1,10 +1,10 @@
 <?php
 
-namespace unDosTres\paymentGateway\Gateway;
+namespace Undostres\PaymentGateway\Gateway;
 
 use UDT\SDK\SASDK;
-use unDosTres\paymentGateway\Helper\Helper2;
-use unDosTres\paymentGateway\Gateway\Config\Config;
+use Undostres\PaymentGateway\Helper\Helper2;
+use Undostres\PaymentGateway\Gateway\Config\Config;
 
 /* ORDER CANCEL ON ADMIN PANEL */
 class Cancel extends Helper2

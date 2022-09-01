@@ -12,7 +12,7 @@ define(
         rendererList.push(
             {
                 type: 'undostres_gateway',
-                component: 'unDosTres_paymentGateway/js/view/payment/method-renderer/undostres_gateway'
+                component: 'Undostres_PaymentGateway/js/view/payment/method-renderer/undostres_gateway'
             }
         );
         return Component.extend({});

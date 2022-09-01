@@ -1,6 +1,6 @@
 <?php
 
-namespace unDosTres\paymentGateway\Model\Api;
+namespace Undostres\PaymentGateway\Model\Api;
 
 /* INTERFACE TO ACTIVATE GETPOST METHOD */
 interface CustomInterface

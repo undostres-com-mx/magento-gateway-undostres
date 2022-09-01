@@ -1,9 +1,9 @@
 <?php
 
-namespace unDosTres\paymentGateway\Model;
+namespace Undostres\PaymentGateway\Model;
 
 use Magento\Payment\Gateway\Response\HandlerInterface;
-use unDosTres\paymentGateway\PrivateConfig;
+use Undostres\PaymentGateway\PrivateConfig;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Model\Context;
 use Magento\Framework\Registry;

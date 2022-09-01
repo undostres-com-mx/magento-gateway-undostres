@@ -2,8 +2,8 @@
 <!--/* ADD UDT CONFIG TO FRONTEND */-->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:App/etc/routes.xsd">
     <router id="standard">
-        <route id="unDosTres" frontName="unDosTres">
-            <module name="unDosTres_paymentGateway" />
+        <route id="Undostres" frontName="Undostres">
+            <module name="Undostres_PaymentGateway" />
         </route>
     </router>
 </config>
