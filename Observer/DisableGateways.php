@@ -3,7 +3,7 @@
 namespace Undostres\PaymentGateway\Observer;
 
 use Magento\Framework\App\Request\DataPersistorInterface;
-use Magento\Framework\Stdlib\CookieManagerInterfacee;
+use Magento\Framework\Stdlib\CookieManagerInterface;
 use Magento\Framework\Event\ObserverInterface;
 use Magento\Framework\App\ObjectManager;
 use Magento\Framework\Event\Observer;
