@@ -6,6 +6,7 @@ use Magento\Framework\Stdlib\Cookie\CookieMetadataFactory;
 use Magento\Framework\Stdlib\CookieManagerInterface;
 use Magento\Framework\Event\ObserverInterface;
 use Magento\Framework\App\Request\Http;
+use Magento\Framework\Event\Observer;
 
 /* COOKIE SETTER AND UPDATER */
 
@@ -22,7 +23,7 @@ class Cookie implements ObserverInterface
         $this->request = $request;
     }
 
-    public function execute()
+    public function execute(Observer $observer)
     {
         $isUDT = $this->_request->getParam('udtref') !== null;
         $cookie = $this->_cookieManager->getCookie("UDT");
