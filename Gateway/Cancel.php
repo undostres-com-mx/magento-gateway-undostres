@@ -3,7 +3,7 @@
 namespace unDosTres\paymentGateway\Gateway;
 
 use UDT\SDK\SASDK;
-use unDosTres\paymentGateway\Helper\Helper;
+use unDosTres\paymentGateway\Helper\Helper2;
 use unDosTres\paymentGateway\Gateway\Config\Config;
 
 /* ORDER CANCEL ON ADMIN PANEL */
