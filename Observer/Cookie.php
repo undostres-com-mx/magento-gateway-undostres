@@ -25,11 +25,11 @@ class Cookie implements ObserverInterface
 
     public function execute(Observer $observer)
     {
-        $isUDT = $this->_request->getParam('udtref') !== null;
-        $cookie = $this->_cookieManager->getCookie("UDT");
+        $isUDT = $this->request->getParam('udtref') !== null;
+        $cookie = $this->cookieManager->getCookie("UDT");
         if (!$isUDT && ($cookie == null || $cookie == 'notUDT')) $value = "notUDT";
         else $value = "isUDT";
-        $newCookieMetadata = $this->_cookieMetadataFactory->createPublicCookieMetadata()->setDuration(30 * 86400)->setPath('/');
-        $this->_cookieManager->setPublicCookie('UDT', $value, $newCookieMetadata);
+        $newCookieMetadata = $this->cookieMetadataFactory->createPublicCookieMetadata()->setDuration(30 * 86400)->setPath('/');
+        $this->cookieManager->setPublicCookie('UDT', $value, $newCookieMetadata);
     }
 }
