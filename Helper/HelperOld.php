@@ -43,7 +43,7 @@ class HelperOld
     /* LOG INTO MAGENTO LOGS */
     public function log($message)
     {
-        if (Config::UDT_APP_LOG === true) $this->_logger->info('UDT PAYMENT LOG: ' . $message);
+        if (true === true) $this->_logger->info('UDT PAYMENT LOG: ' . $message);
     }
 
     /* ADD MESSAGE ON MAGENTO FRONTEND */
