@@ -91,17 +91,16 @@
         </arguments>
     </virtualType>
 
+
+
+
+
+
+
+
+
     <!-- API INTERFACE -->
-    <preference for="Undostres\PaymentGateway\Model\Api\CustomInterface"
-                type="Undostres\PaymentGateway\Model\Api\Custom"/>
-
-
-
-
-
-
-
-
+    <preference for="Undostres\PaymentGateway\Api\UndostresApiInterface" type="Undostres\PaymentGateway\Api\Api"/>
 
     <!-- ADMIN CANCEL ORDER -->
     <type name="Magento\Sales\Model\Order">

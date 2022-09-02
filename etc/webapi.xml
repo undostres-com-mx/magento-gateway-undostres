@@ -1,8 +1,14 @@
 <?xml version="1.0"?>
-<!--/* API ROUTE */-->
+<!-- API ENDPOINTS -->
 <routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Webapi:etc/webapi.xsd">
-    <route method="POST" url="/V2/custom/custom-api/">
-        <service class="Undostres\PaymentGateway\Model\Api\CustomInterface" method="getPost"/>
+    <route url="/V1/udt/callback" method="POST">
+        <service class="Undostres\PaymentGateway\Api\UndostresApiInterface" method="callback" />
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>
+    <route url="/V1/udt/redirect" method="POST">
+        <service class="Undostres\PaymentGateway\Api\UndostresApiInterface" method="redirect" />
         <resources>
             <resource ref="anonymous"/>
         </resources>

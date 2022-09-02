@@ -47,7 +47,6 @@ final class ConfigProvider implements ConfigProviderInterface
                 Config::CODE => [
                     'code' => Config::CODE,
                     'title' => $this->_gatewayConfig->getTitle(),
-                    'description' => $this->_gatewayConfig->getDescription(),
                     'logo' => $logo,
                 ]
             ]

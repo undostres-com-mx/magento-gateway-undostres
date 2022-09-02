@@ -15,11 +15,6 @@ class Config extends MagentoConfig
         return $this->getValue('title');
     }
 
-    public function getDescription()
-    {
-        return $this->getValue('description');
-    }
-
     public function isActive()
     {
         return $this->getValue('active');

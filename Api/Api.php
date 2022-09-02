@@ -1,23 +1,19 @@
 <?php
-namespace Undostres\PaymentGateway\Model\Api;
-use \Magento\Sales\Model\Order;
+
+namespace Undostres\PaymentGateway\Api;
+
+use UDT\SDK\SASDK;
+use Undostres\PaymentGateway\Helper\Helper;
 use Undostres\PaymentGateway\Gateway\Config;
-use Magento\Framework\App\ObjectManager;
-use Psr\Log\LoggerInterface;
-class Custom {
-    private $_logger;
-    private $_config;
-    private $_objectManager;
-    /**
-     * @inheritdoc
-     */
-    public function __construct(LoggerInterface $logger, Config $config){
-        $this->_objectManager = ObjectManager::getInstance();
-        $this->_logger = $logger;
-        $this->_config   = $config;
-    }
-    public function getPost(){
-        $protocol = $_SERVER['SERVER_PROTOCOL'] ?? 'HTTP/1.0';
+
+/* API CLASS TO MANAGE REDIRECT, CALLBACK AND STATUS */
+class Api extends Helper
+{
+    public function callback($data)
+    {
+        $data = $data;
+        return $data;
+       /* $protocol = $_SERVER['SERVER_PROTOCOL'] ?? 'HTTP/1.0';
 
         try{
             $validate = false;
@@ -46,8 +42,8 @@ class Custom {
 
                         $orderState = Order::STATE_PROCESSING; // complete means the order has been shipped already
                         $order->setState($orderState)          // processing means payment is done but the order needs shipment
-                              ->setStatus($orderState)
-                              ->setIsCustomerNotified(true);
+                        ->setStatus($orderState)
+                            ->setIsCustomerNotified(true);
                         $order->save();
                         $emailSender = $this->_objectManager->create('\Magento\Sales\Model\Order\Email\Sender\OrderSender');
                         $emailSender->send($order);
@@ -87,17 +83,12 @@ class Custom {
             echo json_encode($response = ['success' => false, 'code' => 500, 'msg' => $msg]);
             header($protocol.' '.$response['code'].' '.$msg);
             die( );
-        }
+        }*/
     }
 
-    private function isAuthenticRequest($apiKey, $apiToken) {
-        $serverKey = Config::X_VTEX_API_APPKEY;
-        $serverToken = Config::X_VTEX_API_APPTOKEN;
+    public function redirect()
+    {
 
-        if($serverKey == $apiKey && $serverToken == $apiToken) {
-            return true;
-        }
-        return false;
     }
 
     private function getHeaders() {
@@ -117,18 +108,18 @@ class Custom {
 
     private function invoiceOrder($order, $transactionId){
         if(!$order->canInvoice()){
-                throw new \Magento\Framework\Exception\LocalizedException(
-                    __('Cannot create an invoice.')
-                );
+            throw new \Magento\Framework\Exception\LocalizedException(
+                __('Cannot create an invoice.')
+            );
         }
 
         $invoice = $this->_objectManager->create('Magento\Sales\Model\Service\InvoiceService')
-                        ->prepareInvoice($order);
+            ->prepareInvoice($order);
 
         if (!$invoice->getTotalQty()) {
             throw new \Magento\Framework\Exception\LocalizedException(
-                    __('You can\'t create an invoice without products.')
-                );
+                __('You can\'t create an invoice without products.')
+            );
         }
 
         $invoice->setTransactionId($transactionId);
@@ -138,10 +129,8 @@ class Custom {
         $invoice->pay();
 
         $transaction = $this->_objectManager->create('Magento\Framework\DB\Transaction')
-                            ->addObject($invoice)
-                            ->addObject($invoice->getOrder());
+            ->addObject($invoice)
+            ->addObject($invoice->getOrder());
         $transaction->save();
     }
 }
-
-
