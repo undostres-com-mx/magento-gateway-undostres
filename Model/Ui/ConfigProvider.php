@@ -47,10 +47,11 @@ final class ConfigProvider implements ConfigProviderInterface
             $params = array_merge(['_secure' => $request->isSecure()], $params);
             $logo = $this->_assetRepo->getUrlWithParams('Undostres_PaymentGateway::images/undostres_logo.png', $params);
         }
-
+/* ESTA CONFIG SE LE PASA A JS */
         $config = [
             'payment' => [
                 Config::CODE => [
+                    'code' => Config::CODE,
                     'title' => $this->_gatewayConfig->getTitle(),
                     'description' => $this->_gatewayConfig->getDescription(),
                     'logo' => $logo,

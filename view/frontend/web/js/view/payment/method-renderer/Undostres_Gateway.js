@@ -17,7 +17,7 @@ define(
                 return this;
             },
             getCode: function () {
-                return 'Undostres_Gateway';
+                return window.checkoutConfig.payment.Undostres_Gateway.code;
             },
             getData: function () {
                 return {

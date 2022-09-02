@@ -3,11 +3,11 @@
 namespace Undostres\PaymentGateway\Gateway;
 
 use UDT\SDK\SASDK;
-use Undostres\PaymentGateway\Helper\Helper2;
+use Undostres\PaymentGateway\Helper\Helper;
 use Undostres\PaymentGateway\Gateway\Config;
 
 /* ORDER CANCEL ON ADMIN PANEL */
-class Cancel extends Helper2
+class Cancel extends Helper
 {
     public function beforeCancel($subject)
     {

@@ -19,7 +19,7 @@ abstract class AbstractAction extends Action
     public function __construct(Context $context, LoggerInterface $logger, Session $session, OrderFactory $orderFactory, StoreManagerInterface $storeManager)
     {
         parent::__construct($context);
-        $this->_helper = new Helper($context, $logger, $session, $orderFactory, $storeManager);
+        $this->_helper = new HelperOld($context, $logger, $session, $orderFactory, $storeManager);
     }
 
     /* LOG INTO MAGENTO LOGS */
