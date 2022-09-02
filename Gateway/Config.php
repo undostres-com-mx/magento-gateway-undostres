@@ -1,6 +1,6 @@
 <?php
 
-namespace Undostres\PaymentGateway\Gateway\Config;
+namespace Undostres\PaymentGateway\Gateway;
 
 use \Magento\Payment\Gateway\Config\Config as MagentoConfig;
 
