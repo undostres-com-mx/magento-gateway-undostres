@@ -8,15 +8,15 @@ namespace Undostres\PaymentGateway\Api;
 interface UndostresApiInterface
 {
     /**
-     * @param $paymentId
-     * @param $status
+     * @param string $paymentId
+     * @param string $status
      * @return mixed
      */
-    public function callback($paymentId, $status);
+    public function callback(string $paymentId, string $status);
 
     /**
-     * @param $orderId
+     * @param string $orderId
      * @return mixed
      */
-    public function redirect($orderId);
+    public function redirect(string $orderId);
 }
