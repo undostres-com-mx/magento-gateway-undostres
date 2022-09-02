@@ -1,11 +1,12 @@
 <?xml version="1.0"?>
-<!--/* OBSERVER TO HIDE THE GATEWAYS */-->
-<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+<!-- OBSERVERS - COOKIE AND HIDE GATEWAYS -->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
     <event name="payment_method_is_active">
-        <observer name="Undostres_PaymentGateway_DisableGateways" instance="Undostres\PaymentGateway\Observer\DisableGateways" />
+        <observer name="Undostres_PaymentGateway_DisableGateways"
+                  instance="Undostres\PaymentGateway\Observer\DisableGateways"/>
     </event>
     <event name="controller_front_send_response_before">
-        <observer name="Undostres_PaymentGateway_Cookie" instance="Undostres\PaymentGateway\Observer\Cookie" />
+        <observer name="Undostres_PaymentGateway_Cookie" instance="Undostres\PaymentGateway\Observer\Cookie"/>
     </event>
-
 </config>

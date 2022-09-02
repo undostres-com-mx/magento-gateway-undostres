@@ -1,21 +1,27 @@
 <?xml version="1.0"?>
-<!--/* ADMIN FRONT END CONFIG */-->
-<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+<!-- ADMIN FRONT-END CONFIG -->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
     <system>
         <section id="payment">
-            <group id="Undostres_Gateway" translate="label" sortOrder="100" type="text" showInDefault="1" showInWebsite="1" showInStore="1">
+            <group id="Undostres_Gateway" translate="label" sortOrder="100" type="text" showInDefault="1"
+                   showInWebsite="1" showInStore="1">
                 <label>UnDosTres Payment Gateway</label>
-                <field id="active" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
-                    <label>Activado</label>
+                <field id="active" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1"
+                       showInStore="1">
+                    <label>Activo</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                 </field>
-                <field id="key" translate="label" type="password" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                <field id="key" translate="label" type="password" sortOrder="20" showInDefault="1" showInWebsite="1"
+                       showInStore="1">
                     <label>Key</label>
                 </field>
-                <field id="url" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                <field id="url" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1"
+                       showInStore="1">
                     <label>Url</label>
                 </field>
-                <field id="log" translate="label" type="select" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+                <field id="log" translate="label" type="select" sortOrder="40" showInDefault="1" showInWebsite="1"
+                       showInStore="1">
                     <label>Logging</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                 </field>

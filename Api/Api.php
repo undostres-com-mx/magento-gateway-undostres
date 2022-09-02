@@ -9,7 +9,7 @@ use Undostres\PaymentGateway\Gateway\Config;
 /* API CLASS TO MANAGE REDIRECT, CALLBACK AND STATUS */
 class Api extends Helper
 {
-    public function callback($data, $data2)
+    public function callback($paymentId, $status)
     {
         $data = $data;
         return $data;
@@ -86,7 +86,7 @@ class Api extends Helper
         }*/
     }
 
-    public function redirect($data)
+    public function redirect($orderId)
     {
 
     }
