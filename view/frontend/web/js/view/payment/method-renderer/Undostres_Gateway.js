@@ -12,20 +12,8 @@ define(
                 template: 'Undostres_PaymentGateway/payment/form'
             },
             redirectAfterPlaceOrder: false,
-            initialize: function () {
-                this._super();
-                return this;
-            },
             getCode: function () {
                 return window.checkoutConfig.payment.Undostres_Gateway.code;
-            },
-            getData: function () {
-                return {
-                    'method': this.item.method
-                };
-            },
-            getTitle: function () {
-                return window.checkoutConfig.payment.Undostres_Gateway.title;
             },
             getDescription: function () {
                 return window.checkoutConfig.payment.Undostres_Gateway.description;
