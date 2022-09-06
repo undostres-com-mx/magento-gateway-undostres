@@ -22,7 +22,7 @@ class Helper
     protected $storeManager;
     protected $gatewayConfig;
 
-    public function __construct(Config $gatewayConfig, Context $context, LoggerInterface $logger, Session $session, OrderFactory $orderFactory, StoreManagerInterface $storeManager)
+    public function __construct(Config $gatewayConfig, Context $context, Monolog $logger, Session $session, OrderFactory $orderFactory, StoreManagerInterface $storeManager)
     {
         $this->messager = $context->getMessageManager();
         $this->logger = $logger;
