@@ -4,7 +4,7 @@ namespace Undostres\PaymentGateway\Gateway;
 
 use UDT\SDK\SASDK;
 use Undostres\PaymentGateway\Helper\Helper;
-use Undostres\PaymentGateway\Gateway\Config;
+use Undostres\PaymentGateway\Model\Config;
 
 /* ORDER CANCEL ON ADMIN PANEL */
 class Cancel extends Helper

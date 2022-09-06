@@ -1,8 +1,8 @@
 <?php
 
-namespace Undostres\PaymentGateway\Gateway;
+namespace Undostres\PaymentGateway\Model;
 
-use \Magento\Payment\Gateway\Config\Config as MagentoConfig;
+use Magento\Payment\Gateway\Config\Config as MagentoConfig;
 
 /* EXTRACTS INFO FROM MAGENTO CONFIG THROUGH CONFIG EXTENDED CLASS - DICTIONARY */
 

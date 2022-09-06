@@ -5,7 +5,7 @@
     <!-- Payment Method Facade configuration -->
     <virtualType name="PaymentGatewayFacade" type="Magento\Payment\Model\Method\Adapter">
         <arguments>
-            <argument name="code" xsi:type="const">Undostres\PaymentGateway\Gateway\Config::CODE</argument>
+            <argument name="code" xsi:type="const">Undostres\PaymentGateway\Model\Config::CODE</argument>
             <argument name="formBlockType" xsi:type="string">Magento\Payment\Block\Form</argument>
             <argument name="valueHandlerPool" xsi:type="object">PaymentGatewayValueHandlerPool</argument>
             <argument name="commandPool" xsi:type="object">PaymentGatewayCommandPool</argument>
@@ -13,9 +13,9 @@
     </virtualType>
 
     <!-- CONFIGURATION READER -->
-    <type name="Undostres\PaymentGateway\Gateway\Config">
+    <type name="Undostres\PaymentGateway\Model\Config">
         <arguments>
-            <argument name="methodCode" xsi:type="const">Undostres\PaymentGateway\Gateway\Config::CODE</argument>
+            <argument name="methodCode" xsi:type="const">Undostres\PaymentGateway\Model\Config::CODE</argument>
         </arguments>
     </type>
 
@@ -73,7 +73,7 @@
     </virtualType>
     <type name="Undostres\PaymentGateway\Gateway\Request\InitializationRequest">
         <arguments>
-            <argument name="config" xsi:type="object">Undostres\PaymentGateway\Gateway\Config</argument>
+            <argument name="config" xsi:type="object">Undostres\PaymentGateway\Model\Config</argument>
         </arguments>
     </type>
 
@@ -87,7 +87,7 @@
     </virtualType>
     <virtualType name="PaymentGatewayConfigValueHandler" type="Magento\Payment\Gateway\Config\ConfigValueHandler">
         <arguments>
-            <argument name="configInterface" xsi:type="object">Undostres\PaymentGateway\Gateway\Config</argument>
+            <argument name="configInterface" xsi:type="object">Undostres\PaymentGateway\Model\Config</argument>
         </arguments>
     </virtualType>
 

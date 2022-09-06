@@ -4,15 +4,14 @@ namespace Undostres\PaymentGateway\Api;
 
 use UDT\SDK\SASDK;
 use Undostres\PaymentGateway\Helper\Helper;
-use Undostres\PaymentGateway\Gateway\Config;
+use Undostres\PaymentGateway\Model\Config;
 
 /* API CLASS TO MANAGE REDIRECT, CALLBACK AND STATUS */
 class Api extends Helper
 {
     public function callback($paymentId, $status)
     {
-        $data = $data;
-        return $data;
+        return $paymentId;
        /* $protocol = $_SERVER['SERVER_PROTOCOL'] ?? 'HTTP/1.0';
 
         try{

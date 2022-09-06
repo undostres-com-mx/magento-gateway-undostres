@@ -7,7 +7,7 @@ use Magento\Customer\Model\Session;
 use Magento\Backend\Model\Session\Quote;
 use Magento\Framework\App\Helper\Context;
 use Magento\Framework\View\Asset\Repository;
-use Undostres\PaymentGateway\Gateway\Config;
+use Undostres\PaymentGateway\Model\Config;
 
 final class ConfigProvider implements ConfigProviderInterface
 {
