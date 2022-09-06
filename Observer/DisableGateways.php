@@ -27,8 +27,7 @@ class DisableGateways implements ObserverInterface
 
     public function execute(Observer $observer)
     {
-        $this->logger->log("xd");
-        $this->logger->log("xd asd as dasd asd ");
+        $this->logger->log(Logger::INFO, "xd asd as dasd asd ");
         if ($this->gatewayConfig->isActive()) {
             $result = $observer->getEvent()->getResult();
             $method_instance = $observer->getEvent()->getMethodInstance();

@@ -12,7 +12,7 @@ use Undostres\PaymentGateway\Model\Config;
 
 class Logger extends Monolog
 {
-    const INFO = "";
+    const INFO = 1;
     protected $gatewayConfig;
 
     /**
