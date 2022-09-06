@@ -4,10 +4,10 @@ namespace Undostres\PaymentGateway\Gateway\Request;
 
 use Magento\Sales\Model\Order;
 use Magento\Payment\Gateway\Request\BuilderInterface;
-use Undostres\PaymentGateway\Helper\HelperOld;
+use Undostres\PaymentGateway\Helper\Helper;
 use Magento\Payment\Gateway\Helper\SubjectReader;
 
-class InitializationRequest extends HelperOld implements BuilderInterface
+class InitializationRequest extends Helper implements BuilderInterface
 {
 
     /* BUILDS ENV REQUEST, GET THE PAYMENT AND THE ORDER, SET THE STATES AND NO MAIL SEND */

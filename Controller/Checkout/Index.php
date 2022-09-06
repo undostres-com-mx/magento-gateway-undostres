@@ -3,7 +3,7 @@
 namespace Undostres\PaymentGateway\Controller\Checkout;
 
 use Undostres\PaymentGateway\Helper\AbstractAction;
-use Undostres\PaymentGateway\Helper\HelperOld;
+use Undostres\PaymentGateway\Helper\Helper;
 
 /* CONTROLLER WHERE PAYMENT URL IS CREATED AND REDIRECTION IS DONE */
 
@@ -12,7 +12,7 @@ class Index extends AbstractAction
     /* HANDLE ERROR AND REDIRECT */
     private function throwError($order, $restoreCart)
     {
-        $this->addFrontMesage(HelperOld::MSG_WARNING, 'Su orden no fue procesada correctamente, favor de recargar la pagina');
+        $this->addFrontMesage(Helper::MSG_WARNING, 'Su orden no fue procesada correctamente, favor de recargar la pagina');
         if ($restoreCart === true) $this->restoreCart();
         $this->cancelOrder($order);
         $this->redirectToCheckoutCart();

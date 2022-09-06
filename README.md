@@ -49,5 +49,5 @@ All the configuration needed it's on the payment methods page located on admin s
 The logging system logs into a folder inside magento root directory.
 
 ```
-nano var/log/system.log
+nano var/log/Undostres_Gateway.log
 ``` 
