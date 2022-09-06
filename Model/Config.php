@@ -12,17 +12,8 @@ class Config extends MagentoConfig
 {
     const CODE = "Undostres_Gateway";
 
-    private $pathPattern;
-    private $methodCode;
-
-    public function __construct(
-        ScopeConfigInterface $scopeConfig,
-        $methodCode = null,
-        $pathPattern = self::DEFAULT_PATH_PATTERN
-    ) {
-        parent::__construct($scopeConfig, $methodCode, $pathPattern);
-        $this->methodCode = $methodCode;
-        $this->pathPattern = $pathPattern;
+    public function __construct(ScopeConfigInterface $scopeConfig, $gatewayCode = null) {
+        parent::__construct($scopeConfig, $gatewayCode);
     }
 
     /**
@@ -34,10 +25,7 @@ class Config extends MagentoConfig
      */
     public function getConfigValue(string $field, $default = null, $storeId = null)
     {
-        if (!$storeId) {
-            $storeId = $this->storeHelper->getStoreId();
-        }
-        $value = parent::getValue($field, $storeId);
+        $value = parent::getValue($field);
         if ($value === null) {
             $value = $default;
         }

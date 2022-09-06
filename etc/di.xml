@@ -98,7 +98,7 @@
     <!-- CONFIGURATION READER -->
     <type name="Undostres\PaymentGateway\Model\Config">
         <arguments>
-            <argument name="methodCode" xsi:type="const">Undostres\PaymentGateway\Model\Config::CODE</argument>
+            <argument name="gatewayCode" xsi:type="const">Undostres\PaymentGateway\Model\Config::CODE</argument>
         </arguments>
     </type>
 
