@@ -13,6 +13,7 @@ class Index extends Action
 
     public function __construct(Helper $helper)
     {
+        parent::__construct();
         $this->helper = $helper;
     }
 
