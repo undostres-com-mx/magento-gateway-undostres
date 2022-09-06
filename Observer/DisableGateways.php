@@ -13,20 +13,18 @@ use Undostres\PaymentGateway\Model\Config;
 
 class DisableGateways implements ObserverInterface
 {
+    protected $gatewayConfig;
     protected $cookieManager;
-    /** @var Config */
-    private $config;
 
-    public function __construct(Config $config, CookieManagerInterface $cookieManager)
+    public function __construct(Config $gatewayConfig, CookieManagerInterface $cookieManager)
     {
         $this->cookieManager = $cookieManager;
-        $this->config = $config;
+        $this->gatewayConfig = $gatewayConfig;
     }
 
     public function execute(Observer $observer)
     {
-        $xd = $this->config->isActive();
-        if ($xd) {
+        if ($this->gatewayConfig->isActive()) {
             $result = $observer->getEvent()->getResult();
             $method_instance = $observer->getEvent()->getMethodInstance();
             $cookieValue = $this->cookieManager->getCookie('UDT');
