@@ -2,19 +2,10 @@
 
 namespace Undostres\PaymentGateway\Logger\Handler;
 
+use Undostres\PaymentGateway\Model\Config;
 use Magento\Framework\Logger\Handler\Base;
-use Monolog\Logger as MagentoLogger;
 
 class Logger extends Base
 {
-    /**
-     * @var string
-     */
-    protected $fileName = '/var/log/my-sample-log.log';
-
-    /**
-     * @var
-     */
-    protected $loggerType = MagentoLogger::DEBUG;
-
+    protected $fileName = '/var/log/' . Config::CODE . ".log";
 }

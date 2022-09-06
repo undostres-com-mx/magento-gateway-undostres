@@ -40,7 +40,7 @@ class Helper
 
     public function log(string $message, int $type = self::LOG_DEBUG)
     {
-        $message = "\n" . '========= UDT LOG =========' . "\n" . $message . "\n" . '========= UDT END =========' . "\n\n";
+        $message = "\n" . '========= UDT LOG =========' . "\n" . $message . "\n" . '========= UDT END =========  ==>  ';
         if ($this->gatewayConfig->canLog()) {
             if($type=== self::LOG_DEBUG) $this->logger->info($message);
             else if($type=== self::LOG_WARNING) $this->logger->warning($message);
