@@ -2,26 +2,26 @@
 
 namespace Undostres\PaymentGateway\Controller\Checkout;
 
-use Undostres\PaymentGateway\Helper\AbstractAction;
+use Magento\Framework\App\Action\Action;
 use Undostres\PaymentGateway\Helper\Helper;
 
 /* CONTROLLER WHERE PAYMENT URL IS CREATED AND REDIRECTION IS DONE */
 
-class Index extends AbstractAction
+class Index extends Action
 {
     /* HANDLE ERROR AND REDIRECT */
     private function throwError($order, $restoreCart)
     {
-        $this->addFrontMesage(Helper::MSG_WARNING, 'Su orden no fue procesada correctamente, favor de recargar la pagina');
+      /*  $this->addFrontMesage(Helper::MSG_WARNING, 'Su orden no fue procesada correctamente, favor de recargar la pagina');
         if ($restoreCart === true) $this->restoreCart();
         $this->cancelOrder($order);
-        $this->redirectToCheckoutCart();
+        $this->redirectToCheckoutCart();*/
     }
 
     /* ACTION WHERE THE ORDER IS PASSED TO UDT GATEWAY AND REDIRECTION IS DONE */
     public function execute()
     {
-        $order = $this->getOrder();
+     /*   $order = $this->getOrder();
         try {
             if ($order === null) $this->throwError($order, false);
             else {
@@ -36,6 +36,6 @@ class Index extends AbstractAction
             $this->log('Ocurrió una excepción con la orden Undostres/checkout/index: ' . $ex->getMessage());
             $this->log($ex->getTraceAsString());
             $this->throwError($order, true);
-        }
+        }*/
     }
 }
