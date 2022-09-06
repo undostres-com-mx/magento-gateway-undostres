@@ -12,6 +12,7 @@ use Undostres\PaymentGateway\Model\Config;
 
 class Logger extends Monolog
 {
+    const INFO = "";
     protected $gatewayConfig;
 
     /**
@@ -34,9 +35,9 @@ class Logger extends Monolog
     /**
      * @param string $message
      */
-    public function log(string $message)
+    public function log(int $level, string $message, array $context = [])
     {
         $message  = "\n" . '========= UDT LOG =========' . "\n" . $message . "\n" .  '========= UDT END =========' . "\n\n";
-        if ($this->gatewayConfig->canLog()) parent::addRecord(1, $message, []);
+        if ($this->gatewayConfig->canLog()) parent::addRecord(1, $message, $context);
     }
 }
