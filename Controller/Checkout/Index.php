@@ -28,7 +28,8 @@ class Index extends Action
 
     public function execute()
     {
-        $order = $this->getOrder();
+        $this->helper->log("Entro al index :D ");
+        //$order = $this->getOrder();
        /* try {
             if ($order === null) $this->throwError($order, false);
             else {
