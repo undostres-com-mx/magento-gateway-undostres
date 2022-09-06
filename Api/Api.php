@@ -9,8 +9,12 @@ use Undostres\PaymentGateway\Model\Config;
 /* API CLASS TO MANAGE REDIRECT, CALLBACK AND STATUS */
 class Api extends Helper
 {
+
     public function callback($paymentId, $status)
     {
+        $this->log("xd");
+        $this->log("xd",self::LOG_WARNING);
+        $this->log("xd",self::LOG_ERROR);
         return $paymentId;
        /* $protocol = $_SERVER['SERVER_PROTOCOL'] ?? 'HTTP/1.0';
 
