@@ -12,6 +12,16 @@ use Undostres\PaymentGateway\Model\Config;
 
 class Logger extends Monolog
 {
+    /**
+     * @var string
+     */
+    protected $fileName = '/var/log/my-sample-log.log';
+
+    /**
+     * @var
+     */
+    protected $loggerType = Logger::DEBUG;
+
     const INFO = 100;
     protected $gatewayConfig;
 

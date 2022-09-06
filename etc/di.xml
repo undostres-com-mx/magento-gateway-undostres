@@ -55,7 +55,6 @@
     </virtualType>
 
 
-
     <!-- REFUN REQUEST -->
     <virtualType name="PaymentGatewayRefundRequest" type="Magento\Payment\Gateway\Request\BuilderComposite">
         <arguments>
@@ -92,6 +91,13 @@
 
 
 
+
+
+
+
+
+
+
     <!-- API INTERFACE -->
     <preference for="Undostres\PaymentGateway\Api\UndostresApiInterface" type="Undostres\PaymentGateway\Api\Api"/>
 
@@ -103,18 +109,22 @@
     </type>
 
     <!-- LOGGER -->
-    <type name="Undostres\PaymentGateway\Helper\Logger">
+    <type name="Undostres\PaymentGateway\Logger\Handler\Logger">
         <arguments>
-            <argument name="config" xsi:type="object">Undostres\PaymentGateway\\Config\Config</argument>
+            <argument name="filesystem" xsi:type="object">Magento\Framework\Filesystem\Driver\File</argument>
+        </arguments>
+    </type>
+    <type name="Undostres\PaymentGateway\Logger\Logger">
+        <arguments>
+            <argument name="name" xsi:type="string">undostres</argument>
             <argument name="handlers" xsi:type="array">
-                <item name="system" xsi:type="object">Magento\Framework\Logger\Handler\System</item>
-                <item name="debug" xsi:type="object">Magento\Framework\Logger\Handler\Debug</item>
+                <item name="system" xsi:type="object">Undostres\PaymentGateway\Logger\Handler\Logger</item>
             </argument>
         </arguments>
     </type>
 
     <!-- ADMIN CANCEL ORDER -->
     <type name="Magento\Sales\Model\Order">
-        <plugin name="undostresOrderCancel" type="Undostres\PaymentGateway\Gateway\Cancel" />
+        <plugin name="undostresOrderCancel" type="Undostres\PaymentGateway\Gateway\Cancel"/>
     </type>
 </config>
