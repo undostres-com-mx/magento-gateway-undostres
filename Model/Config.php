@@ -15,27 +15,14 @@ class Config extends MagentoConfig
     private $pathPattern;
     private $methodCode;
 
-    /**
-     * @var StoreHelper
-     */
-    private $storeHelper;
-    /**
-     * @var Logger
-     */
-    private $logger;
-
     public function __construct(
         ScopeConfigInterface $scopeConfig,
-        Logger $logger,
-        StoreHelper $storeHelper,
         $methodCode = null,
         $pathPattern = self::DEFAULT_PATH_PATTERN
     ) {
         parent::__construct($scopeConfig, $methodCode, $pathPattern);
         $this->methodCode = $methodCode;
         $this->pathPattern = $pathPattern;
-        $this->logger = $logger;
-        $this->storeHelper = $storeHelper;
     }
 
     /**
