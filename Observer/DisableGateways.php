@@ -11,18 +11,21 @@ use Undostres\PaymentGateway\Model\Config;
 
 /* GATEWAYS DISABLER ON COOKIE */
 
-class DisableGateways extends Config implements ObserverInterface
+class DisableGateways implements ObserverInterface
 {
     protected $cookieManager;
+    /** @var Config */
+    private $config;
 
-    public function __construct(CookieManagerInterface $cookieManager)
+    public function __construct(Config $config, CookieManagerInterface $cookieManager)
     {
         $this->cookieManager = $cookieManager;
+        $this->config = $config;
     }
 
     public function execute(Observer $observer)
     {
-        $xd = $this->isActive();
+        $xd = $this->config->isActive();
         if ($xd) {
             $result = $observer->getEvent()->getResult();
             $method_instance = $observer->getEvent()->getMethodInstance();

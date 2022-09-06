@@ -12,13 +12,6 @@
         </arguments>
     </virtualType>
 
-    <!-- CONFIGURATION READER -->
-    <type name="Undostres\PaymentGateway\Model\Config">
-        <arguments>
-            <argument name="methodCode" xsi:type="const">Undostres\PaymentGateway\Model\Config::CODE</argument>
-        </arguments>
-    </type>
-
     <!-- COMMANDS INFRAESTRCUTURE -->
     <virtualType name="PaymentGatewayCommandPool" type="Magento\Payment\Gateway\Command\CommandPool">
         <arguments>
@@ -94,13 +87,20 @@
 
 
 
-
+    
 
 
 
 
     <!-- API INTERFACE -->
     <preference for="Undostres\PaymentGateway\Api\UndostresApiInterface" type="Undostres\PaymentGateway\Api\Api"/>
+
+    <!-- CONFIGURATION READER -->
+    <type name="Undostres\PaymentGateway\Model\Config">
+        <arguments>
+            <argument name="methodCode" xsi:type="const">Undostres\PaymentGateway\Model\Config::CODE</argument>
+        </arguments>
+    </type>
 
     <!-- ADMIN CANCEL ORDER -->
     <type name="Magento\Sales\Model\Order">
