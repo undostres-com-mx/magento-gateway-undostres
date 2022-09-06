@@ -14,7 +14,7 @@ class Index extends Action
 
     public function __construct(Context $context, Helper $helper)
     {
-        parent::__construct(context);
+        parent::__construct($context);
         $this->helper = $helper;
     }
 
