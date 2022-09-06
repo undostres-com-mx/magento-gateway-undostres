@@ -33,7 +33,9 @@ class Logger extends Monolog
     }
 
     /**
+     * @param int $level
      * @param string $message
+     * @param array $context
      */
     public function log(int $level, string $message, array $context = [])
     {

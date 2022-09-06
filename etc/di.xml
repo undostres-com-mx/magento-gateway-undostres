@@ -102,6 +102,17 @@
         </arguments>
     </type>
 
+    <!-- LOGGER -->
+    <type name="Undostres\PaymentGateway\Helper\Logger">
+        <arguments>
+            <argument name="config" xsi:type="object">Undostres\PaymentGateway\\Config\Config</argument>
+            <argument name="handlers" xsi:type="array">
+                <item name="system" xsi:type="object">Magento\Framework\Logger\Handler\System</item>
+                <item name="debug" xsi:type="object">Magento\Framework\Logger\Handler\Debug</item>
+            </argument>
+        </arguments>
+    </type>
+
     <!-- ADMIN CANCEL ORDER -->
     <type name="Magento\Sales\Model\Order">
         <plugin name="undostresOrderCancel" type="Undostres\PaymentGateway\Gateway\Cancel" />
