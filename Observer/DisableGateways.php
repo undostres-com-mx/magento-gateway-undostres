@@ -22,7 +22,8 @@ class DisableGateways extends Config implements ObserverInterface
 
     public function execute(Observer $observer)
     {
-        if ($this->isActive()) {
+        $xd = $this->isActive();
+        if ($xd) {
             $result = $observer->getEvent()->getResult();
             $method_instance = $observer->getEvent()->getMethodInstance();
             $cookieValue = $this->cookieManager->getCookie('UDT');
