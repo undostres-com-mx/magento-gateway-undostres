@@ -9,6 +9,8 @@ use Magento\Framework\App\Helper\Context;
 use Magento\Framework\View\Asset\Repository;
 use Magento\Framework\App\RequestInterface;
 
+/* THIS CONFIG IS PASSED TO JS */
+
 final class ConfigProvider implements ConfigProviderInterface
 {
     protected $gatewayConfig;
@@ -25,8 +27,6 @@ final class ConfigProvider implements ConfigProviderInterface
     public function getConfig(): array
     {
         $logo = $this->assetRepo->getUrlWithParams('Undostres_PaymentGateway::images/undostres_logo.png', array_merge(['_secure' => $this->request->isSecure()], []));
-
-        /* THIS CONFIG IS PASSED TO JS */
         return [
             'payment' => [
                 Config::CODE => [

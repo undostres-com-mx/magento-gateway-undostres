@@ -21,7 +21,7 @@ class Config extends MagentoConfig
      *
      * @return mixed|null
      */
-    public function getConfigValue(string $field)
+    private function getConfigValue(string $field)
     {
         return parent::getValue($field);
     }
