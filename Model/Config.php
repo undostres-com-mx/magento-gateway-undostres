@@ -3,7 +3,6 @@
 namespace Undostres\PaymentGateway\Model;
 
 //use Magento\Payment\Gateway\Config\Config as MagentoConfig;
-use Magento\Framework\View\Element\Template\Context;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Store\Model\ScopeInterface;
 
@@ -18,10 +17,9 @@ class Config
      */
     private $scopeConfig;
 
-    public function __construct(Context $context, ScopeConfigInterface $scopeConfig, array $data = [])
+    public function __construct(ScopeConfigInterface $scopeConfig)
     {
         $this->scopeConfig = $scopeConfig;
-        parent::__construct($context, $data);
     }
 
     private function getConfigValue($value)
