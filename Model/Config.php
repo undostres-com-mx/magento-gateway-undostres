@@ -14,10 +14,7 @@ class Config extends MagentoConfig
 
     private $pathPattern;
     private $methodCode;
-    /**
-     * @var ApiConfigHelper
-     */
-    private $apiConfigHelper;
+
     /**
      * @var StoreHelper
      */
@@ -29,8 +26,6 @@ class Config extends MagentoConfig
 
     public function __construct(
         ScopeConfigInterface $scopeConfig,
-
-        ApiConfigHelper $apiConfigHelper,
         Logger $logger,
         StoreHelper $storeHelper,
         $methodCode = null,
@@ -40,7 +35,6 @@ class Config extends MagentoConfig
         $this->methodCode = $methodCode;
         $this->pathPattern = $pathPattern;
         $this->logger = $logger;
-        $this->apiConfigHelper = $apiConfigHelper;
         $this->storeHelper = $storeHelper;
     }
 
