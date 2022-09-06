@@ -12,26 +12,26 @@ class Config extends MagentoConfig
 
     public function getTitle()
     {
-        return $this->getValue('title');
+        return $this->getValue('payment/Undostres_Gateway/title');
     }
 
     public function isActive()
     {
-        return $this->getValue('active');
+        return $this->getValue('payment/Undostres_Gateway/active');
     }
 
     public function getKey()
     {
-        return $this->getValue('key');
+        return $this->getValue('payment/Undostres_Gateway/key');
     }
 
     public function getUrl()
     {
-        return $this->getValue('url');
+        return $this->getValue('payment/Undostres_Gateway/url');
     }
 
     public function isLogging()
     {
-        return $this->getValue('log');
+        return $this->getValue('payment/Undostres_Gateway/log');
     }
 }
