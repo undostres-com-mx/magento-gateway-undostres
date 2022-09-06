@@ -37,7 +37,7 @@ class Logger extends Monolog
      * @param string $message
      * @param array $context
      */
-    public function log(int $level, string $message, array $context = [])
+    public function log($level, $message, $context = [])
     {
         $message  = "\n" . '========= UDT LOG =========' . "\n" . $message . "\n" .  '========= UDT END =========' . "\n\n";
         if ($this->gatewayConfig->canLog()) parent::addRecord(1, $message, $context);
