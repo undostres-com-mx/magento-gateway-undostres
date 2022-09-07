@@ -199,7 +199,7 @@ class Helper
     {
         $orderId = $this->session->getLastRealOrderId();
         if (!isset($orderId)) return null;
-        $order = $this->_orderFactory->create()->loadByIncrementId($orderId);
+        $order = $this->orderFactory->create()->loadByIncrementId($orderId);
         if (!$order->getId()) return null;
         return $order;
     }
