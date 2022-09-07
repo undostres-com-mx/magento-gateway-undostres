@@ -197,7 +197,7 @@ class Helper
     /* GET ORDER FROM MAGENTO */
     public function getOrder()
     {
-        $orderId = $this->_session->getLastRealOrderId();
+        $orderId = $this->session->getLastRealOrderId();
         if (!isset($orderId)) return null;
         $order = $this->_orderFactory->create()->loadByIncrementId($orderId);
         if (!$order->getId()) return null;
