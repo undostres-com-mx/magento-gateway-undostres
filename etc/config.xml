@@ -9,7 +9,7 @@
                 <title>UnDosTres</title>
                 <!-- CUSTOM CONFIGS -->
                 <active>1</active>
-                <key backend_model="Magento\Config\Model\Config\Backend\Encrypted" />
+                <key />
                 <url></url>
                 <log>1</log>
                 <!-- CORE CONFIGS -->
