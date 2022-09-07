@@ -32,7 +32,7 @@ class Index extends Action
 
     public function execute()
     {
-        $order = $this->getOrder();
+        $order = $this->helper->getOrder();
         try {
             if ($order === null) throw new Exception("Orden no encontrada.");
             else {

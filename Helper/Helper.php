@@ -89,7 +89,7 @@ class Helper
         die();
     }
 
-    /* GET THE JSON THAT IS SENDED TO UDT */
+    /* GET THE JSON THAT IS SENT TO UDT */
     public function getOrderJSON($order): array
     {
         $shippingAddress = $order->getShippingAddress();
