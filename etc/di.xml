@@ -18,6 +18,8 @@
             <argument name="commands" xsi:type="array">
                 <item name="initialize" xsi:type="string">PaymentGatewayInitializeCommand</item>
                 <item name="refund" xsi:type="string">PaymentGatewayRefundCommand</item>
+                <item name="void" xsi:type="string">PaymentGatewayVoidCommand</item>
+                <item name="cancel" xsi:type="string">PaymentGatewayVoidCommand</item>
             </argument>
         </arguments>
     </virtualType>
@@ -54,6 +56,15 @@
         </arguments>
     </virtualType>
 
+    <!-- CANCEL COMMAND -->
+    <virtualType name="PaymentGatewayVoidCommand" type="Magento\Payment\Gateway\Command\GatewayCommand">
+        <arguments>
+            <argument name="requestBuilder" xsi:type="object">VoidRequest</argument>
+            <argument name="transferFactory" xsi:type="object">Undostres\PaymentGateway\Gateway\Http\TransferFactory</argument>
+            <argument name="handler" xsi:type="object">Undostres\PaymentGateway\Model\VoidHandler</argument>
+            <argument name="client" xsi:type="object">Undostres\PaymentGateway\Gateway\Http\Client\VoidClient</argument>
+        </arguments>
+    </virtualType>
 
     <!-- REFUN REQUEST -->
     <virtualType name="PaymentGatewayRefundRequest" type="Magento\Payment\Gateway\Request\BuilderComposite">
