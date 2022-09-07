@@ -92,7 +92,7 @@ class Api extends Helper
     public function redirect($orderId)
     {
         $order = $this->getOrder();
-        if ($this->isOrderProcesing($order)) {
+        if ($this->isOrderProcessing($order)) {
             $this->addFrontMesage(Helper::MSG_SUCCESS, '¡Felicidades!, tu pago con UnDosTres fue exitoso.');
             $this->redirectToCheckoutOnePageSuccess();
         } else if ($this->isOrderCanceled($order)) {

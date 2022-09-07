@@ -2,6 +2,7 @@
 
 namespace Undostres\PaymentGateway\Controller\Checkout;
 
+use Exception;
 use Magento\Framework\App\Action\Action;
 use Magento\Framework\App\Action\Context;
 use Undostres\PaymentGateway\Helper\Helper;
@@ -19,33 +20,31 @@ class Index extends Action
     }
 
     /* HANDLE ERROR AND REDIRECT */
-    private function throwError($order, $restoreCart)
+    private function handleError($order, $message)
     {
-        /* $this->addFrontMesage(Helper::MSG_WARNING, 'Su orden no fue procesada correctamente, favor de recargar la pagina');
-         if ($restoreCart === true) $this->restoreCart();
-         $this->cancelOrder($order);
-         $this->redirectToCheckoutCart();*/
+        $this->helper->addFrontMessage(Helper::MSG_WARNING, $message);
+        if ($order !== null) {
+            $this->helper->restoreCart();
+            $this->helper->cancelOrder($order);
+            $this->helper->redirectToCheckoutCart();
+        }
     }
-
 
     public function execute()
     {
-        $this->helper->log("Entro al index :D ");
-        //$order = $this->getOrder();
-        /* try {
-             if ($order === null) $this->throwError($order, false);
-             else {
-                 if ($this->isOrderPending($order)) {
-                     $json = $this->getOrderJSON($order);
-                     $gatewayUrl = $this->getPaymentUrl($json);
-                     if ($gatewayUrl === null) $this->throwError($order, true);
-                     else $this->redirectPage($gatewayUrl);
-                 } else $this->throwError($order, false);
-             }
-         } catch (\Exception $ex) {
-             $this->log('Ocurrió una excepción con la orden Undostres/checkout/index: ' . $ex->getMessage());
-             $this->log($ex->getTraceAsString());
-             $this->throwError($order, true);
-         }*/
+        $order = $this->getOrder();
+        try {
+            if ($order === null) throw new Exception("Orden no encontrada.");
+            else {
+                if ($this->helper->isOrderPending($order)) {
+                    $gatewayUrl = $this->helper->createPayment($this->helper->getOrderJSON($order));
+                    if ($gatewayUrl === null) throw new Exception("Error al redireccionar a UnDosTres, por favor intentalo más tarde.");
+                    else $this->helper->redirectPage($gatewayUrl);
+                } else throw new Exception("El estatus de la orden es incorrecto.");
+            }
+        } catch (Exception $ex) {
+            $this->helper->log("Ocurrio un error en la generación de payment url: " . $ex->getMessage(), $this->helper::LOG_ERROR);
+            $this->handleError($order, $ex->getMessage());
+        }
     }
 }

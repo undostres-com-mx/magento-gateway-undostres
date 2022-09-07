@@ -12,41 +12,31 @@ use Magento\Sales\Model\Order;
 use Magento\Framework\Logger\Monolog;
 use Undostres\PaymentGateway\Logger\Logger;
 
-/* PHP CLASS WHIT COMMON FUNCTIONS */
+/* HELPER CLASS, LOG, FRONT MESSAGE, SDK COMMUNICATION */
 
 class Helper
 {
-    /* CONST TO SET MESSAGE ON FRONTEND -> addFrontMesage */
+    /* CONST TO SET MESSAGE ON FRONTEND */
     const MSG_SUCCESS = 'MSG_SUCCESS';
     const MSG_WARNING = 'MSG_WARNING';
     const MSG_ERROR = 'MSG_ERROR';
 
-    /* CONST TO SET MESSAGE ON FRONTEND -> callUdtSdk */
-    const PAYMENT = 'payment';
-    const REFUND = 'refund';
-    const CANCEL = 'cancel';
-
-
-
-
-
-
-
-
+    /* CONST TO SET DEBUG LEVEL */
     const LOG_DEBUG = 0;
     const LOG_WARNING = 1;
     const LOG_ERROR = 2;
 
+    /* CLASS VARIABLES */
     protected $logger;
     protected $orderFactory;
     protected $session;
-    protected $messager;
+    protected $messageManager;
     protected $storeManager;
     protected $gatewayConfig;
 
     public function __construct(Config $gatewayConfig, Context $context, Logger $logger, Session $session, OrderFactory $orderFactory, StoreManagerInterface $storeManager)
     {
-        $this->messager = $context->getMessageManager();
+        $this->messageManager = $context->getMessageManager();
         $this->logger = $logger;
         $this->session = $session;
         $this->orderFactory = $orderFactory;
@@ -55,6 +45,7 @@ class Helper
         SASDK::init($this->gatewayConfig->getKey(), $this->gatewayConfig->getUrl());
     }
 
+    /* LOG TO UDT FILE */
     public function log(string $message, int $type = self::LOG_DEBUG)
     {
         $message = "\n" . '========= UDT LOG =========' . "\n" . $message . "\n" . '========= UDT END =========  ==>  ';
@@ -65,115 +56,46 @@ class Helper
         }
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    /* REDIRECT TO SUCCESS PAGE */
-    protected function redirectToCheckoutOnePageSuccess()
-    {
-        $this->_redirect('checkout/onepage/success');
-    }
-
-    /* REDIRECT TO CART PAGE */
-    protected function redirectToCheckoutCart()
-    {
-        $this->_redirect('checkout/cart');
-    }
-    
     /* ADD MESSAGE ON MAGENTO FRONTEND */
-    public function addFrontMesage($type, $msg)
+    public function addFrontMessage($type, $msg)
     {
-        if ($type === Helper::MSG_SUCCESS) $this->_messager->addSuccess(__($msg));
-        else if ($type === Helper::MSG_WARNING) $this->_messager->addWarning(__($msg));
-        else if ($type === Helper::MSG_ERROR) $this->_messager->addError(__($msg));
+        if ($type === self::MSG_SUCCESS) $this->messageManager->addSuccess(__($msg));
+        else if ($type === self::MSG_WARNING) $this->messageManager->addWarning(__($msg));
+        else if ($type === self::MSG_ERROR) $this->messageManager->addError(__($msg));
     }
 
-    /* GET ORDER FROM MAGENTO */
-    public function getOrder()
+    /* CHECK IS ORDER PENDING */
+    public function isOrderPending($order): bool
     {
-        $orderId = $this->_session->getLastRealOrderId();
-        if (!isset($orderId)) return null;
-        $order = $this->_orderFactory->create()->loadByIncrementId($orderId);
-        if (!$order->getId()) return null;
-        return $order;
+        return $order !== null && $order->getState() === Order::STATE_PENDING_PAYMENT;
     }
 
-    /* RESTORE CART */
-    public function restoreCart()
+    /* CHECK IS ORDER CANCELED */
+    public function isOrderCanceled($order): bool
     {
-        return $this->_session->restoreQuote();
+        return $order !== null && $order->getState() === Order::STATE_CANCELED;
     }
 
-    /* REDIRECT USING JS */
+    /* CHECK IS ORDER PROCESSING */
+    public function isOrderProcessing($order): bool
+    {
+        return $order !== null && $order->getState() === Order::STATE_PROCESSING;
+    }
+
+    /* REDIRECT USING HEADER */
     public function redirectPage($redirectUrl)
     {
         header('Location: ' . $redirectUrl);
         die();
-        //die("<script>window.location.replace('$redirectUrl');</script>");
-    }
-
-    /* MONEY FORMAT */
-    public function moneyFormat($money)
-    {
-        return floatval(number_format($money, 2, '.', ''));
-    }
-
-    /* GET LANDING URL WHEN UDT REDIRECTS */
-    public function getReturnUrl()
-    {
-        return $this->_storeManager->getStore()->getBaseUrl() . 'Undostres/checkout/redirect';
-    }
-
-    /* GET CALLBACK URL */
-    public function getCallbackUrl()
-    {
-        return $this->_storeManager->getStore()->getBaseUrl() . 'rest/V2/custom/custom-api';
-    }
-
-    /* TRANSFORM ORDER TO JSON ORDER UDT */
-    public function getAllItems($order): array
-    {
-        $items = array();
-        foreach ($order->getAllVisibleItems() as $item) {
-            $items[] = array(
-                'id' => (string)$item->getItemId(),
-                'name' => $item->getName(),
-                'price' => $this->moneyFormat($item->getPrice()),
-                'quantity' => (int)$item->getQtyOrdered(),
-                'discount' => 0,
-                'variation_id' => (string)0, /* TODO check this val*/
-            );
-        }
-        return $items;
     }
 
     /* GET THE JSON THAT IS SENDED TO UDT */
-    public function getOrderJSON($order)
+    public function getOrderJSON($order): array
     {
         $shippingAddress = $order->getShippingAddress();
         $shippingAddressParts = preg_split('/\r\n|\r|\n/', $shippingAddress->getData('street'));
         $orderId = $order->getRealOrderId();
-        $data = [
+        return [
             'currency' => $order->getOrderCurrencyCode(),
             'callbackUrl' => $this->getCallbackUrl(),
             'returnUrl' => $this->getReturnUrl(),
@@ -202,17 +124,47 @@ class Helper
                 "items" => $this->getAllItems($order)
             ]
         ];
-        return $data;
     }
 
-    /* GENERETE DE URL TO PAY ON UDT */
-    public function getPaymentUrl($json)
+    /* GET CALLBACK URL */
+    public function getCallbackUrl(): string
     {
-        SASDK::init('36wqV4OcrAa1/Sq9LJ7ARcclXqRhBJsVTZEFR4eo8Htxn6o4nKPrfpW/9rmP3SxPMNCSIfel+507CLU1HIknbSq242/YXNeun/Kwyhqp47LqdiSEUrlwNhBezHSiQwjx6c58W0NUne+IvfKl255TE4qn5Upf1AYoo4CzWClNkfN4vftn/FNOTahWZR6nL46IkzhQqTbNkWDjApP3NXhiBpVaUsci1f9JXaC9WlMR4mWV1FsghFgvPSpCUac+1T/O+pdkHORk0borVbQqBtzox+iZlqkgwjy2TyBpIVwgDhVer5IwhzSaA6Bz4uWULpPMIf3nAqtxShmNwNCnAX5Z1lPrhSdH3j+5hClk47kWCkqHU7sGC+LllD2yOeZtD5YFp2BHdAmlNJHh0p5EClLbcryWaYRRSiOOgZWC7zObOVU=', 'https://nobugs.undostres.com.mx');
-        $response = SASDK::createPayment($json);
-        $this->log(sprintf('Request receive of UnDosTres with the SDK for %s: %s', json_encode($json), json_encode($response)));
-        if ($response['code'] !== 200) return null;
-        return $response['response'];
+        return $this->storeManager->getStore()->getBaseUrl() .'rest/V1/udt/callback';
+    }
+
+    /* GET LANDING URL WHEN UDT REDIRECTS */
+    public function getReturnUrl(): string
+    {
+        return $this->storeManager->getStore()->getBaseUrl() . 'rest/V1/udt/redirect';
+    }
+
+    /* MONEY FORMAT ####.## */
+    public function moneyFormat($money): float
+    {
+        return floatval(number_format($money, 2, '.', ''));
+    }
+
+    /* TRANSFORM ORDER TO JSON ORDER UDT */
+    public function getAllItems($order): array
+    {
+        $items = array();
+        foreach ($order->getAllVisibleItems() as $item) {
+            $items[] = array(
+                'id' => (string)$item->getItemId(),
+                'name' => $item->getName(),
+                'price' => $this->moneyFormat($item->getPrice()),
+                'quantity' => (int)$item->getQtyOrdered(),
+                'discount' => 0,
+                'variation_id' => "0",
+            );
+        }
+        return $items;
+    }
+
+    /* RESTORE CART */
+    public function restoreCart()
+    {
+        return $this->session->restoreQuote();
     }
 
     /* CANCEL ORDER */
@@ -221,36 +173,34 @@ class Helper
         if ($order !== null) $order->setState(Order::STATE_CANCELED)->setStatus(Order::STATE_CANCELED)->save();
     }
 
-    /* CHECK IS ORDER PENDING */
-    public function isOrderPending($order)
+    /* REDIRECT TO SUCCESS PAGE */
+    public function redirectToCheckoutOnePageSuccess()
     {
-        return $order !== null && $order->getState() === Order::STATE_PENDING_PAYMENT;
+        $this->redirectPage($this->storeManager->getStore()->getBaseUrl() .'checkout/onepage/success');
     }
 
-    /* CHECK IS ORDER CENCELED */
-    public function isOrderCanceled($order)
+    /* REDIRECT TO CART PAGE */
+    public function redirectToCheckoutCart()
     {
-        return $order !== null && $order->getState() === Order::STATE_CANCELED;
+        $this->redirectPage($this->storeManager->getStore()->getBaseUrl() .'checkout/cart');
     }
 
-    /* CHECK IS ORDER PROCESING */
-    public function isOrderProcesing($order)
+    /* GENERATE THE URL TO PAY ON UDT */
+    public function createPayment($json)
     {
-        return $order !== null && $order->getState() === Order::STATE_PROCESSING;
-    }
-
-    /* 
-    SDK INTERFACE 
-    type: 'payment','refund','cancel'
-    request: body
-    */
-    public function callUdtSdk($type, $request)
-    {
-        SASDK::init('36wqV4OcrAa1/Sq9LJ7ARcclXqRhBJsVTZEFR4eo8Htxn6o4nKPrfpW/9rmP3SxPMNCSIfel+507CLU1HIknbSq242/YXNeun/Kwyhqp47LqdiSEUrlwNhBezHSiQwjx6c58W0NUne+IvfKl255TE4qn5Upf1AYoo4CzWClNkfN4vftn/FNOTahWZR6nL46IkzhQqTbNkWDjApP3NXhiBpVaUsci1f9JXaC9WlMR4mWV1FsghFgvPSpCUac+1T/O+pdkHORk0borVbQqBtzox+iZlqkgwjy2TyBpIVwgDhVer5IwhzSaA6Bz4uWULpPMIf3nAqtxShmNwNCnAX5Z1lPrhSdH3j+5hClk47kWCkqHU7sGC+LllD2yOeZtD5YFp2BHdAmlNJHh0p5EClLbcryWaYRRSiOOgZWC7zObOVU=', 'https://nobugs.undostres.com.mx');
-        $this->log(sprintf('Request sent to UnDosTres with the SDK for %s: ', $type));
-        $response = SASDK::createPayment($request);
-        $this->log(sprintf('Request receive of UnDosTres with the SDK for %s: %s', $type, json_encode($response)));
+        $response = SASDK::createPayment($json);
+        $this->log(sprintf('Request receive of UnDosTres with the SDK for %s: %s', json_encode($json), json_encode($response)));
         if ($response['code'] !== 200) return null;
-        return $response;
+        return $response['response'];
+    }
+
+    /* GET ORDER FROM MAGENTO */
+    public function getOrder()
+    {
+        $orderId = $this->_session->getLastRealOrderId();
+        if (!isset($orderId)) return null;
+        $order = $this->_orderFactory->create()->loadByIncrementId($orderId);
+        if (!$order->getId()) return null;
+        return $order;
     }
 }
