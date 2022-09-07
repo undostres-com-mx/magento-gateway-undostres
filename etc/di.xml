@@ -134,8 +134,9 @@
         </arguments>
     </type>
 
-    <!-- ADMIN CANCEL ORDER -->
+    <!-- ADMIN CANCEL ORDER
     <type name="Magento\Sales\Model\Order">
         <plugin name="undostresOrderCancel" type="Undostres\PaymentGateway\Gateway\Cancel"/>
     </type>
+    -->
 </config>
