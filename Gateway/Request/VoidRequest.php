@@ -7,20 +7,15 @@ use Magento\Payment\Gateway\Helper\SubjectReader;
 use Undostres\PaymentGateway\Model\Config;
 use Undostres\PaymentGateway\Helper\Helper;
 
-/**
- * First stage of voiding/cancelling an order. 
- * @package Undostres\PaymentGateway\Gateway\Request
- */
-class VoidRequest implements BuilderInterface{
-    protected $helper;
+/* EMPTY RESPONSE, THE REFUND IS MADE IN REFUND HANDLER */
 
-    public function __construct(Helper $helper)
+class VoidRequest implements BuilderInterface
+{
+    public function build(array $buildSubject)
     {
-        $this->helper = $helper;
-    }
-
-    public function build($buildSubject) {
-        $this->helper->log('In function ' . __FUNCTION__);
+        return [];
+        /*
+         *  $this->helper->log('In function ' . __FUNCTION__);
         $toReturn = [];
         $paymentDataObject = SubjectReader::readPayment($buildSubject);
         $order = $paymentDataObject->getOrder();
@@ -36,6 +31,8 @@ class VoidRequest implements BuilderInterface{
         $this->helper->log(sprintf('To return: %s', [json_encode($toReturn)]));
 
         return $toReturn;
+         *
+         * */
     }
 }
-?>
+

@@ -9,7 +9,7 @@ use Undostres\PaymentGateway\Helper\Helper;
 
 class VoidClient implements ClientInterface
 {
-    protected $helper;
+ /*   protected $helper;
 
     public function __construct(Helper $helper)
     {
@@ -29,13 +29,15 @@ class VoidClient implements ClientInterface
         /*if ($subject->canCancel() && $subject->getPayment()->getMethod() === Config::CODE) { // CHECK IF WE CAN CANCEL AND IS UDT PAYMENT
             $response = SASDK::cancelOrder((string)$subject->getRealOrderId());
             if ($response['code'] !== 200)  throw new \Magento\Framework\Exception\CouldNotDeleteException(__("UnDosTres no se encuentra disponible."));
-        }*/
+        }
 
 
         return $response;
+    }*/
+
+    /* REFUND REQUEST */
+    public function placeRequest(TransferInterface $transferObject)
+    {
+        return $transferObject->getBody();
     }
 }
-
-
-
-?>
