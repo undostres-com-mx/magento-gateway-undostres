@@ -14,7 +14,7 @@ use Magento\Payment\Model\Method\Logger;
 use UDT\SDK\SASDK;
 use Magento\Payment\Helper\Data;
 
-class UnDosTresPayment extends \Magento\Payment\Model\Method\AbstractMethod implements HandlerInterface
+class RefundHandler extends \Magento\Payment\Model\Method\AbstractMethod implements HandlerInterface
 {
 	public $_isGateway = true;
 	public $_canRefund = true;

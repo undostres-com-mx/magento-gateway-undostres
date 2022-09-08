@@ -14,5 +14,3 @@ class VoidHandler implements HandlerInterface {
         $payment->setShouldCloseParentTransaction(true);
     }
 }
-
-?>

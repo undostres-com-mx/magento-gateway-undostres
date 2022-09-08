@@ -2,6 +2,7 @@
 
 namespace Undostres\PaymentGateway\Helper;
 
+use Exception;
 use UDT\SDK\SASDK;
 use Undostres\PaymentGateway\Model\Config;
 use Magento\Framework\App\Action\Context;
@@ -11,6 +12,9 @@ use Magento\Checkout\Model\Session;
 use Magento\Sales\Model\Order;
 use Magento\Framework\Logger\Monolog;
 use Undostres\PaymentGateway\Logger\Logger;
+use Magento\Sales\Model\Order\Email\Sender\OrderSender;
+use Magento\Sales\Model\Service\InvoiceService;
+use Magento\Framework\DB\Transaction;
 
 /* HELPER CLASS, LOG, FRONT MESSAGE, SDK COMMUNICATION */
 
@@ -30,11 +34,14 @@ class Helper
     protected $logger;
     protected $orderFactory;
     protected $session;
+    protected $orderSender;
     protected $messageManager;
     protected $storeManager;
     protected $gatewayConfig;
+    protected $invoice;
+    protected $transaction;
 
-    public function __construct(Config $gatewayConfig, Context $context, Logger $logger, Session $session, OrderFactory $orderFactory, StoreManagerInterface $storeManager)
+    public function __construct(Config $gatewayConfig, Context $context, Logger $logger, Session $session, OrderFactory $orderFactory, StoreManagerInterface $storeManager, OrderSender $orderSender, InvoiceService $invoice, Transaction $transaction)
     {
         $this->messageManager = $context->getMessageManager();
         $this->logger = $logger;
@@ -42,6 +49,9 @@ class Helper
         $this->orderFactory = $orderFactory;
         $this->storeManager = $storeManager;
         $this->gatewayConfig = $gatewayConfig;
+        $this->orderSender = $orderSender;
+        $this->invoice = $invoice;
+        $this->transaction = $transaction;
         SASDK::init($this->gatewayConfig->getKey(), $this->gatewayConfig->getUrl());
     }
 
@@ -50,9 +60,9 @@ class Helper
     {
         $message = "\n" . '========= UDT LOG =========' . "\n" . $message . "\n" . '========= UDT END =========  ==>  ';
         if ($this->gatewayConfig->canLog()) {
-            if($type=== self::LOG_DEBUG) $this->logger->info($message);
-            else if($type=== self::LOG_WARNING) $this->logger->warning($message);
-            else if($type=== self::LOG_ERROR) $this->logger->critical($message);
+            if ($type === self::LOG_DEBUG) $this->logger->info($message);
+            else if ($type === self::LOG_WARNING) $this->logger->warning($message);
+            else if ($type === self::LOG_ERROR) $this->logger->critical($message);
         }
     }
 
@@ -87,6 +97,29 @@ class Helper
     {
         header('Location: ' . $redirectUrl);
         die();
+    }
+
+    /* RESPOND JSON USING HEADER */
+    public function responseJSON($json, int $code = 200, string $msg = "")
+    {
+        $protocol = $_SERVER['SERVER_PROTOCOL'] ?? 'HTTP/1.0';
+        echo json_encode($json);
+        header($protocol . ' ' . $code . ' ' . $msg);
+        die();
+    }
+
+    /* GET HEADERS OF PETITION */
+    /**
+     * @throws Exception
+     */
+    public function areValidHeaders(): bool
+    {
+        $serverHeaders = apache_request_headers();
+        $headers = array();
+        foreach ($serverHeaders as $header => $value) {
+            $headers[strtolower($header)] = $value;
+        }
+        return SASDK::validateRequestHeaders($headers["x-vtex-api-appkey"], $headers["x-vtex-api-apptoken"]);
     }
 
     /* GET THE JSON THAT IS SENT TO UDT */
@@ -129,7 +162,7 @@ class Helper
     /* GET CALLBACK URL */
     public function getCallbackUrl(): string
     {
-        return $this->storeManager->getStore()->getBaseUrl() .'rest/V1/udt/callback';
+        return $this->storeManager->getStore()->getBaseUrl() . 'rest/V1/udt/callback';
     }
 
     /* GET LANDING URL WHEN UDT REDIRECTS */
@@ -176,31 +209,90 @@ class Helper
     /* REDIRECT TO SUCCESS PAGE */
     public function redirectToCheckoutOnePageSuccess()
     {
-        $this->redirectPage($this->storeManager->getStore()->getBaseUrl() .'checkout/onepage/success');
+        $this->redirectPage($this->storeManager->getStore()->getBaseUrl() . 'checkout/onepage/success');
     }
 
     /* REDIRECT TO CART PAGE */
     public function redirectToCheckoutCart()
     {
-        $this->redirectPage($this->storeManager->getStore()->getBaseUrl() .'checkout/cart');
-    }
-
-    /* GENERATE THE URL TO PAY ON UDT */
-    public function createPayment($json)
-    {
-        $response = SASDK::createPayment($json);
-        $this->log(sprintf('Request receive of UnDosTres with the SDK for %s: %s', json_encode($json), json_encode($response)));
-        if ($response['code'] !== 200) return null;
-        return $response['response'];
+        $this->redirectPage($this->storeManager->getStore()->getBaseUrl() . 'checkout/cart');
     }
 
     /* GET ORDER FROM MAGENTO */
-    public function getOrder()
+    public function getOrder($orderId = null)
     {
-        $orderId = $this->session->getLastRealOrderId();
+        if ($orderId === null) $orderId = $this->session->getLastRealOrderId();
         if (!isset($orderId)) return null;
         $order = $this->orderFactory->create()->loadByIncrementId($orderId);
         if (!$order->getId()) return null;
         return $order;
+    }
+
+    /* GET ORDER FROM MAGENTO */
+    /**
+     * @throws Exception
+     */
+    public function processOrder($paymentId, $status): array
+    {
+        $order = $this->getOrder($paymentId);
+        if ($order === null) return ['code' => 404, 'message' => 'Orden no encontrada.'];
+        switch ($status) {
+            case 'approved':
+                if ($this->isOrderPending($paymentId)) {
+                    $this->invoiceOrder($order, $paymentId);
+                    $order->setState(Order::STATE_PROCESSING)->setStatus(Order::STATE_PROCESSING)->setIsCustomerNotified(true);
+                    $this->orderSender->send($order);
+                    $response = [
+                        'code' => 200,
+                        'message' => 'User Paid.',
+                        'paymentId' => (string)$paymentId,
+                        'status' => $order->$order->getState()
+                    ];
+                } else {
+                    $response = [
+                        'code' => 400,
+                        'message' => 'Not valid order status.',
+                        'paymentId' => (string)$paymentId,
+                        'status' => $order->$order->getState()
+                    ];
+                }
+                break;
+            case 'denied':
+                $order->setState(Order::STATE_CANCELED)->setStatus(Order::STATE_CANCELED);
+                $response = [
+                    'code' => 200,
+                    'message' => 'Order cancel successfully.',
+                    'paymentId' => (string)$paymentId,
+                    'status' => Order::STATE_CANCELED
+                ];
+                break;
+            default:
+                $response = [
+                    'code' => 400,
+                    'message' => 'Bad request',
+                    'paymentId' => (string)$paymentId,
+                    'status' => $order->getState()
+                ];
+                break;
+        }
+        $order->save();
+        return $response;
+    }
+
+    /**
+     * @throws Exception
+     */
+    private function invoiceOrder($order, $transactionId)
+    {
+        if (!$order->canInvoice()) throw new Exception('Cannot create an invoice.');
+        $invoice = $this->invoice->prepareInvoice($order);
+        if (!$invoice->getTotalQty()) throw new Exception('No se puede realizar un pago sin productos.');
+        $invoice->setTransactionId($transactionId);
+        $invoice->setRequestedCaptureCase(Order\Invoice::CAPTURE_ONLINE);
+        $invoice->setState(Order\Invoice::STATE_PAID);
+        $invoice->register();
+        $invoice->pay();
+        $transaction = $this->transaction->addObject($invoice)->addObject($invoice->getOrder());
+        $transaction->save();
     }
 }

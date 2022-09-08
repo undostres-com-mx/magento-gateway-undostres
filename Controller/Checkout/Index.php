@@ -19,17 +19,6 @@ class Index extends Action
         $this->helper = $helper;
     }
 
-    /* HANDLE ERROR AND REDIRECT */
-    private function handleError($order, $message)
-    {
-        $this->helper->addFrontMessage(Helper::MSG_WARNING, $message);
-        if ($order !== null) {
-            $this->helper->restoreCart();
-            $this->helper->cancelOrder($order);
-            $this->helper->redirectToCheckoutCart();
-        }
-    }
-
     public function execute()
     {
         $order = $this->helper->getOrder();
@@ -44,7 +33,12 @@ class Index extends Action
             }
         } catch (Exception $ex) {
             $this->helper->log("Ocurrio un error en la generación de payment url: " . $ex->getMessage(), $this->helper::LOG_ERROR);
-            $this->handleError($order, $ex->getMessage());
+            $this->helper->addFrontMessage(Helper::MSG_WARNING, $ex->getMessage());
+            if ($order !== null) {
+                $this->helper->restoreCart();
+                $this->helper->cancelOrder($order);
+            }
+            $this->helper->redirectToCheckoutCart();
         }
     }
 }
