@@ -31,7 +31,7 @@ class Helper
 
     /* CLASS VARIABLES */
     protected $logger;
-    protected $orderRepository;
+    protected $order;
     protected $session;
     protected $orderSender;
     protected $messageManager;
@@ -40,20 +40,18 @@ class Helper
     protected $invoice;
     protected $transaction;
 
-    public function __construct(Config $gatewayConfig, Context $context, Logger $logger, Session $session, OrderRepositoryInterface $orderRepository, StoreManagerInterface $storeManager, OrderSender $orderSender, InvoiceService $invoice, Transaction $transaction,
-                                array  $data = [])
+    public function __construct(Config $gatewayConfig, Context $context, Logger $logger, Session $session, Order $order, StoreManagerInterface $storeManager, OrderSender $orderSender, InvoiceService $invoice, Transaction $transaction)
     {
         $this->messageManager = $context->getMessageManager();
         $this->logger = $logger;
         $this->session = $session;
-        $this->orderRepository = $orderRepository;
+        $this->order = $order;
         $this->storeManager = $storeManager;
         $this->gatewayConfig = $gatewayConfig;
         $this->orderSender = $orderSender;
         $this->invoice = $invoice;
         $this->transaction = $transaction;
         SASDK::init($this->gatewayConfig->getKey(), $this->gatewayConfig->getUrl());
-        parent::__construct($context, $data);
     }
 
     /* LOG TO UDT FILE */
@@ -224,7 +222,7 @@ class Helper
     {
         if ($orderId === null) $orderId = $this->session->getLastRealOrderId();
         if (!isset($orderId)) return null;
-        $order = $this->orderRepository->get($orderId);
+        $order = $this->order->loadByIncrementId($orderId);
         if (!$order->getId()) return null;
         return $order;
     }
@@ -246,7 +244,7 @@ class Helper
         if ($order === null) return ['code' => 404, 'message' => 'Orden no encontrada.'];
         switch ($status) {
             case 'approved':
-                if ($this->isOrderPending($paymentId)) {
+                if ($this->isOrderPending($order)) {
                     $this->invoiceOrder($order, $paymentId);
                     $order->setState(Order::STATE_PROCESSING)->setStatus(Order::STATE_PROCESSING)->setIsCustomerNotified(true);
                     $this->orderSender->send($order);
