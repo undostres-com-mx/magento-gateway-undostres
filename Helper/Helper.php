@@ -6,7 +6,7 @@ use Exception;
 use UDT\SDK\SASDK;
 use Undostres\PaymentGateway\Model\Config;
 use Magento\Framework\App\Action\Context;
-use Magento\Sales\Model\OrderFactory;
+use Magento\Sales\Api\OrderRepositoryInterface;
 use Magento\Store\Model\StoreManagerInterface;
 use Magento\Checkout\Model\Session;
 use Magento\Sales\Model\Order;
@@ -32,7 +32,7 @@ class Helper
 
     /* CLASS VARIABLES */
     protected $logger;
-    protected $orderFactory;
+    protected $orderRepository;
     protected $session;
     protected $orderSender;
     protected $messageManager;
@@ -41,12 +41,12 @@ class Helper
     protected $invoice;
     protected $transaction;
 
-    public function __construct(Config $gatewayConfig, Context $context, Logger $logger, Session $session, OrderFactory $orderFactory, StoreManagerInterface $storeManager, OrderSender $orderSender, InvoiceService $invoice, Transaction $transaction)
+    public function __construct(Config $gatewayConfig, Context $context, Logger $logger, Session $session, OrderRepositoryInterface  $orderRepository, StoreManagerInterface $storeManager, OrderSender $orderSender, InvoiceService $invoice, Transaction $transaction)
     {
         $this->messageManager = $context->getMessageManager();
         $this->logger = $logger;
         $this->session = $session;
-        $this->orderFactory = $orderFactory;
+        $this->orderRepository = $orderRepository;
         $this->storeManager = $storeManager;
         $this->gatewayConfig = $gatewayConfig;
         $this->orderSender = $orderSender;
@@ -223,7 +223,10 @@ class Helper
     {
         if ($orderId === null) $orderId = $this->session->getLastRealOrderId();
         if (!isset($orderId)) return null;
-        $order = $this->orderFactory->create()->loadByIncrementId($orderId);
+        $order = $this->orderFactory->create()->loadByIncrementId();
+
+        $order = $this->orderRepository->get($orderId);
+
         if (!$order->getId()) return null;
         return $order;
     }

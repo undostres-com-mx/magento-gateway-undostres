@@ -26,12 +26,12 @@ class Api extends Helper
     {
         $order = $this->getOrder($orderId);
         if ($this->isOrderProcessing($order)) {
-            $this->addFrontMesage(Helper::MSG_SUCCESS, '¡Felicidades!, tu pago con UnDosTres fue exitoso.');
+            $this->addFrontMessage(Helper::MSG_SUCCESS, '¡Felicidades!, tu pago con UnDosTres fue exitoso.');
             $this->redirectToCheckoutOnePageSuccess();
         } else if ($this->isOrderCanceled($order)) {
-            $this->addFrontMesage(Helper::MSG_WARNING, 'Tu pago con UnDosTres fue cancelado.');
+            $this->addFrontMessage(Helper::MSG_WARNING, 'Tu pago con UnDosTres fue cancelado.');
             $this->restoreCart();
-        } else $this->addFrontMesage(Helper::MSG_ERROR, 'Orden invalida.');
+        } else $this->addFrontMessage(Helper::MSG_ERROR, 'Orden invalida.');
         $this->redirectToCheckoutCart();
     }
 }
