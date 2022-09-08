@@ -85,7 +85,7 @@
             </argument>
             <argument name="transferFactory" xsi:type="object">Undostres\PaymentGateway\Gateway\TransferFactory
             </argument>
-            <argument name="handler" xsi:type="object">Undostres\PaymentGateway\Response\Handler\VoidHandler</argument>
+            <argument name="handler" xsi:type="object">Undostres\PaymentGateway\Gateway\Handler\VoidHandler</argument>
             <argument name="client" xsi:type="object">Undostres\PaymentGateway\Gateway\Client\VoidClient</argument>
         </arguments>
     </virtualType>
@@ -97,7 +97,7 @@
             </argument>
             <argument name="transferFactory" xsi:type="object">Undostres\PaymentGateway\Gateway\TransferFactory
             </argument>
-            <argument name="handler" xsi:type="object">Undostres\PaymentGateway\Response\Handler\RefundHandler
+            <argument name="handler" xsi:type="object">Undostres\PaymentGateway\Gateway\Handler\RefundHandler
             </argument>
             <argument name="client" xsi:type="object">Undostres\PaymentGateway\Gateway\Client\RefundClient
             </argument>
