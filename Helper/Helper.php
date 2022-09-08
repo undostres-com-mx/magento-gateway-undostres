@@ -233,10 +233,16 @@ class Helper
         return $response["response"];
     }
 
-    public function cancelUDTOrder($paymentId)
+    public function cancelUDTOrder($paymentId): bool
     {
         $response = SASDK::cancelOrder($paymentId);
-        if ($response["code"] !== 200) return null;
+        return $response["code"] !== 200;
+    }
+
+    public function refundUDTOrder($paymentId, $transactionId, $value): bool
+    {
+        $response = SASDK::refundOrder($paymentId, $transactionId, $value);
+        return $response["code"] !== 200;
     }
 
     /* GET ORDER FROM MAGENTO */

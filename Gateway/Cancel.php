@@ -13,7 +13,7 @@ class Cancel extends Helper
     public function beforeCancel($subject)
     {
         if ($subject->canCancel() && $subject->getPayment()->getMethod() === Config::CODE) {
-            if($this->cancelUDTOrder($subject->getRealOrderId()) === null)
+            if($this->cancelUDTOrder($subject->getRealOrderId()))
                 throw new CouldNotDeleteException("UnDosTres no se encuentra disponible.");
         }
     }
