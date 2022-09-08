@@ -13,8 +13,9 @@ class Api extends Helper
     {
         try {
             if (!$this->areValidHeaders()) throw new Exception("Headers invalidas.");
-            $this->log(sprintf("%s | %s -> Callback de la orden: %s con el estatus: %s", __CLASS__, __METHOD__, $paymentId, $status));
+            $this->log(sprintf("%s -> Callback de la orden: %s con el estatus: %s", __METHOD__, $paymentId, $status));
             $response = $this->processOrder($paymentId, $status);
+            $this->log(sprintf("%s -> Callback correcto de la orden: %s", __METHOD__, $paymentId));
             $this->responseJSON($response);
         } catch (Exception $e) {
             $this->log('Exception' . $e->getMessage(), Helper::LOG_ERROR);
@@ -25,6 +26,7 @@ class Api extends Helper
     public function redirect($orderId)
     {
         $order = $this->getOrder($orderId);
+        $this->log(sprintf("%s -> Redirect de la orden: %s", __METHOD__, $orderId));
         if ($this->isOrderProcessing($order)) {
             $this->addFrontMessage(Helper::MSG_SUCCESS, '¡Felicidades!, tu pago con UnDosTres fue exitoso.');
             $this->redirectToCheckoutOnePageSuccess();
