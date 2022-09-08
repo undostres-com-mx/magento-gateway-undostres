@@ -99,11 +99,10 @@ class Helper
     }
 
     /* RESPOND JSON USING HEADER */
-    public function responseJSON($json, int $code = 200, string $msg = "")
+    public function responseJSON($json)
     {
-        $protocol = $_SERVER['SERVER_PROTOCOL'] ?? 'HTTP/1.0';
         echo json_encode($json);
-        header($protocol . ' ' . $code . ' ' . $msg);
+        header("Content-Type: application/json; charset=utf-8");
         die();
     }
 
