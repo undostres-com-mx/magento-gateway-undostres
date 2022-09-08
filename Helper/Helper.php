@@ -223,7 +223,6 @@ class Helper
         if ($orderId === null) $orderId = $this->session->getLastRealOrderId();
         if (!isset($orderId)) return null;
         $order = $this->order->loadByIncrementId($orderId);
-        $id = $order->getId();
         if (!$order->getId()) return null;
         return $order;
     }
@@ -245,7 +244,7 @@ class Helper
         if ($order === null) return ['code' => 404, 'message' => 'Orden no encontrada.'];
         switch ($status) {
             case 'approved':
-                if ($this->isOrderPending($paymentId)) {
+                if ($this->isOrderPending($order)) {
                     $this->invoiceOrder($order, $paymentId);
                     $order->setState(Order::STATE_PROCESSING)->setStatus(Order::STATE_PROCESSING)->setIsCustomerNotified(true);
                     $this->orderSender->send($order);
