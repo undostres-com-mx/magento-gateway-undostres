@@ -129,7 +129,7 @@ class Helper
         return [
             'currency' => $order->getOrderCurrencyCode(),
             'callbackUrl' => $this->getCallbackUrl(),
-            'returnUrl' => $this->getReturnUrl(),
+            'returnUrl' => $this->getReturnUrl($orderId),
             'reference' => (string)$orderId,
             'transactionId' => (string)$orderId,
             'paymentId' => (string)$orderId,
@@ -164,9 +164,9 @@ class Helper
     }
 
     /* GET LANDING URL WHEN UDT REDIRECTS */
-    public function getReturnUrl(): string
+    public function getReturnUrl($orderId): string
     {
-        return $this->storeManager->getStore()->getBaseUrl() . 'rest/V1/udt/redirect';
+        return $this->storeManager->getStore()->getBaseUrl() . 'rest/V1/udt/redirect?orderId=' . $orderId;
     }
 
     /* MONEY FORMAT ####.## */
