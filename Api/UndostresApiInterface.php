@@ -15,8 +15,8 @@ interface UndostresApiInterface
     public function callback(string $paymentId, string $status);
 
     /**
-     * @param string $orderId
+     * @param string $orderid
      * @return mixed
      */
-    public function redirect(string $orderId);
+    public function redirect(string $orderid);
 }
