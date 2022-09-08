@@ -59,7 +59,6 @@
             <argument name="commands" xsi:type="array">
                 <item name="initialize" xsi:type="string">UndostresPaymentGatewayInitializeCommand</item>
                 <item name="refund" xsi:type="string">UndostresPaymentGatewayRefundCommand</item>
-                <item name="void" xsi:type="string">UndostresPaymentGatewayVoidCommand</item>
                 <item name="cancel" xsi:type="string">UndostresPaymentGatewayVoidCommand</item>
             </argument>
         </arguments>
