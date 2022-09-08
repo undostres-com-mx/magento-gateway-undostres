@@ -10,7 +10,6 @@ use Magento\Sales\Api\OrderRepositoryInterface;
 use Magento\Store\Model\StoreManagerInterface;
 use Magento\Checkout\Model\Session;
 use Magento\Sales\Model\Order;
-use Magento\Framework\Logger\Monolog;
 use Undostres\PaymentGateway\Logger\Logger;
 use Magento\Sales\Model\Order\Email\Sender\OrderSender;
 use Magento\Sales\Model\Service\InvoiceService;
@@ -41,7 +40,8 @@ class Helper
     protected $invoice;
     protected $transaction;
 
-    public function __construct(Config $gatewayConfig, Context $context, Logger $logger, Session $session, OrderRepositoryInterface  $orderRepository, StoreManagerInterface $storeManager, OrderSender $orderSender, InvoiceService $invoice, Transaction $transaction)
+    public function __construct(Config $gatewayConfig, Context $context, Logger $logger, Session $session, OrderRepositoryInterface $orderRepository, StoreManagerInterface $storeManager, OrderSender $orderSender, InvoiceService $invoice, Transaction $transaction,
+                                array  $data = [])
     {
         $this->messageManager = $context->getMessageManager();
         $this->logger = $logger;
@@ -53,6 +53,7 @@ class Helper
         $this->invoice = $invoice;
         $this->transaction = $transaction;
         SASDK::init($this->gatewayConfig->getKey(), $this->gatewayConfig->getUrl());
+        parent::__construct($context, $data);
     }
 
     /* LOG TO UDT FILE */
@@ -223,10 +224,7 @@ class Helper
     {
         if ($orderId === null) $orderId = $this->session->getLastRealOrderId();
         if (!isset($orderId)) return null;
-        $order = $this->orderFactory->create()->loadByIncrementId();
-
         $order = $this->orderRepository->get($orderId);
-
         if (!$order->getId()) return null;
         return $order;
     }
@@ -234,7 +232,7 @@ class Helper
     public function createPayment($json)
     {
         $response = SASDK::createPayment($json);
-        if($response["code"] !== 200) return null;
+        if ($response["code"] !== 200) return null;
         return $response["response"];
     }
 
