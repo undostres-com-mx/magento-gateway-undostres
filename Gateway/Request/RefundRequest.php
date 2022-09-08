@@ -9,13 +9,6 @@ use Undostres\PaymentGateway\Helper\Helper;
 
 class RefundRequest implements BuilderInterface
 {
-    protected $helper;
-
-    public function __construct(Helper $helper)
-    {
-        $this->helper = $helper;
-    }
-
     public function build(array $buildSubject)
     {
         return [];

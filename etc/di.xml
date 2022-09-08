@@ -59,7 +59,6 @@
             <argument name="commands" xsi:type="array">
                 <item name="initialize" xsi:type="string">UndostresPaymentGatewayInitializeCommand</item>
                 <item name="refund" xsi:type="string">UndostresPaymentGatewayRefundCommand</item>
-                <item name="cancel" xsi:type="string">UndostresPaymentGatewayVoidCommand</item>
             </argument>
         </arguments>
     </virtualType>
@@ -77,18 +76,6 @@
         </arguments>
     </virtualType>
 
-    <!-- VOID/CANCEL COMMAND -->
-    <virtualType name="UndostresPaymentGatewayVoidCommand" type="Magento\Payment\Gateway\Command\GatewayCommand">
-        <arguments>
-            <argument name="requestBuilder" xsi:type="object">Undostres\PaymentGateway\Gateway\Request\VoidRequest
-            </argument>
-            <argument name="transferFactory" xsi:type="object">Undostres\PaymentGateway\Gateway\TransferFactory
-            </argument>
-            <argument name="handler" xsi:type="object">Undostres\PaymentGateway\Gateway\Handler\VoidHandler</argument>
-            <argument name="client" xsi:type="object">Undostres\PaymentGateway\Gateway\Client\VoidClient</argument>
-        </arguments>
-    </virtualType>
-
     <!-- REFUND COMMAND -->
     <virtualType name="UndostresPaymentGatewayRefundCommand" type="Magento\Payment\Gateway\Command\GatewayCommand">
         <arguments>
@@ -102,4 +89,9 @@
             </argument>
         </arguments>
     </virtualType>
+
+    <!-- ADMIN CANCEL ORDER -->
+    <type name="Magento\Sales\Model\Order">
+        <plugin name="UndostresPaymentGatewayCancel" type="Undostres\PaymentGateway\Gateway\Cancel"/>
+    </type>
 </config>
