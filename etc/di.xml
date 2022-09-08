@@ -7,6 +7,7 @@
         <arguments>
             <argument name="code" xsi:type="const">Undostres\PaymentGateway\Model\Config::CODE</argument>
             <argument name="formBlockType" xsi:type="string">Magento\Payment\Block\Form</argument>
+            <argument name="infoBlockType" xsi:type="string">Magento\Payment\Block\Info</argument>
             <argument name="valueHandlerPool" xsi:type="object">PaymentGatewayValueHandlerPool</argument>
             <argument name="commandPool" xsi:type="object">PaymentGatewayCommandPool</argument>
         </arguments>
@@ -77,8 +78,7 @@
     <virtualType name="UndostresPaymentGatewayVoidCommand" type="Magento\Payment\Gateway\Command\GatewayCommand">
         <arguments>
             <argument name="requestBuilder" xsi:type="object">Undostres\PaymentGateway\Gateway\Request\VoidRequest</argument>
-            <argument name="transferFactory" xsi:type="object">Undostres\PaymentGateway\Gateway\Http\TransferFactory
-            </argument>
+            <argument name="transferFactory" xsi:type="object">Undostres\PaymentGateway\Gateway\Http\TransferFactory</argument>
             <argument name="handler" xsi:type="object">Undostres\PaymentGateway\Response\VoidHandler</argument>
             <argument name="client" xsi:type="object">Undostres\PaymentGateway\Gateway\Http\Client\VoidClient</argument>
         </arguments>
