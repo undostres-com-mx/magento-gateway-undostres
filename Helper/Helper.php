@@ -228,6 +228,13 @@ class Helper
         return $order;
     }
 
+    public function createPayment($json)
+    {
+        $response = SASDK::createPayment($json);
+        if($response["code"] !== 200) return null;
+        return $response["response"];
+    }
+
     /* GET ORDER FROM MAGENTO */
     /**
      * @throws Exception
