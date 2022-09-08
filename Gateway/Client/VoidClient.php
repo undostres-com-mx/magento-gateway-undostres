@@ -1,5 +1,5 @@
 <?php
-namespace Undostres\PaymentGateway\Gateway\Http\Client;
+namespace Undostres\PaymentGateway\Gateway\Client;
 
 use UDT\SDK\SASDK;
 use Magento\Payment\Gateway\Http\ClientInterface;

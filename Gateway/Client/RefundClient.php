@@ -1,15 +1,15 @@
 <?php
 
-namespace Undostres\PaymentGateway\Gateway\Http\Client;
+namespace Undostres\PaymentGateway\Gateway\Client;
 
 use Magento\Payment\Gateway\Http\ClientInterface;
 use Magento\Payment\Gateway\Http\TransferInterface;
 
-class Client implements ClientInterface
+class RefundClient implements ClientInterface
 {
-    /* IGNORED */
+    /* REFUND REQUEST */
     public function placeRequest(TransferInterface $transferObject)
     {
-        return ['IGNORED' => ['IGNORED']];
+        return $transferObject->getBody();
     }
 }

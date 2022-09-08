@@ -1,11 +1,11 @@
 <?php
 
-namespace Undostres\PaymentGateway\Gateway\Http;
+namespace Undostres\PaymentGateway\Gateway;
 
 use Magento\Payment\Gateway\Http\TransferFactoryInterface;
 use Magento\Payment\Gateway\Http\TransferBuilder;
 
-/* TRANSFERFACTORY IS WHERE API REQUEST ARE CREATED */
+/* TRANSFER FACTORY IS WHERE API REQUEST ARE CREATED */
 
 class TransferFactory implements TransferFactoryInterface
 {

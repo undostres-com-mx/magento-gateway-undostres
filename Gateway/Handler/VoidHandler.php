@@ -1,5 +1,5 @@
 <?php
-namespace Undostres\PaymentGateway\Gateway\Response;
+namespace Undostres\PaymentGateway\Gateway\Handler;
 
 use Magento\Payment\Gateway\Helper\SubjectReader;
 use Magento\Payment\Gateway\Response\HandlerInterface;

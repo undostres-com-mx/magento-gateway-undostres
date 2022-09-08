@@ -24,7 +24,8 @@
             </argument>
         </arguments>
     </virtualType>
-    <virtualType name="UndostresPaymentGatewayConfigValueHandler" type="Magento\Payment\Gateway\Config\ConfigValueHandler">
+    <virtualType name="UndostresPaymentGatewayConfigValueHandler"
+                 type="Magento\Payment\Gateway\Config\ConfigValueHandler">
         <arguments>
             <argument name="configInterface" xsi:type="object">Undostres\PaymentGateway\Model\Config</argument>
         </arguments>
@@ -67,21 +68,25 @@
     <!-- PAYMENT COMMAND -->
     <virtualType name="UndostresPaymentGatewayInitializeCommand" type="Magento\Payment\Gateway\Command\GatewayCommand">
         <arguments>
-            <argument name="requestBuilder" xsi:type="object">Undostres\PaymentGateway\Gateway\Request\InitializationRequest</argument>
-            <argument name="transferFactory" xsi:type="object">Undostres\PaymentGateway\Gateway\Http\TransferFactory
+            <argument name="requestBuilder" xsi:type="object">
+                Undostres\PaymentGateway\Gateway\Request\InitializationRequest
             </argument>
-            <argument name="client" xsi:type="object">Undostres\PaymentGateway\Gateway\Http\Client\Client</argument>
+            <argument name="transferFactory" xsi:type="object">Undostres\PaymentGateway\Gateway\TransferFactory
+            </argument>
+            <argument name="client" xsi:type="object">Undostres\PaymentGateway\Gateway\Client\InitializationClient
+            </argument>
         </arguments>
     </virtualType>
 
     <!-- VOID/CANCEL COMMAND -->
     <virtualType name="UndostresPaymentGatewayVoidCommand" type="Magento\Payment\Gateway\Command\GatewayCommand">
         <arguments>
-            <argument name="requestBuilder" xsi:type="object">Undostres\PaymentGateway\Gateway\Request\VoidRequest</argument>
-            <argument name="transferFactory" xsi:type="object">Undostres\PaymentGateway\Gateway\Http\TransferFactory</argument>
-            <argument name="handler" xsi:type="object">Undostres\PaymentGateway\Response\VoidHandler</argument>
-            <argument name="client" xsi:type="object">Undostres\PaymentGateway\Gateway\Http\Client\VoidClient</argument>
-            <argument name="validator" xsi:type="object">Undostres\PaymentGateway\Gateway\Validator\VoidResponseValidator</argument>
+            <argument name="requestBuilder" xsi:type="object">Undostres\PaymentGateway\Gateway\Request\VoidRequest
+            </argument>
+            <argument name="transferFactory" xsi:type="object">Undostres\PaymentGateway\Gateway\TransferFactory
+            </argument>
+            <argument name="handler" xsi:type="object">Undostres\PaymentGateway\Response\Handler\VoidHandler</argument>
+            <argument name="client" xsi:type="object">Undostres\PaymentGateway\Gateway\Client\VoidClient</argument>
         </arguments>
     </virtualType>
 
@@ -90,10 +95,11 @@
         <arguments>
             <argument name="requestBuilder" xsi:type="object">Undostres\PaymentGateway\Gateway\Request\RefundRequest
             </argument>
-            <argument name="transferFactory" xsi:type="object">Undostres\PaymentGateway\Gateway\Http\TransferFactory
+            <argument name="transferFactory" xsi:type="object">Undostres\PaymentGateway\Gateway\TransferFactory
             </argument>
-            <argument name="handler" xsi:type="object">Undostres\PaymentGateway\Response\RefundHandler</argument>
-            <argument name="client" xsi:type="object">Undostres\PaymentGateway\Gateway\Http\Client\RefundClient
+            <argument name="handler" xsi:type="object">Undostres\PaymentGateway\Response\Handler\RefundHandler
+            </argument>
+            <argument name="client" xsi:type="object">Undostres\PaymentGateway\Gateway\Client\RefundClient
             </argument>
         </arguments>
     </virtualType>
