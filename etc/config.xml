@@ -5,7 +5,7 @@
         <payment>
             <Undostres_Gateway>
                 <!-- BASIC CONFIGS -->
-                <model>PaymentGatewayFacade</model>
+                <model>UndostresPaymentGatewayFacade</model>
                 <title>UnDosTres</title>
                 <!-- CUSTOM CONFIGS -->
                 <active>1</active>
