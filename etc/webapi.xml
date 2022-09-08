@@ -8,7 +8,7 @@
             <resource ref="anonymous"/>
         </resources>
     </route>
-    <route url="/V1/udt/redirect" method="POST">
+    <route url="/V1/udt/redirect" method="GET">
         <service class="Undostres\PaymentGateway\Api\UndostresApiInterface" method="redirect"/>
         <resources>
             <resource ref="anonymous"/>
