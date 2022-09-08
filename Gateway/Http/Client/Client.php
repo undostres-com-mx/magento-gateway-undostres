@@ -10,7 +10,6 @@ class Client implements ClientInterface
     /* IGNORED */
     public function placeRequest(TransferInterface $transferObject)
     {
-        $response = ['IGNORED' => ['IGNORED']];
-        return $response;
+        return ['IGNORED' => ['IGNORED']];
     }
 }

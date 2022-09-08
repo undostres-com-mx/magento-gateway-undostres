@@ -10,7 +10,6 @@ class RefundClient implements ClientInterface
     /* REFUND REQUEST */
     public function placeRequest(TransferInterface $transferObject)
     {
-        $response = $transferObject->getBody();
-        return $response;
+        return $transferObject->getBody();
     }
 }
