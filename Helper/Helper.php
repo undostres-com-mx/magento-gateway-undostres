@@ -252,14 +252,14 @@ class Helper
                         'code' => 200,
                         'message' => 'User Paid.',
                         'paymentId' => (string)$paymentId,
-                        'status' => $order->$order->getState()
+                        'status' => $order->getState()
                     ];
                 } else {
                     $response = [
                         'code' => 400,
                         'message' => 'Not valid order status.',
                         'paymentId' => (string)$paymentId,
-                        'status' => $order->$order->getState()
+                        'status' => $order->getState()
                     ];
                 }
                 break;
