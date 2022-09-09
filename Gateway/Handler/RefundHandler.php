@@ -8,6 +8,12 @@ use Magento\Framework\Exception\LocalizedException;
 
 class RefundHandler extends Helper implements HandlerInterface
 {
+    /**
+     * VALIDATE IF ORDER CAN BE REFUNDED AND REFUNDS THROUGH UDT
+     * @param array $handlingSubject
+     * @param array $response
+     * @return void
+     */
 	public function handle(array $handlingSubject, array $response)
 	{
 		$refund_amount = $handlingSubject['amount'];

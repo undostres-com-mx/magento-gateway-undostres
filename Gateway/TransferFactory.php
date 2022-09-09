@@ -6,7 +6,7 @@ use Magento\Payment\Gateway\Http\TransferFactoryInterface;
 use Magento\Payment\Gateway\Http\TransferBuilder;
 use Magento\Payment\Gateway\Http\TransferInterface;
 
-/* TRANSFER FACTORY IS WHERE API REQUEST ARE CREATED */
+/* TRANSFER FACTORY IS WHERE COMMAND REQUEST ARE CREATED */
 
 class TransferFactory implements TransferFactoryInterface
 {

@@ -16,6 +16,11 @@ class Cookie implements ObserverInterface
     protected $cookieMetadataFactory;
     protected $request;
 
+    /**
+     * @param CookieManagerInterface $cookieManager
+     * @param CookieMetadataFactory $cookieMetadataFactory
+     * @param Http $request
+     */
     public function __construct(CookieManagerInterface $cookieManager, CookieMetadataFactory $cookieMetadataFactory, Http $request)
     {
         $this->cookieManager = $cookieManager;
@@ -23,6 +28,10 @@ class Cookie implements ObserverInterface
         $this->request = $request;
     }
 
+    /**
+     * @param Observer $observer
+     * @return void
+     */
     public function execute(Observer $observer)
     {
         $isUDT = $this->request->getParam('udtref') !== null;

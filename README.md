@@ -2,7 +2,7 @@
 
 ## Plugin information
 
-This plugin has been tested on magento 2.4.X.
+This plugin has been tested on Magento Open Source 2.4.3 - 2.4.5, version recommended 2.4.5.
 
 The composer.json have the dependencies of the plugin.
 

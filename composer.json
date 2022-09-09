@@ -11,7 +11,7 @@
     }
   ],
   "require": {
-    "undostres-com-mx/superapp_sdk": "dev-master",
+    "undostres-com-mx/superapp_sdk": "1.0.2",
     "php": ">=7.1"
   },
   "autoload": {

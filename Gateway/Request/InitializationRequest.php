@@ -9,7 +9,11 @@ use Magento\Payment\Gateway\Helper\SubjectReader;
 
 class InitializationRequest extends Helper implements BuilderInterface
 {
-    /* BUILDS ENV REQUEST, GET THE PAYMENT AND THE ORDER, SET THE STATES AND NO MAIL SEND */
+    /**
+     * BUILDS ENV REQUEST, GET THE PAYMENT AND THE ORDER, SET THE STATES AND NO MAIL SEND
+     * @param array $buildSubject
+     * @return string[][]
+     */
     public function build(array $buildSubject)
     {
         try {

@@ -13,12 +13,19 @@ class Index extends Action
 {
     protected $helper;
 
+    /**
+     * @param Context $context
+     * @param Helper $helper
+     */
     public function __construct(Context $context, Helper $helper)
     {
         parent::__construct($context);
         $this->helper = $helper;
     }
 
+    /**
+     * @return void
+     */
     public function execute()
     {
         $order = $this->helper->getOrder();

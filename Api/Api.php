@@ -9,6 +9,10 @@ use Undostres\PaymentGateway\Helper\Helper;
 
 class Api extends Helper
 {
+    /**
+     * CALLBACK OF UDT | HERE IS THE LOGIC TO CHANGE THE STATUS OF ORDERS
+     * @return void
+     */
     public function callback($paymentId, $status)
     {
         try {
@@ -23,6 +27,10 @@ class Api extends Helper
         }
     }
 
+    /**
+     * REDIRECT OF UDT TO STORE | HERE IS THE LOGIC TO WHERE TO REDIRECT
+     * @return void
+     */
     public function redirect($orderId)
     {
         $order = $this->getOrder($orderId);

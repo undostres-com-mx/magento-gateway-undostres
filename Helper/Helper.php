@@ -6,7 +6,6 @@ use Exception;
 use UDT\SDK\SASDK;
 use Undostres\PaymentGateway\Model\Config;
 use Magento\Framework\App\Action\Context;
-use Magento\Sales\Api\OrderRepositoryInterface;
 use Magento\Store\Model\StoreManagerInterface;
 use Magento\Checkout\Model\Session;
 use Magento\Sales\Model\Order;
@@ -15,7 +14,7 @@ use Magento\Sales\Model\Order\Email\Sender\OrderSender;
 use Magento\Sales\Model\Service\InvoiceService;
 use Magento\Framework\DB\Transaction;
 
-/* HELPER CLASS, LOG, FRONT MESSAGE, SDK COMMUNICATION */
+/* HELPER CLASS, LOG, FRONT MESSAGE, SDK COMMUNICATION, ORDER VALIDATIONS */
 
 class Helper
 {
@@ -30,16 +29,27 @@ class Helper
     const LOG_ERROR = 2;
 
     /* CLASS VARIABLES */
-    protected $logger;
-    protected $order;
-    protected $session;
-    protected $orderSender;
     protected $messageManager;
+    protected $logger;
+    protected $session;
+    protected $order;
     protected $storeManager;
     protected $gatewayConfig;
+    protected $orderSender;
     protected $invoice;
     protected $transaction;
 
+    /**
+     * @param Config $gatewayConfig
+     * @param Context $context
+     * @param Logger $logger
+     * @param Session $session
+     * @param Order $order
+     * @param StoreManagerInterface $storeManager
+     * @param OrderSender $orderSender
+     * @param InvoiceService $invoice
+     * @param Transaction $transaction
+     */
     public function __construct(Config $gatewayConfig, Context $context, Logger $logger, Session $session, Order $order, StoreManagerInterface $storeManager, OrderSender $orderSender, InvoiceService $invoice, Transaction $transaction)
     {
         $this->messageManager = $context->getMessageManager();
@@ -54,7 +64,11 @@ class Helper
         SASDK::init($this->gatewayConfig->getKey(), $this->gatewayConfig->getUrl());
     }
 
-    /* LOG TO UDT FILE */
+    /**
+     * LOG TO UDT FILE
+     * @param string $message
+     * @param int $type
+     */
     public function log(string $message, int $type = self::LOG_DEBUG)
     {
         $message = "\n" . '========= UDT LOG =========' . "\n" . $message . "\n" . '========= UDT END =========  ==>  ';
@@ -65,7 +79,12 @@ class Helper
         }
     }
 
-    /* ADD MESSAGE ON MAGENTO FRONTEND */
+    /**
+     * ADD MESSAGE ON MAGENTO FRONTEND
+     * @param $type
+     * @param $msg
+     * @return void
+     */
     public function addFrontMessage($type, $msg)
     {
         if ($type === self::MSG_SUCCESS) $this->messageManager->addSuccess(__($msg));
@@ -73,32 +92,50 @@ class Helper
         else if ($type === self::MSG_ERROR) $this->messageManager->addError(__($msg));
     }
 
-    /* CHECK IS ORDER PENDING */
+    /**
+     * CHECK IF ORDER IS PENDING
+     * @param $order
+     * @return bool
+     */
     public function isOrderPending($order): bool
     {
         return $order !== null && $order->getState() === Order::STATE_PENDING_PAYMENT;
     }
 
-    /* CHECK IS ORDER CANCELED */
+    /**
+     * CHECK IF ORDER IS CANCELED
+     * @param $order
+     * @return bool
+     */
     public function isOrderCanceled($order): bool
     {
         return $order !== null && $order->getState() === Order::STATE_CANCELED;
     }
 
-    /* CHECK IS ORDER PROCESSING */
+    /**
+     * CHECK IF ORDER IS PROCESSING
+     * @param $order
+     * @return bool
+     */
     public function isOrderProcessing($order): bool
     {
         return $order !== null && $order->getState() === Order::STATE_PROCESSING;
     }
 
-    /* REDIRECT USING HEADER */
+    /**
+     * REDIRECT USING HEADER
+     * @param $redirectUrl
+     */
     public function redirectPage($redirectUrl)
     {
         header('Location: ' . $redirectUrl);
         die();
     }
 
-    /* RESPOND JSON USING HEADER */
+    /**
+     * RESPOND JSON USING HEADER (API)
+     * @param $json
+     */
     public function responseJSON($json)
     {
         echo json_encode($json);
@@ -106,8 +143,9 @@ class Helper
         die();
     }
 
-    /* GET HEADERS OF PETITION */
     /**
+     * VALIDATE UDT HEADERS
+     * @return bool
      * @throws Exception
      */
     public function areValidHeaders(): bool
@@ -120,7 +158,12 @@ class Helper
         return SASDK::validateRequestHeaders($headers["x-vtex-api-appkey"], $headers["x-vtex-api-apptoken"]);
     }
 
-    /* GET THE JSON THAT IS SENT TO UDT */
+    /**
+     * TRANSFORM ORDER TO JSON
+     * @param $order
+     * @return array
+     * @throws Exception
+     */
     public function getOrderJSON($order): array
     {
         $shippingAddress = $order->getShippingAddress();
@@ -157,25 +200,12 @@ class Helper
         ];
     }
 
-    /* GET CALLBACK URL */
-    public function getCallbackUrl(): string
-    {
-        return $this->storeManager->getStore()->getBaseUrl() . 'rest/V1/udt/callback';
-    }
-
-    /* GET LANDING URL WHEN UDT REDIRECTS */
-    public function getReturnUrl($orderId): string
-    {
-        return $this->storeManager->getStore()->getBaseUrl() . 'rest/V1/udt/redirect?orderId=' . $orderId;
-    }
-
-    /* MONEY FORMAT ####.## */
-    public function moneyFormat($money): float
-    {
-        return floatval(number_format($money, 2, '.', ''));
-    }
-
-    /* TRANSFORM ORDER TO JSON ORDER UDT */
+    /**
+     * TRANSFORM ORDER PRODUCTS TO JSON
+     * @param $order
+     * @return array
+     * @throws Exception
+     */
     public function getAllItems($order): array
     {
         $items = array();
@@ -192,31 +222,75 @@ class Helper
         return $items;
     }
 
-    /* RESTORE CART */
-    public function restoreCart()
+    /**
+     * GET API ROUTE TO CALLBACK
+     * @return string
+     */
+    public function getCallbackUrl(): string
     {
-        return $this->session->restoreQuote();
+        return $this->storeManager->getStore()->getBaseUrl() . 'rest/V1/udt/callback';
     }
 
-    /* CANCEL ORDER */
+    /**
+     * GET API ROUTE TO REDIRECT
+     * @param $orderId
+     * @return string
+     */
+    public function getReturnUrl($orderId): string
+    {
+        return $this->storeManager->getStore()->getBaseUrl() . 'rest/V1/udt/redirect?orderId=' . $orderId;
+    }
+
+    /**
+     * MONEY FORMAT ####.##
+     * @param $money
+     * @return float
+     */
+    public function moneyFormat($money): float
+    {
+        return floatval(number_format($money, 2, '.', ''));
+    }
+
+    /**
+     * RESTORE CART
+     * @return void
+     */
+    public function restoreCart()
+    {
+        $this->session->restoreQuote();
+    }
+
+    /**
+     * CANCEL MAGENTO ORDER
+     * @return void
+     */
     public function cancelOrder($order)
     {
         if ($order !== null) $order->setState(Order::STATE_CANCELED)->setStatus(Order::STATE_CANCELED)->save();
     }
 
-    /* REDIRECT TO SUCCESS PAGE */
+    /**
+     * REDIRECT TO SUCCESS PAGE
+     * @return void
+     */
     public function redirectToCheckoutOnePageSuccess()
     {
         $this->redirectPage($this->storeManager->getStore()->getBaseUrl() . 'checkout/onepage/success');
     }
 
-    /* REDIRECT TO CART PAGE */
+    /**
+     * REDIRECT TO CART PAGE
+     * @return void
+     */
     public function redirectToCheckoutCart()
     {
         $this->redirectPage($this->storeManager->getStore()->getBaseUrl() . 'checkout/cart');
     }
 
-    /* GET ORDER FROM MAGENTO */
+    /**
+     * RETURNS MAGENTO ORDER FROM SESSION OR ID
+     * @return mixed
+     */
     public function getOrder($orderId = null)
     {
         if ($orderId === null) $orderId = $this->session->getLastRealOrderId();
@@ -226,27 +300,47 @@ class Helper
         return $order;
     }
 
-    public function createPayment($json)
+    /**
+     * CREATE ORDER PAYMENT WITH UDT ENDPOINT
+     * @param $json
+     * @return bool
+     */
+    public function createPayment($json): ?bool
     {
         $response = SASDK::createPayment($json);
         if ($response["code"] !== 200) return null;
         return $response["response"];
     }
 
+    /**
+     * CANCEL ORDER WITH UDT ENDPOINT
+     * @param $paymentId
+     * @return bool
+     */
     public function cancelUDTOrder($paymentId): bool
     {
         $response = SASDK::cancelOrder($paymentId);
         return $response["code"] !== 200;
     }
 
+    /**
+     * REFUND ORDER WITH UDT ENDPOINT
+     * @param $paymentId
+     * @param $transactionId
+     * @param $value
+     * @return bool
+     */
     public function refundUDTOrder($paymentId, $transactionId, $value): bool
     {
         $response = SASDK::refundOrder($paymentId, $transactionId, $value);
         return $response["code"] !== 200;
     }
 
-    /* GET ORDER FROM MAGENTO */
     /**
+     * PROCESS THE ORDER | CHANGES THE STATUS DEPENDING ON THE PARAMETER OF API
+     * @param $paymentId
+     * @param $status
+     * @return array
      * @throws Exception
      */
     public function processOrder($paymentId, $status): array
@@ -297,6 +391,8 @@ class Helper
     }
 
     /**
+     * GENERATE THE PAYMENT OF THE ORDER
+     * @return void
      * @throws Exception
      */
     private function invoiceOrder($order, $transactionId)
