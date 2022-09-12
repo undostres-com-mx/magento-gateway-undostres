@@ -22,7 +22,7 @@ class Index extends Action
         parent::__construct($context);
         $this->helper = $helper;
     }
-    
+
     public function execute()
     {
         $order = $this->helper->getOrder();

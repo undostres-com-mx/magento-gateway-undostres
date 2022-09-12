@@ -333,6 +333,7 @@ class Helper
     public function refundUDTOrder($paymentId, $transactionId, $value): bool
     {
         $response = SASDK::refundOrder($paymentId, $transactionId, $value);
+        $this->log(sprintf("%s -> Envio refund: %s - %s - %s \nRecibio los datos:\n%s", __METHOD__, $paymentId, $transactionId, $value, json_encode($response)));
         return $response["code"] !== 200;
     }
 

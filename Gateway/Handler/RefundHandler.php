@@ -4,7 +4,7 @@ namespace Undostres\PaymentGateway\Gateway\Handler;
 
 use Magento\Payment\Gateway\Response\HandlerInterface;
 use Undostres\PaymentGateway\Helper\Helper;
-use Magento\Framework\Exception\LocalizedException;
+use Exception;
 
 class RefundHandler extends Helper implements HandlerInterface
 {
@@ -13,6 +13,7 @@ class RefundHandler extends Helper implements HandlerInterface
      * @param array $handlingSubject
      * @param array $response
      * @return void
+     * @throws Exception
      */
 	public function handle(array $handlingSubject, array $response)
 	{
@@ -20,8 +21,8 @@ class RefundHandler extends Helper implements HandlerInterface
 		$payment = $handlingSubject['payment']->getPayment();
 		$transaction_id = $payment->getData()['creditmemo']->getData('invoice')->getData('transaction_id');
         if (empty($payment) || empty($payment->getData('creditmemo')))
-            throw new LocalizedException(__('No podemos realizar un reembolso porque no hay una transacción de captura.'));
+            throw new Exception('No podemos realizar un reembolso porque no hay una transacción de captura.');
         if($this->refundUDTOrder($transaction_id, $transaction_id, $this->moneyFormat($refund_amount)))
-            throw new LocalizedException("UnDosTres no se encuentra disponible.");
+            throw new Exception("UnDosTres no se encuentra disponible.");
 	}
 }
