@@ -305,7 +305,7 @@ class Helper
      * @param $json
      * @return bool
      */
-    public function createPayment($json): ?bool
+    public function createPayment($json): ?string
     {
         $response = SASDK::createPayment($json);
         if ($response["code"] !== 200) return null;
