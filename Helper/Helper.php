@@ -61,7 +61,7 @@ class Helper
         $this->orderSender = $orderSender;
         $this->invoice = $invoice;
         $this->transaction = $transaction;
-        SASDK::init($this->gatewayConfig->getKey(), $this->gatewayConfig->getUrl());
+        SASDK::init($this->gatewayConfig->getKey() ?? "", $this->gatewayConfig->getUrl());
     }
 
     /**
