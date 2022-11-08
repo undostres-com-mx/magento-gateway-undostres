@@ -19,4 +19,10 @@ interface UndostresApiInterface
      * @return mixed
      */
     public function redirect(string $orderId);
+
+    /**
+     * @param string $orderId
+     * @return mixed
+     */
+    public function status(string $orderId);
 }

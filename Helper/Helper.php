@@ -177,7 +177,7 @@ class Helper
             'transactionId' => (string)$orderId,
             'paymentId' => (string)$orderId,
             'orderId' => (string)$orderId,
-            'value' => $this->moneyFormat($order->getTotalDue()),
+            'value' => $this->formatMoney($order->getTotalDue()),
             'installments' => 0,
             'paymentMethod' => "UnDosTres",
             'miniCart' => [
@@ -187,8 +187,8 @@ class Helper
                     'email' => $order->getData('customer_email'),
                     'phone' => $order->getBillingAddress()->getData('telephone')
                 ],
-                "taxValue" => $this->moneyFormat($order->getTaxAmount()),
-                "shippingValue" => $this->moneyFormat($order->getShippingAmount()),
+                "taxValue" => $this->formatMoney($order->getTaxAmount()),
+                "shippingValue" => $this->formatMoney($order->getShippingAmount()),
                 "shippingAddress" => [
                     'street' => $shippingAddressParts[0],
                     'city' => $shippingAddress->getData('city'),
@@ -213,7 +213,7 @@ class Helper
             $items[] = array(
                 'id' => (string)$item->getItemId(),
                 'name' => $item->getName(),
-                'price' => $this->moneyFormat($item->getPrice()),
+                'price' => $this->formatMoney($item->getPrice()),
                 'quantity' => (int)$item->getQtyOrdered(),
                 'discount' => 0,
                 'variation_id' => "0",
@@ -246,9 +246,9 @@ class Helper
      * @param $money
      * @return float
      */
-    public function moneyFormat($money): float
+    public function formatMoney($money): float
     {
-        return floatval(number_format($money, 2, '.', ''));
+        return SASDK::formatMoney($money);
     }
 
     /**
@@ -285,6 +285,25 @@ class Helper
     public function redirectToCheckoutCart()
     {
         $this->redirectPage($this->storeManager->getStore()->getBaseUrl() . 'checkout/cart');
+    }
+
+    /**
+     * REDIRECT TO SHOP PAGE
+     * @return void
+     */
+    public function redirectToShop()
+    {
+        $this->redirectPage($this->storeManager->getStore()->getBaseUrl());
+    }
+
+    /**
+     * CHECK IF ORDER IT'S FROM UDT
+     * @return bool
+     */
+    public function isUDTOrder($order): ?bool
+    {
+        if ($order === null) return null;
+        return $order->getPayment()->getAdditionalInformation("method_title") === Config::CODE;
     }
 
     /**
@@ -348,45 +367,25 @@ class Helper
     {
         $order = $this->getOrder($paymentId);
         if ($order === null) return ['code' => 404, 'message' => 'Orden no encontrada.'];
+        if (!$this->isUDTOrder($order)) return ['code' => 500, 'message' => 'No es una orden de undostres.'];
+        if (!$this->isOrderPending($order)) return ['code' => 500, 'message' => 'Estado previo inválido.'];
         switch ($status) {
             case 'approved':
-                if ($this->isOrderPending($order)) {
-                    $this->invoiceOrder($order, $paymentId);
-                    $order->setState(Order::STATE_PROCESSING)->setStatus(Order::STATE_PROCESSING)->setIsCustomerNotified(true);
-                    $this->orderSender->send($order);
-                    $response = [
-                        'code' => 200,
-                        'message' => 'User Paid.',
-                        'paymentId' => (string)$paymentId,
-                        'status' => $order->getState()
-                    ];
-                } else {
-                    $response = [
-                        'code' => 400,
-                        'message' => 'Not valid order status.',
-                        'paymentId' => (string)$paymentId,
-                        'status' => $order->getState()
-                    ];
-                }
+                $this->invoiceOrder($order, $paymentId);
+                $order->setState(Order::STATE_PROCESSING)->setStatus(Order::STATE_PROCESSING)->setIsCustomerNotified(true);
+                $this->orderSender->send($order);
+                $response = ['code' => 200, 'message' => 'Orden pagada correctamente.'];
                 break;
             case 'denied':
                 $order->setState(Order::STATE_CANCELED)->setStatus(Order::STATE_CANCELED);
-                $response = [
-                    'code' => 200,
-                    'message' => 'Order cancel successfully.',
-                    'paymentId' => (string)$paymentId,
-                    'status' => Order::STATE_CANCELED
-                ];
+                $response = ['code' => 200, 'message' => 'Orden cancelada correctamente.'];
                 break;
             default:
-                $response = [
-                    'code' => 400,
-                    'message' => 'Bad request',
-                    'paymentId' => (string)$paymentId,
-                    'status' => $order->getState()
-                ];
+                $response = ['code' => 500, 'message' => 'Nuevo estado incorrecto.'];
                 break;
         }
+        $response['paymentId'] = (string)$paymentId;
+        $response['status'] = $order->getState();
         $order->save();
         return $response;
     }

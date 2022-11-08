@@ -19,7 +19,6 @@ class Api extends Helper
             if (!$this->areValidHeaders()) throw new Exception("Headers invalidas.");
             $this->log(sprintf("%s -> Callback de la orden: %s con el estatus: %s", __METHOD__, $paymentId, $status));
             $response = $this->processOrder($paymentId, $status);
-            $this->log(sprintf("%s -> Callback correcto de la orden: %s", __METHOD__, $paymentId));
             $this->responseJSON($response);
         } catch (Exception $e) {
             $this->log('Exception' . $e->getMessage(), Helper::LOG_ERROR);
@@ -33,15 +32,39 @@ class Api extends Helper
      */
     public function redirect($orderId)
     {
-        $order = $this->getOrder($orderId);
         $this->log(sprintf("%s -> Redirect de la orden: %s", __METHOD__, $orderId));
-        if ($this->isOrderProcessing($order)) {
-            $this->addFrontMessage(Helper::MSG_SUCCESS, '¡Felicidades!, tu pago con UnDosTres fue exitoso.');
-            $this->redirectToCheckoutOnePageSuccess();
-        } else if ($this->isOrderCanceled($order)) {
-            $this->addFrontMessage(Helper::MSG_WARNING, 'Tu pago con UnDosTres fue cancelado.');
-            $this->restoreCart();
-        } else $this->addFrontMessage(Helper::MSG_ERROR, 'Orden invalida.');
-        $this->redirectToCheckoutCart();
+        $order = $this->getOrder($orderId);
+        if ($order !== null & $this->isUDTOrder($order)) {
+            if ($this->isOrderProcessing($order)) {
+                $this->addFrontMessage(Helper::MSG_SUCCESS, '¡Felicidades!, tu pago con UnDosTres fue exitoso.');
+                $this->redirectToCheckoutOnePageSuccess();
+            } else if ($this->isOrderCanceled($order)) {
+                $this->addFrontMessage(Helper::MSG_WARNING, 'Tu pago con UnDosTres fue cancelado.');
+                $this->restoreCart();
+                $this->redirectToCheckoutCart();
+            }
+        }
+        $this->addFrontMessage(Helper::MSG_ERROR, 'Orden invalida.');
+        $this->redirectToShop();
+    }
+
+    /**
+     * PARSE THE STATUS TO UDT STANDARD STATUSES
+     * @return void
+     */
+    public function status($orderId)
+    {
+        try {
+            if (!$this->areValidHeaders()) throw new Exception("Headers invalidas.");
+            $order = $this->getOrder($orderId);
+            $this->log(sprintf("%s -> Consulta estatus de la orden: %s", __METHOD__, $orderId));
+            if ($order === null)  $response = ['code' => 404, 'message' => 'Orden no encontrada.'];
+            else if (!$this->isUDTOrder($order))   $response = ['code' => 500, 'message' => 'Orden no creada por UnDosTres.'];
+            else $response = ['code' => 200, 'message' => 'Ok.', 'status' => $order->getState()];
+            $this->responseJSON($response);
+        } catch (Exception $e) {
+            $this->log('Exception' . $e->getMessage(), Helper::LOG_ERROR);
+            $this->responseJSON(['success' => false, 'code' => 500, 'msg' => $e->getMessage()]);
+        }
     }
 }

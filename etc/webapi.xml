@@ -14,4 +14,10 @@
             <resource ref="anonymous"/>
         </resources>
     </route>
+    <route url="/V1/udt/status" method="GET">
+        <service class="Undostres\PaymentGateway\Api\UndostresApiInterface" method="status"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>
 </routes>

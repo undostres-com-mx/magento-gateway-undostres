@@ -1,6 +1,6 @@
 {
   "name": "undostres-com-mx/magento-gateway-undostres",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "UnDosTres payment gateway for magento.",
   "type": "magento2-module",
   "license": "proprietary",
