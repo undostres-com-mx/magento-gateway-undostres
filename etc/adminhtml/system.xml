@@ -9,20 +9,20 @@
                 <label>UnDosTres Payment Gateway</label>
                 <field id="active" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1"
                        showInStore="1">
-                    <label>Activo</label>
+                    <label>Activa/Desactiva pago</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                 </field>
                 <field id="key" translate="label" type="password" sortOrder="20" showInDefault="1" showInWebsite="1"
                        showInStore="1">
-                    <label>Key</label>
+                    <label>Llave secreta</label>
                 </field>
                 <field id="url" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1"
                        showInStore="1">
-                    <label>Url</label>
+                    <label>Url personalizada</label>
                 </field>
                 <field id="log" translate="label" type="select" sortOrder="40" showInDefault="1" showInWebsite="1"
                        showInStore="1">
-                    <label>Logging</label>
+                    <label>Activar registro</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                 </field>
             </group>
