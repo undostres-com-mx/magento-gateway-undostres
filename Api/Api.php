@@ -44,7 +44,6 @@ class Api extends Helper
                 $this->redirectToCheckoutCart();
             }
         }
-        $this->addFrontMessage(Helper::MSG_ERROR, 'Orden invalida.');
         $this->redirectToShop();
     }
 
