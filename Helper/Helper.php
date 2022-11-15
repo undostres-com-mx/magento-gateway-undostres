@@ -367,7 +367,7 @@ class Helper
     {
         $order = $this->getOrder($paymentId);
         if ($order === null) return ['code' => 404, 'message' => 'Orden no encontrada.'];
-        if (!$this->isUDTOrder($order)) return ['code' => 500, 'message' => 'No es una orden de undostres.'];
+        if (!$this->isUDTOrder($order)) return ['code' => 500, 'message' => 'Orden no creada por UnDosTres.'];
         if (!$this->isOrderPending($order)) return ['code' => 500, 'message' => 'Estado previo inválido.'];
         switch ($status) {
             case 'approved':
@@ -384,9 +384,9 @@ class Helper
                 $response = ['code' => 500, 'message' => 'Nuevo estado incorrecto.'];
                 break;
         }
+        $order->save();
         $response['paymentId'] = (string)$paymentId;
         $response['status'] = $order->getState();
-        $order->save();
         return $response;
     }
 

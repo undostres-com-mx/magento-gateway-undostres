@@ -21,7 +21,7 @@ class Api extends Helper
             $response = $this->processOrder($paymentId, $status);
             $this->responseJSON($response);
         } catch (Exception $e) {
-            $this->log('Exception' . $e->getMessage(), Helper::LOG_ERROR);
+            $this->log($e->getMessage(), Helper::LOG_ERROR);
             $this->responseJSON(['success' => false, 'code' => 500, 'msg' => $e->getMessage()]);
         }
     }
@@ -62,7 +62,7 @@ class Api extends Helper
             else $response = ['code' => 200, 'message' => 'Ok.', 'status' => $order->getState()];
             $this->responseJSON($response);
         } catch (Exception $e) {
-            $this->log('Exception' . $e->getMessage(), Helper::LOG_ERROR);
+            $this->log($e->getMessage(), Helper::LOG_ERROR);
             $this->responseJSON(['success' => false, 'code' => 500, 'msg' => $e->getMessage()]);
         }
     }
