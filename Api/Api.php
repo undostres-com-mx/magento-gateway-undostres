@@ -21,7 +21,7 @@ class Api extends Helper
             $response = $this->processOrder($paymentId, $status);
             $this->responseJSON($response);
         } catch (Exception $e) {
-            $this->log($e->getMessage(), Helper::LOG_ERROR);
+            $this->log(sprintf("%s -> Exception: %s", __METHOD__, $e->getMessage()), Helper::LOG_ERROR);
             $this->responseJSON(['success' => false, 'code' => 500, 'msg' => $e->getMessage()]);
         }
     }
@@ -62,7 +62,7 @@ class Api extends Helper
             else $response = ['code' => 200, 'message' => 'Ok.', 'status' => $order->getState()];
             $this->responseJSON($response);
         } catch (Exception $e) {
-            $this->log($e->getMessage(), Helper::LOG_ERROR);
+            $this->log(sprintf("%s -> Exception: %s", __METHOD__, $e->getMessage()), Helper::LOG_ERROR);
             $this->responseJSON(['success' => false, 'code' => 500, 'msg' => $e->getMessage()]);
         }
     }
@@ -77,7 +77,7 @@ class Api extends Helper
             if (!$this->areValidHeaders()) throw new Exception("Headers invalidas.");
             $this->responseJSON(['success' => true, 'code' => 200, 'msg' => $this->getLogsToText()]);
         } catch (Exception $e) {
-            $this->log($e->getMessage(), Helper::LOG_ERROR);
+            $this->log(sprintf("%s -> Exception: %s", __METHOD__, $e->getMessage()), Helper::LOG_ERROR);
             $this->responseJSON(['success' => false, 'code' => 500, 'msg' => $e->getMessage()]);
         }
     }
@@ -93,7 +93,7 @@ class Api extends Helper
             $this->deleteAllLogs();
             $this->responseJSON(['success' => true, 'code' => 200]);
         } catch (Exception $e) {
-            $this->log($e->getMessage(), Helper::LOG_ERROR);
+            $this->log(sprintf("%s -> Exception: %s", __METHOD__, $e->getMessage()), Helper::LOG_ERROR);
             $this->responseJSON(['success' => false, 'code' => 500, 'msg' => $e->getMessage()]);
         }
     }
