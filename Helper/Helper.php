@@ -155,7 +155,7 @@ class Helper
         foreach ($serverHeaders as $header => $value) {
             $headers[strtolower($header)] = $value;
         }
-        return SASDK::validateRequestHeaders($headers["x-vtex-api-appkey"], $headers["x-vtex-api-apptoken"]);
+        return SASDK::validateRequestHeaders($headers["x-vtex-api-appkey"] ?? "", $headers["x-vtex-api-apptoken"] ?? "");
     }
 
     /**
