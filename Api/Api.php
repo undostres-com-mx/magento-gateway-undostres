@@ -73,7 +73,13 @@ class Api extends Helper
      */
     public function getLogs()
     {
-        $this->responseJSON(['success' => false, 'code' => 500, 'msg' => 'xd']);
+        try {
+            if (!$this->areValidHeaders()) throw new Exception("Headers invalidas.");
+            $this->responseJSON(['success' => true, 'code' => 200, 'msg' => $this->getLogsToText()]);
+        } catch (Exception $e) {
+            $this->log($e->getMessage(), Helper::LOG_ERROR);
+            $this->responseJSON(['success' => false, 'code' => 500, 'msg' => $e->getMessage()]);
+        }
     }
 
     /**

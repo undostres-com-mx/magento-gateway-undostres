@@ -13,6 +13,7 @@ use Undostres\PaymentGateway\Logger\Logger;
 use Magento\Sales\Model\Order\Email\Sender\OrderSender;
 use Magento\Sales\Model\Service\InvoiceService;
 use Magento\Framework\DB\Transaction;
+use Magento\Framework\Filesystem\DirectoryList;
 
 /* HELPER CLASS, LOG, FRONT MESSAGE, SDK COMMUNICATION, ORDER VALIDATIONS */
 
@@ -38,6 +39,7 @@ class Helper
     protected $orderSender;
     protected $invoice;
     protected $transaction;
+    protected $directory;
 
     /**
      * @param Config $gatewayConfig
@@ -49,8 +51,9 @@ class Helper
      * @param OrderSender $orderSender
      * @param InvoiceService $invoice
      * @param Transaction $transaction
+     * @param DirectoryList $directory
      */
-    public function __construct(Config $gatewayConfig, Context $context, Logger $logger, Session $session, Order $order, StoreManagerInterface $storeManager, OrderSender $orderSender, InvoiceService $invoice, Transaction $transaction)
+    public function __construct(Config $gatewayConfig, Context $context, Logger $logger, Session $session, Order $order, StoreManagerInterface $storeManager, OrderSender $orderSender, InvoiceService $invoice, Transaction $transaction, DirectoryList $directory)
     {
         $this->messageManager = $context->getMessageManager();
         $this->logger = $logger;
@@ -61,6 +64,7 @@ class Helper
         $this->orderSender = $orderSender;
         $this->invoice = $invoice;
         $this->transaction = $transaction;
+        $this->directory = $directory;
         SASDK::init($this->gatewayConfig->getKey() ?? "", $this->gatewayConfig->getUrl());
     }
 
@@ -77,6 +81,14 @@ class Helper
             else if ($type === self::LOG_WARNING) $this->logger->warning($message);
             else if ($type === self::LOG_ERROR) $this->logger->critical($message);
         }
+    }
+
+    /**
+     * GET LOGS TO TEXT
+     */
+    public function getLogsToText()
+    {
+        $directory = $this->directory->getPath('log');
     }
 
     /**
