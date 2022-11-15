@@ -352,11 +352,12 @@ class Helper
     /**
      * CREATE ORDER PAYMENT WITH UDT ENDPOINT
      * @param $json
-     * @return bool
+     * @return string|null
      */
     public function createPayment($json): ?string
     {
         $response = SASDK::createPayment($json);
+        $this->log(sprintf("%s -> Payment url request send: %s \nReceive:\n%s", __METHOD__, json_encode($json), json_encode($response)));
         if ($response["code"] !== 200) return null;
         return $response["response"];
     }
@@ -369,6 +370,7 @@ class Helper
     public function cancelUDTOrder($paymentId): bool
     {
         $response = SASDK::cancelOrder($paymentId);
+        $this->log(sprintf("%s -> Admin cancel de orden: %s\nRecibio los datos: %s", __METHOD__, $paymentId, json_encode($response)));
         return $response["code"] !== 200;
     }
 
@@ -382,7 +384,7 @@ class Helper
     public function refundUDTOrder($paymentId, $transactionId, $value): bool
     {
         $response = SASDK::refundOrder($paymentId, $transactionId, $value);
-        $this->log(sprintf("%s -> Envio refund: %s - %s - %s \nRecibio los datos:\n%s", __METHOD__, $paymentId, $transactionId, $value, json_encode($response)));
+        $this->log(sprintf("%s -> Envio refund: %s - %s - %s \nRecibio los datos: %s", __METHOD__, $paymentId, $transactionId, $value, json_encode($response)));
         return $response["code"] !== 200;
     }
 

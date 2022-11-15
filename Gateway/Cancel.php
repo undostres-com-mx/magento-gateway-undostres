@@ -4,18 +4,17 @@ namespace Undostres\PaymentGateway\Gateway;
 
 use Magento\Framework\Exception\CouldNotDeleteException;
 use Undostres\PaymentGateway\Helper\Helper;
-use Undostres\PaymentGateway\Model\Config;
 
 class Cancel extends Helper
 {
     /**
      * ADMIN CANCEL INTERCEPTOR | CANCEL UDT ORDER
-     * @param $subject
+     * @param $order
      */
-    public function beforeCancel($subject)
+    public function beforeCancel($order)
     {
-        if ($subject->canCancel() && $subject->getPayment()->getMethod() === Config::CODE) {
-            if($this->cancelUDTOrder($subject->getRealOrderId()))
+        if ($order->canCancel() && $this->isUDTOrder($order)) {
+            if($this->cancelUDTOrder($order->getRealOrderId()))
                 throw new CouldNotDeleteException("UnDosTres no se encuentra disponible.");
         }
     }

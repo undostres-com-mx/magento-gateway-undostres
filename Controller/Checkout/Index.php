@@ -30,9 +30,7 @@ class Index extends Action
             if ($order === null) throw new Exception("Orden no encontrada.");
             else {
                 if ($this->helper->isOrderPending($order)) {
-                    $json = $this->helper->getOrderJSON($order);
-                    $gatewayUrl = $this->helper->createPayment($json);
-                    $this->helper->log(sprintf("%s -> Payment url request send: %s \nReceive:\n%s", __METHOD__, json_encode($json), json_encode($gatewayUrl)));
+                    $gatewayUrl = $this->helper->createPayment($this->helper->getOrderJSON($order));
                     if ($gatewayUrl === null) throw new Exception("Error al redireccionar a UnDosTres, por favor intentalo más tarde.");
                     else $this->helper->redirectPage($gatewayUrl);
                 } else throw new Exception("El estatus de la orden es incorrecto.");

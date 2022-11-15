@@ -2,6 +2,7 @@
 
 namespace Undostres\PaymentGateway\Gateway\Request;
 
+use Exception;
 use Magento\Sales\Model\Order;
 use Magento\Payment\Gateway\Request\BuilderInterface;
 use Undostres\PaymentGateway\Helper\Helper;
@@ -25,9 +26,8 @@ class InitializationRequest extends Helper implements BuilderInterface
             $stateObject->setState(Order::STATE_PENDING_PAYMENT);
             $stateObject->setStatus(Order::STATE_PENDING_PAYMENT);
             $stateObject->setIsNotified(false);
-        } catch (\Exception $ex) {
-            $this->log('Ocurrió una excepción en el init request: ' . $ex->getMessage());
-            $this->log($ex->getTraceAsString());
+        } catch (Exception $e) {
+            $this->log(sprintf("%s -> Exception: %s", __METHOD__, $e->getMessage()), Helper::LOG_ERROR);
         }
         return ['IGNORED' => ['IGNORED']];
     }
