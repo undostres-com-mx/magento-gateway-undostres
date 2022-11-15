@@ -88,6 +88,13 @@ class Api extends Helper
      */
     public function deleteLogs()
     {
-        $this->responseJSON(['success' => false, 'code' => 500, 'msg' => 'XDDD']);
+        try {
+            if (!$this->areValidHeaders()) throw new Exception("Headers invalidas.");
+            $this->deleteAllLogs();
+            $this->responseJSON(['success' => true, 'code' => 200]);
+        } catch (Exception $e) {
+            $this->log($e->getMessage(), Helper::LOG_ERROR);
+            $this->responseJSON(['success' => false, 'code' => 500, 'msg' => $e->getMessage()]);
+        }
     }
 }

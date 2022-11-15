@@ -98,6 +98,18 @@ class Helper
     }
 
     /**
+     * GET ALL POSSIBLY LOGS OF DIRECTORY AND RETURN THEM AS ARRAY
+     */
+    public function deleteAllLogs()
+    {
+        $directory = $this->directory->getPath('log');
+        $files = array_diff(scandir($directory), array('.', '..'));
+        foreach ($files as $file) {
+            if (strpos($file, Config::CODE) !== false) unlink($directory . "/" . $file);
+        }
+    }
+
+    /**
      * ADD MESSAGE ON MAGENTO FRONTEND
      * @param $type
      * @param $msg
