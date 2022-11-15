@@ -84,11 +84,17 @@ class Helper
     }
 
     /**
-     * GET LOGS TO TEXT
+     * GET ALL POSSIBLY LOGS OF DIRECTORY AND RETURN THEM AS ARRAY
      */
-    public function getLogsToText()
+    public function getLogsToText(): array
     {
         $directory = $this->directory->getPath('log');
+        $files = array_diff(scandir($directory), array('.', '..'));
+        $logs = [];
+        foreach ($files as $file) {
+            if (strpos($file, Config::CODE) !== false) $logs[$file] = file_get_contents('compress.zlib://' . $directory . "/" . $file);
+        }
+        return $logs;
     }
 
     /**
