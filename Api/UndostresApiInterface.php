@@ -25,4 +25,14 @@ interface UndostresApiInterface
      * @return mixed
      */
     public function status(string $orderId);
+
+    /**
+     * @return mixed
+     */
+    public function getLogs();
+
+    /**
+     * @return mixed
+     */
+    public function deleteLogs();
 }

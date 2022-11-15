@@ -57,7 +57,8 @@ class Api extends Helper
         try {
             if (!$this->areValidHeaders()) throw new Exception("Headers invalidas.");
             $order = $this->getOrder($orderId);
-            $this->log(sprintf("%s -> Consulta estatus de la orden: %s", __METHOD__, $orderId));
+           // $this->log(sprintf("%s -> Consulta estatus de la orden: %s", __METHOD__, $orderId));
+            $this->log(sprintf("%s -> Consulta estatus de la orden: %s", __METHOD__, $order->getPayment()->getAdditionalInformation("method_title")));
             if ($order === null)  $response = ['code' => 404, 'message' => 'Orden no encontrada.'];
             else if (!$this->isUDTOrder($order))   $response = ['code' => 500, 'message' => 'Orden no creada por UnDosTres.'];
             else $response = ['code' => 200, 'message' => 'Ok.', 'status' => $order->getState()];
@@ -66,5 +67,23 @@ class Api extends Helper
             $this->log('Exception' . $e->getMessage(), Helper::LOG_ERROR);
             $this->responseJSON(['success' => false, 'code' => 500, 'msg' => $e->getMessage()]);
         }
+    }
+
+    /**
+     * GET LOG FILE AND RETURNS IT
+     * @return void
+     */
+    public function getLogs()
+    {
+        $this->responseJSON(['success' => false, 'code' => 500, 'msg' => 'xd']);
+    }
+
+    /**
+     * GET LOG FILE AND RETURNS IT
+     * @return void
+     */
+    public function deleteLogs()
+    {
+        $this->responseJSON(['success' => false, 'code' => 500, 'msg' => 'XDDD']);
     }
 }

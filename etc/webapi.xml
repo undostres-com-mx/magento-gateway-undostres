@@ -20,4 +20,16 @@
             <resource ref="anonymous"/>
         </resources>
     </route>
+    <route url="/V1/udt/getLogs" method="GET">
+        <service class="Undostres\PaymentGateway\Api\UndostresApiInterface" method="getLogs"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>
+    <route url="/V1/udt/deleteLogs" method="DELETE">
+        <service class="Undostres\PaymentGateway\Api\UndostresApiInterface" method="deleteLogs"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>
 </routes>
