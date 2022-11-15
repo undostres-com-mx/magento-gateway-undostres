@@ -303,7 +303,7 @@ class Helper
     public function isUDTOrder($order): ?bool
     {
         if ($order === null) return null;
-        return $order->getPayment()->getAdditionalInformation("method_title") === Config::CODE;
+        return $order->getPayment()->getMethod() === Config::CODE;
     }
 
     /**

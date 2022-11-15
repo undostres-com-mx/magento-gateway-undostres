@@ -57,10 +57,9 @@ class Api extends Helper
         try {
             if (!$this->areValidHeaders()) throw new Exception("Headers invalidas.");
             $order = $this->getOrder($orderId);
-           // $this->log(sprintf("%s -> Consulta estatus de la orden: %s", __METHOD__, $orderId));
-            $this->log(sprintf("%s -> Consulta estatus de la orden: %s", __METHOD__, $order->getPayment()->getAdditionalInformation("method_title")));
-            if ($order === null)  $response = ['code' => 404, 'message' => 'Orden no encontrada.'];
-            else if (!$this->isUDTOrder($order))   $response = ['code' => 500, 'message' => 'Orden no creada por UnDosTres.'];
+            $this->log(sprintf("%s -> Consulta estatus de la orden: %s", __METHOD__, $orderId));
+            if ($order === null) $response = ['code' => 404, 'message' => 'Orden no encontrada.'];
+            else if (!$this->isUDTOrder($order)) $response = ['code' => 500, 'message' => 'Orden no creada por UnDosTres.'];
             else $response = ['code' => 200, 'message' => 'Ok.', 'status' => $order->getState()];
             $this->responseJSON($response);
         } catch (Exception $e) {
