@@ -168,8 +168,10 @@ class Helper
      */
     public function responseJSON($json)
     {
+        header_remove();
+        http_response_code($json['code']);
+        header('Content-Type: application/json; charset=utf-8');
         echo json_encode($json);
-        header("Content-Type: application/json; charset=utf-8");
         die();
     }
 
